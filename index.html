@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mathurams Engineering IDC</title>
+    <!-- <title>Mathurams Engineering IDC</title>/ -->
+	<!-- <meta name="description" content="Eco Energy offers premium plastic food packaging solutions designed for restaurants, cloud kitchens, caterers, and retail food brands.">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Eco Energy – Premium Food Container Supplier in Tamil Nadu">
+    <meta name="twitter:description" content="Eco Energy offers premium plastic food packaging solutions designed for restaurants, cloud kitchens, caterers, and retail food brands.">
+    <meta name="twitter:image" content="./global assets/Images/logo.webp"> -->
+    <link rel="icon" href="./global assets/Images/logo.svg">
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+        }
+
+        @media screen and (min-width: 992px) {
+            body {
+                overflow: hidden;
+            }
+        }
+
+        #content {
+            width: 100%;
+            margin: 0 auto;
+        }
+
+        #content object {
+            width: 100%;
+            height: 100%;
+            border: none;
+            min-height: 100vh;
+        }
+        /* ==================== FUTURISTIC ORBITAL PRELOADER ==================== */
+        #preloader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: radial-gradient(circle at center, #053664 0%, #03294D 70%, #011325 100%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 99999999999;
+            overflow: hidden;
+            transition: opacity 0.8s ease-out;
+        }
+
+        .loader-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 220px;
+            height: 220px;
+            margin-bottom: 30px;
+        }
+
+        .orbit-spinner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .orbit-ring {
+            position: absolute;
+            border-radius: 50%;
+            box-sizing: border-box;
+        }
+
+        .orbit-ring.ring-1 {
+            width: 220px;
+            height: 220px;
+            border: 2px dashed rgba(230, 116, 41, 0.4);
+            animation: rotateClockwise 12s linear infinite;
+        }
+
+        .orbit-ring.ring-2 {
+            width: 180px;
+            height: 180px;
+            border: 3px solid transparent;
+            border-top-color: #00d8f6;
+            border-bottom-color: #00d8f6;
+            animation: rotateCounterClockwise 6s linear infinite;
+        }
+
+        .orbit-ring.ring-3 {
+            width: 140px;
+            height: 140px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-right: 3px solid #E67429;
+            animation: rotateClockwise 3s linear infinite;
+        }
+
+        .center-logo {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.03);
+            border: 1.5px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+        }
+
+        .center-logo img {
+            width: 60px;
+            height: auto;
+        }
+
+        @keyframes rotateClockwise {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @keyframes rotateCounterClockwise {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(-360deg); }
+        }
+
+        .loader-text {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .loader-text h2 {
+            font-family: 'Inter', sans-serif;
+            font-size: 24px;
+            font-weight: 700;
+            background: linear-gradient(90deg, #ff9f5e, #E67429, #00d8f6);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: textShine 3s linear infinite;
+        }
+
+        @keyframes textShine {
+            from { background-position: 0% center; }
+            to   { background-position: 200% center; }
+        }
+
+        .loader-text p {
+            font-family: sans-serif;
+            font-size: 18px;
+            color: rgba(255, 255, 255, 0.85);
+            margin-top: 15px;
+            font-weight: 600;
+            letter-spacing: 1.5px;
+        }
+
+        .loader-text .loader-percent {
+            font-family: sans-serif;
+            font-size: 18px;
+            color: #E67429;
+            margin-left: 8px;
+            letter-spacing: 0;
+        }
+
+        .progress-line {
+            margin-top: 20px;
+            width: 200px;
+            height: 3.5px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 1px;
+            overflow: hidden;
+            --progress: 0%;
+        }
+
+        .progress-line::after {
+            content: '';
+            display: block;
+            width: var(--progress);
+            height: 100%;
+            background: linear-gradient(90deg, transparent, #E67429, #00d8f6, transparent);
+            transition: width 0.3s ease;
+        }
+
+        .fade-out {
+            opacity: 0 !important;
+            pointer-events: none;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ✅ STEP 1: Preloader is now uncommented and always visible on load -->
+    <div id="preloader">
+        <div class="loader-wrapper">
+            <div class="orbit-spinner">
+                <div class="orbit-ring ring-1"></div>
+                <div class="orbit-ring ring-2"></div>
+                <div class="orbit-ring ring-3"></div>
+                <div class="center-logo">
+                    <img src="./global assets/Images/logo.svg" alt="Logo">
+                </div>
+            </div>
+        </div>
+
+        <div class="progress-line"></div>
+        <div class="loader-text">
+            <p>Loading <span class="loader-percent" id="loader-percent">0</span>%</p>
+        </div>
+    </div>
+
+    <div id="content"></div>
+
+    <script>
+     const preloader  = document.getElementById("preloader");
+const contentDiv = document.getElementById("content");
+const percentText = document.getElementById("loader-percent");
+const progressLine = document.querySelector(".progress-line");
+
+let hideScheduled = false;
+let initialProgressStarted = false;
+let finalAnimationStarted = false;
+let contentShown = false;
+let currentProgress = 0;
+let progressFrame = null;
+
+function renderProgress() {
+    if (percentText) percentText.textContent = `${currentProgress}`;
+    if (progressLine) progressLine.style.setProperty("--progress", `${currentProgress}%`);
+}
+
+function animateProgress(target, duration, callback) {
+    if (progressFrame) {
+        cancelAnimationFrame(progressFrame);
+        progressFrame = null;
+    }
+
+    const start = currentProgress;
+    const delta = target - start;
+    const startTime = performance.now();
+
+    function step(now) {
+        const elapsed = Math.min(duration, now - startTime);
+        const t = elapsed / duration;
+        const eased = Math.pow(t, 0.7);
+        currentProgress = Math.round(start + delta * eased);
+        renderProgress();
+
+        if (elapsed < duration) {
+            progressFrame = requestAnimationFrame(step);
+        } else {
+            progressFrame = null;
+            currentProgress = target;
+            renderProgress();
+            if (callback) callback();
+        }
+    }
+
+    progressFrame = requestAnimationFrame(step);
+}
+
+function startInitialProgress() {
+    if (initialProgressStarted) return;
+    initialProgressStarted = true;
+    currentProgress = 0;
+    renderProgress();
+    animateProgress(60, 7000);
+}
+
+function startFinalProgress() {
+    if (finalAnimationStarted) return;
+    finalAnimationStarted = true;
+    animateProgress(100, 800, showContent);
+}
+
+function scheduleHide() {
+    if (hideScheduled) return;
+    hideScheduled = true;
+    setTimeout(startFinalProgress, 5000);
+}
+
+function showContent() {
+    if (contentShown) return;
+    contentShown = true;
+    preloader.classList.add("fade-out");
+    setTimeout(() => {
+        preloader.style.display = "none";
+    }, 800);
+}
+
+function waitForAllImagesInIframe(objectEl) {
+    try {
+        const iframeDoc = objectEl.contentDocument || objectEl.contentWindow?.document;
+        if (!iframeDoc) {
+            startFinalProgress();
+            return;
+        }
+
+        const images = Array.from(iframeDoc.getElementsByTagName('img'));
+
+        if (images.length === 0) {
+            startFinalProgress();
+            return;
+        }
+
+        let loadedCount = 0;
+        const totalImages = images.length;
+
+        function onImageSettled() {
+            loadedCount++;
+            if (loadedCount >= totalImages) {
+                startFinalProgress();
+            }
+        }
+
+        images.forEach((img) => {
+            if (img.complete) {
+                onImageSettled();
+            } else {
+                img.addEventListener('load',  onImageSettled, { once: true });
+                img.addEventListener('error', onImageSettled, { once: true });
+            }
+        });
+
+    } catch (err) {
+        console.error('Iframe access error:', err);
+        scheduleHide();
+    }
+}
+
+function load_home() {
+    var folderPath = 'For_Desc/index.html';
+    contentDiv.innerHTML = '<object type="text/html" data="' + folderPath +
+        '" style="width:100%; height:600px;"></object>';
+
+    const objectEl = contentDiv.querySelector('object');
+
+    if (objectEl) {
+        objectEl.addEventListener('load', function () {
+            startInitialProgress();
+            setTimeout(() => waitForAllImagesInIframe(objectEl), 500);
+        });
+
+        // Hard fallback — never show preloader longer than 20 seconds
+        setTimeout(() => scheduleHide(), 5000);
+    }
+}
+
+// ===== MERGED MESSAGE LISTENER (both contentReady + fullscreen) =====
+const embedded = document.getElementById("content");
+window.addEventListener("message", function (event) {
+    if (!event.data || !event.data.action) return;
+
+    // Signal from inner flipbook: all images loaded
+    if (event.data.action === "contentReady") {
+        scheduleHide();
+    }
+
+    // Fullscreen toggle from inner flipbook
+    if (event.data.action === "toggleFullscreen") {
+        if (!document.fullscreenElement) {
+            embedded.requestFullscreen?.() || embedded.webkitRequestFullscreen?.();
+        } else {
+            document.exitFullscreen?.();
+        }
+    }
+});
+
+window.onload = load_home;
+
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'ArrowRight' || e.key === 'ArrowLeft' ||
+        e.key === 'ArrowDown'  || e.key === 'ArrowUp') {
+        e.preventDefault();
+    }
+    if (e.target.matches('input, textarea')) return;
+    const objectEl = document.querySelector('#content object');
+    if (!objectEl) return;
+    switch(e.key) {
+        case 'ArrowRight':
+        case 'ArrowDown':
+            objectEl.contentWindow.postMessage({ action: 'flipNext' }, '*');
+            break;
+        case 'ArrowLeft':
+        case 'ArrowUp':
+            objectEl.contentWindow.postMessage({ action: 'flipPrev' }, '*');
+            break;
+        case 'Home':
+            objectEl.contentWindow.postMessage({ action: 'flipFirst' }, '*');
+            break;
+        case 'End':
+            objectEl.contentWindow.postMessage({ action: 'flipLast' }, '*');
+            break;
+    }
+});
+    </script>
+</body>
+</html>
+

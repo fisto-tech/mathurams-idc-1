@@ -1,0 +1,48 @@
+/* Attender Cot Product Switcher Styles */
+.cot-fade {
+  transition: opacity 0.3s ease, transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  opacity: 1;
+  transform: scale(1);
+}
+
+.cot-fade-out {
+  opacity: 0;
+  transform: scale(0.97);
+}
+
+.cot-btn {
+  transition: transform 0.25s ease, filter 0.25s ease, opacity 0.25s ease;
+  opacity: 0.65;
+}
+
+.cot-btn:hover {
+  opacity: 0.9;
+  transform: scale(1.05);
+}
+
+.active-cot-btn {
+  opacity: 1 !important;
+  transform: scale(1.12) !important;
+  filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.25));
+}
+
+/* Active and inactive inline SVG path styles for MF-19, MF-20, MF-22 */
+.cot-btn svg path:nth-child(1) {
+  fill: #ffffff !important;
+  stroke: #E67429 !important;
+  transition: fill 0.3s ease, stroke 0.3s ease;
+}
+
+.cot-btn svg path:nth-child(2) {
+  fill: #E67429 !important;
+  transition: fill 0.3s ease;
+}
+
+.active-cot-btn svg path:nth-child(1) {
+  fill: #E67429 !important;
+  stroke: #E67429 !important;
+}
+
+.active-cot-btn svg path:nth-child(2) {
+  fill: #ffffff !important;
+}
