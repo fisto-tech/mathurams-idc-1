@@ -1,1171 +1,689 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="./style.css">
-  <link rel="stylesheet" href="./css/style.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
-  <link rel="stylesheet" href="./css/style.css">
-  <!-- <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/font-awesome/4.7.1/css/font-awesome.min.css'> -->
-  <link rel="icon" href="../global assets/Images/HomePage/logo.svg">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Arial">
-  <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous"> -->
-
-  <title>Eco Energy IDC</title>
+  <meta charset="UTF-8" />
+  <script>
+    window.onerror = function(msg, url, line, col, error) {
+      alert("Error: " + msg + "\nURL: " + url + "\nLine: " + line + "\nCol: " + col + "\nStack: " + (error ? error.stack : 'N/A'));
+      return false;
+    };
+    (function() {
+      const path = window.location.pathname;
+      let baseHref = '/';
+      const idx = path.toLowerCase().indexOf('/index.html');
+      if (idx !== -1) {
+        baseHref = path.substring(0, idx + 1);
+      } else {
+        baseHref = path.endsWith('/') ? path : path.substring(0, path.lastIndexOf('/') + 1);
+      }
+      const base = document.createElement('base');
+      base.href = baseHref;
+      document.head.appendChild(base);
+    })();
+  </script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Interactive 3D product configurator for Sri Mathurams Medical Engineering beds, cots, and hospital furniture." />
+  <link rel="icon" href="assets/images/logo-icon.svg" />
+  <title>Mathurams IDC 3D Customisation</title>
+  <link rel="stylesheet" href="style.css?v=5" />
+  <script>
+    self.ModelViewerElement = self.ModelViewerElement || {};
+    self.ModelViewerElement.meshoptDecoderLocation = 'https://unpkg.com/meshoptimizer@0.17.0/meshopt_decoder.js';
+  </script>
+  <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/4.3.1/model-viewer.min.js"></script>
 </head>
-
 <body>
 
+<div id="app">
 
-  <!--******************************** 3D Models ***************************************************-->
-
-
-  <!-- ****************Round container Start************************  -->
-
-  <!-- ================================03-250 ml Round Container start========================================================== -->
-
-  <div class="lightbox-target" id="03-250-ml-round-container">
-
-    <div class="position-relative bg-[#bdbdbd] " style="background-color: #bdbdbd;">
-
-      <img src="./assets/images/logo.svg" alt="logo" class="logo-360-page">
-      <h2 class="product-name">250 ml Round Container</h2>
-
-
-      <model-viewer src="./assets/models/IML-Round-Conatiners/03-250ml.glb" ar-modes="webxr scene-viewer quick-look"
-        camera-controls tone-mapping="neutral" poster="poster.webp" shadow-intensity="1"
-        camera-orbit="2.246deg 76.12deg 0.2466m" field-of-view="30deg" min-camera-orbit="auto auto 0.42m"
-        max-camera-orbit="auto auto 0.42m" min-field-of-view="20.26deg" disable-pan disable-tap></model-viewer>
-      <div class="progress-bar hide" slot="progress-bar">
-        <div class="update-bar"></div>
+  <!-- Top Bar -->
+  <header id="topbar">
+    <div class="header-left">
+      <button class="back-btn" id="back-btn" title="Back to product">&larr;<span class="back-btn-text">Back To Product</span></button>
+      <div class="topbar-file-info" id="file-label">No file loaded &mdash; <span>Drop 3D file to begin</span></div>
+    </div>
+    
+    <div class="product-title-center" id="product-title"></div>
+    
+    <div class="header-right">
+      <button id="upload-btn">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+          <polyline points="17 8 12 3 7 8"/>
+          <line x1="12" y1="3" x2="12" y2="15"/>
+        </svg>
+        Load Model
+      </button>
+      <div class="export-container">
+        <button id="export-btn" title="Export current scene model">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+            <polyline points="7 10 12 15 17 10"/>
+            <line x1="12" y1="15" x2="12" y2="3"/>
+          </svg>
+          Export
+        </button>
+        <div class="export-dropdown" id="export-dropdown">
+          <button class="export-option" id="export-glb">Export GLB</button>
+          <button class="export-option" id="export-gltf">Export GLTF</button>
+        </div>
       </div>
-      </model-viewer>
-    </div>
-
-    <a class="lightbox-close" href="#" onclick="javascript:window.close()"></a>
-    <div class=" icon-360">
-      <img src="../global assets/Images/commonThings/360-icon-black.webp" alt="">
-    </div>
-
-  </div>
-  <!-- ==================================03-250 ml Round Container end============================================================================== -->
-
-
-  <!-- ================================04-300 ml Round Container start========================================================== -->
-
-  <div class="lightbox-target" id="04-300-ml-round-container">
-    <div class="position-relative bg-[#bdbdbd] " style="background-color: #bdbdbd;">
-
-      <img src="./assets/images/logo.svg" alt="logo" class="logo-360-page">
-      <h2 class="product-name">300 ml Round Container</h2>
-
-      <model-viewer src="./assets/models/IML-Round-Conatiners/04-300ml.glb" ar-modes="webxr scene-viewer quick-look"
-        camera-controls tone-mapping="neutral" poster="poster.webp" shadow-intensity="1"
-        camera-orbit="359.4deg 77.22deg 0.2549m" field-of-view="30deg" min-camera-orbit="auto auto 0.35m" min-field-of-view="20.98deg"
-        max-camera-orbit="auto auto 0.35m"  disable-pan disable-tap></model-viewer>
-      <div class="progress-bar hide" slot="progress-bar">
-        <div class="update-bar"></div>
+      <div class="company-logo">
+        <img src="assets/images/logo.svg" alt="Sri Mathurams Medical Engineering Logo" />
       </div>
-      </model-viewer>
     </div>
+    <input type="file" id="file-input" accept=".fbx,.glb,.gltf,.obj" />
+  </header>
 
-    <a class="lightbox-close" href="#" onclick="javascript:window.close()"></a>
-    <div class="icon-360">
-      <img src="../global assets/Images/commonThings/360-icon-black.webp" alt="">
-    </div>
-
-  </div>
-  <!-- ==================================04-300 ml Round Container end============================================================================== -->
-
-
-  <!-- ================================03-500 ml Round Container start========================================================== -->
-
-  <div class="lightbox-target" id="03-500-ml-round-container">
-    <div class="position-relative bg-[#bdbdbd] " style="background-color: #bdbdbd;">
-
-      <img src="./assets/images/logo.svg" alt="logo" class="logo-360-page">
-      <h2 class="product-name">500 ml Round Container</h2>
-
-      <model-viewer src="./assets/models/IML-Round-Conatiners/03-500ml.glb" ar-modes="webxr scene-viewer quick-look"
-        camera-controls tone-mapping="neutral" poster="poster.webp" shadow-intensity="1"
-        camera-orbit="356.6deg 76.68deg 0.2742m" field-of-view="30deg" min-camera-orbit="auto auto 0.35m" min-field-of-view="20.98deg"
-        max-camera-orbit="auto auto 0.35m"  disable-pan disable-tap></model-viewer>
-      <div class="progress-bar hide" slot="progress-bar">
-        <div class="update-bar"></div>
+  <!-- Left Configuration Panel -->
+  <aside id="sidebar-config">
+    <!-- Skeleton Loader -->
+    <div id="sidebar-skeleton">
+      <div class="skeleton-section">
+        <div class="skeleton-title shimmer"></div>
+        <div class="skeleton-radio shimmer"></div>
+        <div class="skeleton-radio shimmer"></div>
       </div>
-      </model-viewer>
-    </div>
-
-    <a class="lightbox-close" href="#" onclick="javascript:window.close()"></a>
-    <div class="icon-360">
-      <img src="../global assets/Images/commonThings/360-icon-black.webp" alt="">
-    </div>
-
-  </div>
-  <!-- ==================================03-500 ml Round Container end============================================================================== -->
-
-
-  <!-- ================================05-600 ml Round Container start========================================================== -->
-
-  <div class="lightbox-target" id="05-600-ml-round-container">
-    <div class="position-relative bg-[#bdbdbd] " style="background-color: #bdbdbd;">
-
-      <img src="./assets/images/logo.svg" alt="logo" class="logo-360-page">
-      <h2 class="product-name">600 ml Round Container</h2>
-
-      <model-viewer src="./assets/models/IML-Round-Conatiners/05-600ml.glb" ar-modes="webxr scene-viewer quick-look"
-        camera-controls tone-mapping="neutral" poster="poster.webp" shadow-intensity="1"
-        camera-orbit="-1.685deg 77.81deg 0.3132m" field-of-view="30deg" min-camera-orbit="auto auto 0.36m"
-        max-camera-orbit="auto auto 0.36m" min-field-of-view="20.26deg"  disable-pan disable-tap></model-viewer>
-      <div class="progress-bar hide" slot="progress-bar">
-        <div class="update-bar"></div>
+      <div class="skeleton-section">
+        <div class="skeleton-title shimmer"></div>
+        <div class="skeleton-grid">
+          <div class="skeleton-card shimmer"></div>
+          <div class="skeleton-card shimmer"></div>
+          <div class="skeleton-card shimmer"></div>
+        </div>
       </div>
-      </model-viewer>
-    </div>
-
-    <a class="lightbox-close" href="#" onclick="javascript:window.close()"></a>
-    <div class="icon-360">
-      <img src="../global assets/Images/commonThings/360-icon-black.webp" alt="">
-    </div>
-
-  </div>
-  <!-- ==================================05-600 ml Round Container end============================================================================== -->
-
-
-  <!-- ================================05-750 ml Round Container start========================================================== -->
-
-  <div class="lightbox-target" id="05-750-ml-round-container">
-    <div class="position-relative bg-[#bdbdbd] " style="background-color: #bdbdbd;">
-
-      <img src="./assets/images/logo.svg" alt="logo" class="logo-360-page">
-      <h2 class="product-name">750 ml Round Container</h2>
-
-      <model-viewer src="./assets/models/IML-Round-Conatiners/05-750ml.glb" ar-modes="webxr scene-viewer quick-look"
-        camera-controls tone-mapping="neutral" poster="poster.webp" shadow-intensity="1"
-        camera-orbit="-2.246deg 75deg 0.3237m" field-of-view="30deg" min-camera-orbit="auto auto 0.35m"
-        max-camera-orbit="auto auto 0.35m" min-field-of-view="20.26deg" disable-pan disable-tap></model-viewer>
-      <div class="progress-bar hide" slot="progress-bar">
-        <div class="update-bar"></div>
+      <div class="skeleton-section">
+        <div class="skeleton-title shimmer"></div>
+        <div class="skeleton-grid">
+          <div class="skeleton-card shimmer"></div>
+          <div class="skeleton-card shimmer"></div>
+          <div class="skeleton-card shimmer"></div>
+        </div>
       </div>
-      </model-viewer>
     </div>
 
-    <a class="lightbox-close" href="#" onclick="javascript:window.close()"></a>
-    <div class="icon-360">
-      <img src="../global assets/Images/commonThings/360-icon-black.webp" alt="">
-    </div>
-
-  </div>
-  <!-- ==================================05-750 ml Round Container end============================================================================== -->
-
-
-  <!-- ================================05-1000 ml Round Container start========================================================== -->
-
-  <div class="lightbox-target" id="05-1000-ml-round-container">
-    <div class="position-relative bg-[#bdbdbd] " style="background-color: #bdbdbd;">
-
-      <img src="./assets/images/logo.svg" alt="logo" class="logo-360-page">
-      <h2 class="product-name">1000 ml Round Container</h2>
-
-      <model-viewer src="./assets/models/IML-Round-Conatiners/05-1000ml.glb" ar-modes="webxr scene-viewer quick-look"
-        camera-controls tone-mapping="neutral" poster="poster.webp" shadow-intensity="1"
-        camera-orbit="7.301deg 68.24deg 0.3425m" field-of-view="30deg" min-camera-orbit="auto auto 0.37m"
-        max-camera-orbit="auto auto 0.37m" min-field-of-view="20.26deg" disable-pan disable-tap></model-viewer>
-      <div class="progress-bar hide" slot="progress-bar">
-        <div class="update-bar"></div>
+    <!-- A. BED TYPE -->
+    <div class="config-section" id="config-section-operation">
+      <div class="config-section-title">A. BED TYPE</div>
+      <div class="radio-group">
+        <label class="radio-option">
+          <input type="radio" name="operation" value="manual" checked />
+          <span class="radio-custom"></span>
+          Manual
+        </label>
+        <label class="radio-option">
+          <input type="radio" name="operation" value="remote" />
+          <span class="radio-custom"></span>
+          Remote
+        </label>
       </div>
-      </model-viewer>
     </div>
 
-    <a class="lightbox-close" href="#" onclick="javascript:window.close()"></a>
-    <div class="icon-360">
-      <img src="../global assets/Images/commonThings/360-icon-black.webp" alt="">
-    </div>
-
-  </div>
-  <!-- ==================================05-1000 ml Round Container end============================================================================== -->
-
-
-  <!-- ****************Round container End************************  -->
-
-
-
-
-
-
-  <!-- ****************Round Bucket container start************************  -->
-
-  <!-- ================================1180ml Round Bucket Container start========================================================== -->
-
-  <div class="lightbox-target" id="1180-ml-round-bucket">
-    <div class="position-relative bg-[#bdbdbd] " style="background-color: #bdbdbd;">
-
-      <img src="./assets/images/logo.svg" alt="logo" class="logo-360-page">
-      <h2 class="product-name">1180 ml Round Bucket</h2>
-
-      <model-viewer src="./assets/models/IML-Round-bucket/1180-ml-round-bucket.glb"
-        ar-modes="webxr scene-viewer quick-look" camera-controls tone-mapping="neutral" poster="poster.webp"
-        shadow-intensity="1" camera-orbit="-366.7deg 64.33deg 0.3832m" field-of-view="30deg"
-        min-camera-orbit="auto auto 0.45m" max-camera-orbit="auto auto 0.45m" min-field-of-view="20.26deg" disable-pan
-        disable-tap></model-viewer>
-      <div class="progress-bar hide" slot="progress-bar">
-        <div class="update-bar"></div>
+    <!-- B. Head & Foot Panel -->
+    <div class="config-section" id="config-section-headfoot">
+      <div class="config-section-title">B. Head &amp; Foot End Panel</div>
+      <div class="card-grid col-3">
+        <div class="config-card active" data-section="headfoot" data-value="ms">
+          <div class="selection-indicator"></div>
+          <img src="assets/images/ms-icon.webp" alt="MS" />
+          <span>MS Panel</span>
+        </div>
+        <div class="config-card" data-section="headfoot" data-value="ss">
+          <div class="selection-indicator"></div>
+          <img src="assets/images/ss-plain-icon.webp" alt="SS" />
+          <span>SS Panel</span>
+        </div>
+        <div class="config-card" data-section="headfoot" data-value="abs1">
+          <div class="selection-indicator"></div>
+          <img src="assets/images/abs-icon.webp" alt="ABS 1" />
+          <span>ABS 1 Panel</span>
+        </div>
+        <div class="config-card" data-section="headfoot" data-value="abs2">
+          <div class="selection-indicator"></div>
+          <img src="assets/images/abs-icon.webp" alt="ABS 2" />
+          <span>ABS 2 Panel</span>
+        </div>
       </div>
-      </model-viewer>
     </div>
 
-    <a class="lightbox-close" href="#" onclick="javascript:window.close()"></a>
-    <div class="icon-360">
-      <img src="../global assets/Images/commonThings/360-icon-black.webp" alt="">
-    </div>
-
-  </div>
-  <!-- ==================================1180ml Round Bucket Container end============================================================================== -->
-
-
-  <!-- ================================2000ml Round Bucket Container start========================================================== -->
-
-  <div class="lightbox-target" id="2000-ml-round-bucket">
-    <div class="position-relative bg-[#bdbdbd] " style="background-color: #bdbdbd;">
-
-      <img src="./assets/images/logo.svg" alt="logo" class="logo-360-page">
-      <h2 class="product-name">2000 ml Round Bucket </h2>
-
-      <model-viewer src="./assets/models/IML-Round-bucket/2000-ml-round-bucket.glb"
-        ar-modes="webxr scene-viewer quick-look" camera-controls tone-mapping="neutral" poster="poster.webp"
-        shadow-intensity="1" camera-orbit="-362.2deg 67.39deg 0.4553m" field-of-view="30deg"
-        min-camera-orbit="auto auto 0.495m" max-camera-orbit="auto auto 0.495m" min-field-of-view="20.26deg" disable-pan
-        disable-tap></model-viewer>
-      <div class="progress-bar hide" slot="progress-bar">
-        <div class="update-bar"></div>
+    <!-- ABS Panel Color Option Section -->
+    <div class="config-section" id="abs-panel-color-section" style="display: none;">
+      <div class="config-section-subtitle" style="margin-top: 0;">ABS Panel Color Option</div>
+      <div class="color-row" id="abs-panel-color-row">
+        <button class="color-swatch abs-panel-color" data-color="#6F4E37" style="background-color: #6F4E37; color: #FFFFFF;" title="Coffee Brown">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+        </button>
+        <button class="color-swatch abs-panel-color" data-color="#4E342E" style="background-color: #4E342E; color: #FFFFFF;" title="Chocolate Brown">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+        </button>
+        <button class="color-swatch abs-panel-color" data-color="#5BC0EB" style="background-color: #5BC0EB; color: #1E293B;" title="Light Blue">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+        </button>
+        <button class="color-swatch abs-panel-color active" data-color="#0056A6" style="background-color: #0056A6; color: #FFFFFF;" title="Dark Blue">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+        </button>
+        <button class="color-swatch abs-panel-color" data-color="#009A44" style="background-color: #009A44; color: #FFFFFF;" title="Reliance Green">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+        </button>
+        <button class="color-swatch abs-panel-color" data-color="#B8D8A3" style="background-color: #B8D8A3; color: #1E293B;" title="Pista Green">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+        </button>
+        <button class="color-swatch abs-panel-color" data-color="#50C878" style="background-color: #50C878; color: #FFFFFF;" title="Parrot Green">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+        </button>
+        <button class="color-swatch abs-panel-color" data-color="#A7A9AC" style="background-color: #A7A9AC; color: #1E293B;" title="DA Grey">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+        </button>
+        <button class="color-swatch abs-panel-color" data-color="#4A4F54" style="background-color: #4A4F54; color: #FFFFFF;" title="Basalt Grey">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+        </button>
+        <button class="color-swatch abs-panel-color" data-color="#F57C00" style="background-color: #F57C00; color: #FFFFFF;" title="Orange">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+        </button>
+        <button class="color-swatch abs-panel-color" data-color="#FFD400" style="background-color: #FFD400; color: #1E293B;" title="Lemon Yellow">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+        </button>
+        <button class="color-swatch abs-panel-color" data-color="#000000" style="background-color: #000000; color: #FFFFFF;" title="Black">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+        </button>
+        <button class="color-swatch abs-panel-color" data-color="#6A1B9A" style="background-color: #6A1B9A; color: #FFFFFF;" title="Violet">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+        </button>
+        <button class="color-swatch abs-panel-color" data-color="#E8DCC5" style="background-color: #E8DCC5; color: #1E293B;" title="Beige">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+        </button>
       </div>
-      </model-viewer>
     </div>
 
-    <a class="lightbox-close" href="#" onclick="javascript:window.close()"></a>
-    <div class="icon-360">
-      <img src="../global assets/Images/commonThings/360-icon-black.webp" alt="">
-    </div>
-
-  </div>
-  <!-- ==================================2000ml Round Bucket Container end============================================================================== -->
-
-
-  <!-- ****************Round Bucket container End************************  -->
-
-
-
-
-
-
-
-
-
-  <!-- ****************Square Bucket Start************************  -->
-
-  <!-- ================================1500 ml Square Bucket start========================================================== -->
-
-  <div class="lightbox-target" id="1500-ml-square-bucket">
-    <div class="position-relative bg-[#bdbdbd] " style="background-color: #bdbdbd;">
-
-      <img src="./assets/images/logo.svg" alt="logo" class="logo-360-page">
-      <h2 class="product-name">1500 ml Square Bucket</h2>
-
-      <model-viewer src="./assets/models/IML-Square-Bucket/1500ml.glb" ar-modes="webxr scene-viewer quick-look"
-        camera-controls tone-mapping="neutral" poster="poster.webp" shadow-intensity="1"
-        camera-orbit="-29.77deg 86.23deg 0.4604m" field-of-view="30deg" min-camera-orbit="auto auto 0.65m"
-        max-camera-orbit="auto auto 0.65m"
-        min-field-of-view="20.26deg" disable-pan disable-tap></model-viewer>
-      <div class="progress-bar hide" slot="progress-bar">
-        <div class="update-bar"></div>
+    <!-- C. Side Rails -->
+    <div class="config-section" id="config-section-siderails">
+      <div class="config-section-title">C. Side Rails</div>
+      <div class="card-grid col-3">
+        <div class="config-card active" data-section="siderails" data-value="ms">
+          <div class="selection-indicator"></div>
+          <img src="assets/images/ms-icon.webp" alt="MS" />
+          <span>MS Rail</span>
+        </div>
+        <div class="config-card" data-section="siderails" data-value="ssplain">
+          <div class="selection-indicator"></div>
+          <img src="assets/images/ss-plain-icon.webp" alt="SS Plain" />
+          <span>SS Plain</span>
+        </div>
+        <div class="config-card" data-section="siderails" data-value="abs">
+          <div class="selection-indicator"></div>
+          <img src="assets/images/abs-icon.webp" alt="ABS" />
+          <span>ABS Rail</span>
+        </div>
+        <div class="config-card" data-section="siderails" data-value="aluminium">
+          <div class="selection-indicator"></div>
+          <img src="assets/images/aluminium-collapsible-icon.webp" alt="Aluminium Collapsible" />
+          <span>Aluminium Collapsible</span>
+        </div>
+        <div class="config-card" data-section="siderails" data-value="sscollapsible">
+          <div class="selection-indicator"></div>
+          <img src="assets/images/ss-collapsible-icon.webp" alt="SS Collapsible" />
+          <span>SS Collapsible</span>
+        </div>
       </div>
-      </model-viewer>
     </div>
 
-    <a class="lightbox-close" href="#" onclick="javascript:window.close()"></a>
-    <div class="icon-360">
-      <img src="../global assets/Images/commonThings/360-icon-black.webp" alt="">
-    </div>
-
-  </div>
-  <!-- ==================================1500 ml Square Bucket end============================================================================== -->
-  <!-- ================================2 ltr ghee square bucket start========================================================== -->
-
-  <div class="lightbox-target" id="2-ltr-ghee-square-bucket">
-    <div class="position-relative bg-[#bdbdbd] " style="background-color: #bdbdbd;">
-
-      <img src="./assets/images/logo.svg" alt="logo" class="logo-360-page">
-      <h2 class="product-name">2 ltr Ghee Square Bucket</h2>
-
-      <model-viewer src="./assets/models/IML-Square-Bucket/2-ltr-ghee.glb" ar-modes="webxr scene-viewer quick-look"
-        camera-controls tone-mapping="neutral" poster="poster.webp" shadow-intensity="1"
-        camera-orbit="-25.27deg 80.38deg 0.5287m" field-of-view="30deg" min-camera-orbit="auto auto 0.65m"
-        max-camera-orbit="auto auto 0.65m"
-        min-field-of-view="20.26deg" disable-pan disable-tap></model-viewer>
-      <div class="progress-bar hide" slot="progress-bar">
-        <div class="update-bar"></div>
+    <!-- ABS Rail Color Option Section -->
+    <div class="config-section" id="abs-rail-color-section" style="display: none;">
+      <div class="config-section-subtitle" style="margin-top: 0;">ABS Rail Color Option</div>
+      <div class="color-row" id="abs-rail-color-row">
+        <button class="color-swatch abs-rail-color" data-color="#6F4E37" style="background-color: #6F4E37; color: #FFFFFF;" title="Coffee Brown">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+        </button>
+        <button class="color-swatch abs-rail-color" data-color="#4E342E" style="background-color: #4E342E; color: #FFFFFF;" title="Chocolate Brown">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+        </button>
+        <button class="color-swatch abs-rail-color" data-color="#5BC0EB" style="background-color: #5BC0EB; color: #1E293B;" title="Light Blue">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+        </button>
+        <button class="color-swatch abs-rail-color active" data-color="#0056A6" style="background-color: #0056A6; color: #FFFFFF;" title="Dark Blue">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+        </button>
+        <button class="color-swatch abs-rail-color" data-color="#009A44" style="background-color: #009A44; color: #FFFFFF;" title="Reliance Green">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+        </button>
+        <button class="color-swatch abs-rail-color" data-color="#B8D8A3" style="background-color: #B8D8A3; color: #1E293B;" title="Pista Green">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+        </button>
+        <button class="color-swatch abs-rail-color" data-color="#50C878" style="background-color: #50C878; color: #FFFFFF;" title="Parrot Green">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+        </button>
+        <button class="color-swatch abs-rail-color" data-color="#A7A9AC" style="background-color: #A7A9AC; color: #1E293B;" title="DA Grey">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+        </button>
+        <button class="color-swatch abs-rail-color" data-color="#4A4F54" style="background-color: #4A4F54; color: #FFFFFF;" title="Basalt Grey">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+        </button>
+        <button class="color-swatch abs-rail-color" data-color="#F57C00" style="background-color: #F57C00; color: #FFFFFF;" title="Orange">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+        </button>
+        <button class="color-swatch abs-rail-color" data-color="#FFD400" style="background-color: #FFD400; color: #1E293B;" title="Lemon Yellow">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+        </button>
+        <button class="color-swatch abs-rail-color" data-color="#000000" style="background-color: #000000; color: #FFFFFF;" title="Black">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+        </button>
+        <button class="color-swatch abs-rail-color" data-color="#6A1B9A" style="background-color: #6A1B9A; color: #FFFFFF;" title="Violet">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+        </button>
+        <button class="color-swatch abs-rail-color" data-color="#E8DCC5" style="background-color: #E8DCC5; color: #1E293B;" title="Beige">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+        </button>
       </div>
-      </model-viewer>
     </div>
 
-    <a class="lightbox-close" href="#" onclick="javascript:window.close()"></a>
-    <div class="icon-360">
-      <img src="../global assets/Images/commonThings/360-icon-black.webp" alt="">
-    </div>
-
-  </div>
-  <!-- ==================================2 ltr ghee square bucket end============================================================================== -->
-
-
-  <!-- ================================2000 ml square bucket start========================================================== -->
-
-  <div class="lightbox-target" id="2000-ml-square-bucket">
-    <div class="position-relative bg-[#bdbdbd] " style="background-color: #bdbdbd;">
-
-      <img src="./assets/images/logo.svg" alt="logo" class="logo-360-page">
-      <h2 class="product-name">2000 ml Square Bucket</h2>
-
-      <model-viewer src="./assets/models/IML-Square-Bucket/2000ml.glb" ar-modes="webxr scene-viewer quick-look"
-        camera-controls tone-mapping="neutral" poster="poster.webp" shadow-intensity="1"
-        camera-orbit="-35.94deg 83.4deg 0.4912m" field-of-view="30deg" min-camera-orbit="auto auto 0.6m"
-        max-camera-orbit="auto auto 0.6m"
-        min-field-of-view="20.26deg" disable-pan disable-tap></model-viewer>
-      <div class="progress-bar hide" slot="progress-bar">
-        <div class="update-bar"></div>
+    <!-- D. Mattress Type -->
+    <div class="config-section" id="config-section-mattress">
+      <div class="config-section-title">D. Mattress Type</div>
+      <div class="radio-group">
+        <label class="radio-option">
+          <input type="radio" name="mattress" value="zip" checked />
+          <span class="radio-custom"></span>
+          Zip Type
+        </label>
+        <label class="radio-option">
+          <input type="radio" name="mattress" value="plain" />
+          <span class="radio-custom"></span>
+          Plain
+        </label>
       </div>
-      </model-viewer>
-    </div>
-
-    <a class="lightbox-close" href="#" onclick="javascript:window.close()"></a>
-    <div class="icon-360">
-      <img src="../global assets/Images/commonThings/360-icon-black.webp" alt="">
-    </div>
-
-  </div>
-  <!-- ==================================2000 ml Square Bucket end============================================================================== -->
-  <!-- ================================4500 ml square bucket start========================================================== -->
-
-  <div class="lightbox-target" id="4500-ml-square-bucket">
-    <div class="position-relative bg-[#bdbdbd] " style="background-color: #bdbdbd;">
-
-      <img src="./assets/images/logo.svg" alt="logo" class="logo-360-page">
-      <h2 class="product-name">T4500 ml Square Bucket</h2>
-
-      <model-viewer src="./assets/models/IML-Square-Bucket/4500ml.glb" ar-modes="webxr scene-viewer quick-look"
-        camera-controls tone-mapping="neutral" poster="poster.webp" shadow-intensity="1"
-        camera-orbit="2127deg 77.22deg 0.6909m" field-of-view="30deg" min-camera-orbit="auto auto 0.7m"
-        max-camera-orbit="auto auto 0.7m"
-        min-field-of-view="20.26deg" disable-pan disable-tap></model-viewer>
-      <div class="progress-bar hide" slot="progress-bar">
-        <div class="update-bar"></div>
+      <div class="config-section-subtitle">Mattress Color Option</div>
+      <div class="color-row" id="mattress-color-row">
+        <button class="color-swatch mattress-color active" data-color="#6F4E37" style="background-color: #6F4E37; color: #FFFFFF;" title="#6F4E37">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+        </button>
+        <button class="color-swatch mattress-color" data-color="#4E342E" style="background-color: #4E342E; color: #FFFFFF;" title="#4E342E">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+        </button>
+        <button class="color-swatch mattress-color" data-color="#5BC0EB" style="background-color: #5BC0EB; color: #1E293B;" title="#5BC0EB">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+        </button>
+        <button class="color-swatch mattress-color" data-color="#0056A6" style="background-color: #0056A6; color: #FFFFFF;" title="#0056A6">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+        </button>
+        <button class="color-swatch mattress-color" data-color="#009A44" style="background-color: #009A44; color: #FFFFFF;" title="#009A44">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+        </button>
+        <button class="color-swatch mattress-color" data-color="#B8D8A3" style="background-color: #B8D8A3; color: #1E293B;" title="#B8D8A3">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+        </button>
+        <button class="color-swatch mattress-color" data-color="#50C878" style="background-color: #50C878; color: #FFFFFF;" title="#50C878">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+        </button>
+        <button class="color-swatch mattress-color" data-color="#A7A9AC" style="background-color: #A7A9AC; color: #1E293B;" title="#A7A9AC">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+        </button>
+        <button class="color-swatch mattress-color" data-color="#4A4F54" style="background-color: #4A4F54; color: #FFFFFF;" title="#4A4F54">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+        </button>
+        <button class="color-swatch mattress-color" data-color="#F57C00" style="background-color: #F57C00; color: #FFFFFF;" title="#F57C00">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+        </button>
+        <button class="color-swatch mattress-color" data-color="#FFD400" style="background-color: #FFD400; color: #1E293B;" title="#FFD400">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+        </button>
+        <button class="color-swatch mattress-color" data-color="#000000" style="background-color: #000000; color: #FFFFFF;" title="#000000">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+        </button>
+        <button class="color-swatch mattress-color" data-color="#6A1B9A" style="background-color: #6A1B9A; color: #FFFFFF;" title="#6A1B9A">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+        </button>
+        <button class="color-swatch mattress-color" data-color="#E8DCC5" style="background-color: #E8DCC5; color: #1E293B;" title="#E8DCC5">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+        </button>
       </div>
-      </model-viewer>
     </div>
 
-    <a class="lightbox-close" href="#" onclick="javascript:window.close()"></a>
-    <div class="icon-360">
-      <img src="../global assets/Images/commonThings/360-icon-black.webp" alt="">
-    </div>
-
-  </div>
-  <!-- ==================================4500 ml Square Bucket end============================================================================== -->
-
-
-  <!-- ================================5 ltr ghee square bucket start========================================================== -->
-
-  <div class="lightbox-target" id="5-ltr-ghee-square-bucket">
-    <div class="position-relative bg-[#bdbdbd] " style="background-color: #bdbdbd;">
-
-      <img src="./assets/images/logo.svg" alt="logo" class="logo-360-page">
-      <h2 class="product-name">5 ltr Ghee Square Bucket</h2>
-
-      <model-viewer src="./assets/models/IML-Square-Bucket/5-ltr-ghee.glb" ar-modes="webxr scene-viewer quick-look"
-        camera-controls tone-mapping="neutral" poster="poster.webp" shadow-intensity="1"
-        camera-orbit="2127deg 77.22deg 0.7198m" field-of-view="30deg" min-camera-orbit="auto auto 0.75m"
-        max-camera-orbit="auto auto 0.75m"
-        min-field-of-view="20.26deg" disable-pan disable-tap></model-viewer>
-      <div class="progress-bar hide" slot="progress-bar">
-        <div class="update-bar"></div>
+    <!-- Couch Cabinet Color Option Section -->
+    <div class="config-section" id="couch-cabinet-color-section" style="display: none;">
+      <div class="config-section-subtitle" style="margin-top: 0;">Cabinet Color Option</div>
+      <div class="color-row" id="couch-cabinet-color-row">
+        <button class="color-swatch couch-cabinet-color" data-color="#6F4E37" style="background-color: #6F4E37; color: #FFFFFF;" title="Coffee Brown">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+        </button>
+        <button class="color-swatch couch-cabinet-color" data-color="#4E342E" style="background-color: #4E342E; color: #FFFFFF;" title="Chocolate Brown">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+        </button>
+        <button class="color-swatch couch-cabinet-color" data-color="#5BC0EB" style="background-color: #5BC0EB; color: #1E293B;" title="Light Blue">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+        </button>
+        <button class="color-swatch couch-cabinet-color" data-color="#0056A6" style="background-color: #0056A6; color: #FFFFFF;" title="Dark Blue">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+        </button>
+        <button class="color-swatch couch-cabinet-color" data-color="#009A44" style="background-color: #009A44; color: #FFFFFF;" title="Reliance Green">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+        </button>
+        <button class="color-swatch couch-cabinet-color" data-color="#B8D8A3" style="background-color: #B8D8A3; color: #1E293B;" title="Pista Green">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+        </button>
+        <button class="color-swatch couch-cabinet-color" data-color="#50C878" style="background-color: #50C878; color: #FFFFFF;" title="Parrot Green">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+        </button>
+        <button class="color-swatch couch-cabinet-color" data-color="#A7A9AC" style="background-color: #A7A9AC; color: #1E293B;" title="DA Grey">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+        </button>
+        <button class="color-swatch couch-cabinet-color" data-color="#4A4F54" style="background-color: #4A4F54; color: #FFFFFF;" title="Basalt Grey">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+        </button>
+        <button class="color-swatch couch-cabinet-color" data-color="#F57C00" style="background-color: #F57C00; color: #FFFFFF;" title="Orange">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+        </button>
+        <button class="color-swatch couch-cabinet-color" data-color="#FFD400" style="background-color: #FFD400; color: #1E293B;" title="Lemon Yellow">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+        </button>
+        <button class="color-swatch couch-cabinet-color" data-color="#000000" style="background-color: #000000; color: #FFFFFF;" title="Black">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+        </button>
+        <button class="color-swatch couch-cabinet-color" data-color="#6A1B9A" style="background-color: #6A1B9A; color: #FFFFFF;" title="Violet">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+        </button>
+        <button class="color-swatch couch-cabinet-color active" data-color="#E8DCC5" style="background-color: #E8DCC5; color: #1E293B;" title="Beige">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+        </button>
       </div>
-      </model-viewer>
     </div>
 
-    <a class="lightbox-close" href="#" onclick="javascript:window.close()"></a>
-    <div class="icon-360">
-      <img src="../global assets/Images/commonThings/360-icon-black.webp" alt="">
-    </div>
-
-  </div>
-  <!-- ==================================5 ltr ghee square bucket end============================================================================== -->
-
-
-  <!-- ****************Square Bucket End************************  -->
-
-
-
-
-
-
-  <!-- ****************Ice Cream round Container Start************************  -->
-
-  <!-- ================================100 ml Ice Cream round Container start========================================================== -->
-
-  <div class="lightbox-target" id="100-ml-ice-cream-round-container">
-    <div class="position-relative bg-[#bdbdbd] " style="background-color: #bdbdbd;">
-
-      <img src="./assets/images/logo.svg" alt="logo" class="logo-360-page">
-      <h2 class="product-name">100 ml Ice Cream Round Container</h2>
-
-      <model-viewer src="./assets/models/IML-Ice-cream-round/100ml-Ice-cream-round.glb"
-        ar-modes="webxr scene-viewer quick-look" camera-controls tone-mapping="neutral" poster="poster.webp"
-        shadow-intensity="1" camera-orbit="743.6deg 77.81deg 0.1697m" field-of-view="30deg"
-        min-camera-orbit="auto auto 0.25m" max-camera-orbit="auto auto 0.25m" min-field-of-view="20.26deg" disable-pan
-        disable-tap></model-viewer>
-      <div class="progress-bar hide" slot="progress-bar">
-        <div class="update-bar"></div>
+    <!-- Couch Drawer Color Option Section -->
+    <div class="config-section" id="couch-drawer-color-section" style="display: none;">
+      <div class="config-section-subtitle" style="margin-top: 0;">Drawer Color Option</div>
+      <div class="color-row" id="couch-drawer-color-row">
+        <button class="color-swatch couch-drawer-color" data-color="#6F4E37" style="background-color: #6F4E37; color: #FFFFFF;" title="Coffee Brown">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+        </button>
+        <button class="color-swatch couch-drawer-color" data-color="#4E342E" style="background-color: #4E342E; color: #FFFFFF;" title="Chocolate Brown">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+        </button>
+        <button class="color-swatch couch-drawer-color" data-color="#5BC0EB" style="background-color: #5BC0EB; color: #1E293B;" title="Light Blue">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+        </button>
+        <button class="color-swatch couch-drawer-color" data-color="#0056A6" style="background-color: #0056A6; color: #FFFFFF;" title="Dark Blue">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+        </button>
+        <button class="color-swatch couch-drawer-color" data-color="#009A44" style="background-color: #009A44; color: #FFFFFF;" title="Reliance Green">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+        </button>
+        <button class="color-swatch couch-drawer-color" data-color="#B8D8A3" style="background-color: #B8D8A3; color: #1E293B;" title="Pista Green">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+        </button>
+        <button class="color-swatch couch-drawer-color" data-color="#50C878" style="background-color: #50C878; color: #FFFFFF;" title="Parrot Green">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+        </button>
+        <button class="color-swatch couch-drawer-color active" data-color="#A7A9AC" style="background-color: #A7A9AC; color: #1E293B;" title="DA Grey">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+        </button>
+        <button class="color-swatch couch-drawer-color" data-color="#4A4F54" style="background-color: #4A4F54; color: #FFFFFF;" title="Basalt Grey">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+        </button>
+        <button class="color-swatch couch-drawer-color" data-color="#F57C00" style="background-color: #F57C00; color: #FFFFFF;" title="Orange">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+        </button>
+        <button class="color-swatch couch-drawer-color" data-color="#FFD400" style="background-color: #FFD400; color: #1E293B;" title="Lemon Yellow">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+        </button>
+        <button class="color-swatch couch-drawer-color" data-color="#000000" style="background-color: #000000; color: #FFFFFF;" title="Black">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+        </button>
+        <button class="color-swatch couch-drawer-color" data-color="#6A1B9A" style="background-color: #6A1B9A; color: #FFFFFF;" title="Violet">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+        </button>
+        <button class="color-swatch couch-drawer-color" data-color="#E8DCC5" style="background-color: #E8DCC5; color: #1E293B;" title="Beige">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+        </button>
       </div>
-      </model-viewer>
     </div>
 
-    <a class="lightbox-close" href="#" onclick="javascript:window.close()"></a>
-    <div class="icon-360">
-      <img src="../global assets/Images/commonThings/360-icon-black.webp" alt="">
-    </div>
-
-  </div>
-  <!-- ==================================100 ml Ice Cream round Container end============================================================================== -->
-
-    <!-- ================================100 ml false bottom Ice Cream round Container start========================================================== -->
-
-  <div class="lightbox-target" id="100-ml-false-bottom-ice-cream-round-container">
-    <div class="position-relative bg-[#bdbdbd] " style="background-color: #bdbdbd;">
-
-      <img src="./assets/images/logo.svg" alt="logo" class="logo-360-page">
-      <h2 class="product-name">100 ml False Bottom Ice Cream Round Container</h2>
-
-      <model-viewer src="./assets/models/IML-Ice-cream-round/100ml-false-bottom-Ice-cream-round.glb"
-        ar-modes="webxr scene-viewer quick-look" camera-controls tone-mapping="neutral" poster="poster.webp"
-        shadow-intensity="1" camera-orbit="31.45deg 73.32deg 0.1967m" field-of-view="30deg"
-        min-camera-orbit="auto auto 0.25m" max-camera-orbit="auto auto 0.25m" min-field-of-view="20.26deg" disable-pan
-        disable-tap></model-viewer>
-      <div class="progress-bar hide" slot="progress-bar">
-        <div class="update-bar"></div>
+    <!-- E. Wheel Type -->
+    <div class="config-section" id="config-section-wheel">
+      <div class="config-section-title">E. Wheel Type</div>
+      <div class="radio-group">
+        <label class="radio-option">
+          <input type="radio" name="wheel" value="without" checked />
+          <span class="radio-custom"></span>
+          Without Wheel
+        </label>
+        <label class="radio-option">
+          <input type="radio" name="wheel" value="wheel" />
+          <span class="radio-custom"></span>
+          With Wheel
+        </label>
       </div>
-      </model-viewer>
     </div>
 
-    <a class="lightbox-close" href="#" onclick="javascript:window.close()"></a>
-    <div class="icon-360">
-      <img src="../global assets/Images/commonThings/360-icon-black.webp" alt="">
-    </div>
+  </aside>
 
-  </div>
-  <!-- ==================================100 ml false bottom Ice Cream round Container end============================================================================== -->
 
-  <!-- ================================115 ml Ice Cream round Container start========================================================== -->
 
-  <div class="lightbox-target" id="115-ml-ice-cream-round-container">
-    <div class="position-relative bg-[#bdbdbd] " style="background-color: #bdbdbd;">
+  <!-- Canvas Wrap -->
+  <div id="canvas-wrap">
+    <model-viewer id="three-canvas" alt="Mathurams 3D Product" camera-controls touch-action="none" shadow-intensity="1" disable-tap disable-pan></model-viewer>
 
-      <img src="./assets/images/logo.svg" alt="logo" class="logo-360-page">
-      <h2 class="product-name">115 ml Ice Cream Round Container</h2>
-
-      <model-viewer src="./assets/models/IML-Ice-cream-round/115ml-Ice-cream-round.glb"
-        ar-modes="webxr scene-viewer quick-look" camera-controls tone-mapping="neutral" poster="poster.webp"
-        shadow-intensity="1" camera-orbit="225.2deg 77.25deg 0.181m" field-of-view="30deg"
-        min-camera-orbit="auto auto 0.25m" max-camera-orbit="auto auto 0.25m" min-field-of-view="20.26deg" disable-pan
-        disable-tap></model-viewer>
-      <div class="progress-bar hide" slot="progress-bar">
-        <div class="update-bar"></div>
+    <!-- Auto Rotate Switch in Top Right -->
+    <div id="auto-rotate-card">
+      <div class="auto-rotate-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l.73-.73" stroke-linecap="round" stroke-linejoin="round"/>
+          <text x="12" y="15.5" font-family="'Inter', sans-serif" font-size="9.5" font-weight="100" fill="currentColor" text-anchor="middle">A</text>
+        </svg>
       </div>
-      </model-viewer>
+      <span class="auto-rotate-label">Auto Rotate</span>
+      <label class="auto-rotate-toggle">
+        <input type="checkbox" id="auto-rotate-toggle-cb" checked />
+        <span class="auto-rotate-slider"></span>
+      </label>
     </div>
-
-    <a class="lightbox-close" href="#" onclick="javascript:window.close()"></a>
-    <div class="icon-360">
-      <img src="../global assets/Images/commonThings/360-icon-black.webp" alt="">
-    </div>
-
-  </div>
-  <!-- ==================================115 ml Ice Cream round Container end============================================================================== -->
-
-
-  <!-- ================================125 ml Ice Cream round Container start========================================================== -->
-
-  <div class="lightbox-target" id="125-ml-ice-cream-round-container">
-    <div class="position-relative bg-[#bdbdbd] " style="background-color: #bdbdbd;">
-
-      <img src="./assets/images/logo.svg" alt="logo" class="logo-360-page">
-      <h2 class="product-name">125 ml Ice Cream Round Container</h2>
-
-      <model-viewer src="./assets/models/IML-Ice-cream-round/125ml-Ice-cream-round.glb"
-        ar-modes="webxr scene-viewer quick-look" camera-controls tone-mapping="neutral" poster="poster.webp"
-        shadow-intensity="1" camera-orbit="0.000337deg 70.51deg 0.2009m" field-of-view="30deg"
-        min-camera-orbit="auto auto 0.25m" max-camera-orbit="auto auto 0.25m" min-field-of-view="20.26deg" disable-pan
-        disable-tap></model-viewer>
-      <div class="progress-bar hide" slot="progress-bar">
-        <div class="update-bar"></div>
+    
+    <!-- Pan Model Switch in Top Right -->
+    <div id="pan-model-card">
+      <div class="pan-model-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
       </div>
-      </model-viewer>
+      <span class="pan-model-label">Pan Model</span>
+      <label class="pan-model-toggle">
+        <input type="checkbox" id="pan-model-toggle-cb" />
+        <span class="pan-model-slider"></span>
+      </label>
     </div>
 
-    <a class="lightbox-close" href="#" onclick="javascript:window.close()"></a>
-    <div class="icon-360">
-      <img src="../global assets/Images/commonThings/360-icon-black.webp" alt="">
-    </div>
-
-  </div>
-  <!-- ==================================125 ml Ice Cream round Container end============================================================================== -->
-
-
-     <!-- ================================125 ml false bottom Ice Cream round Container start========================================================== -->
-
-  <div class="lightbox-target" id="125-ml-false-bottom-ice-cream-round-container">
-    <div class="position-relative bg-[#bdbdbd] " style="background-color: #bdbdbd;">
-
-      <img src="./assets/images/logo.svg" alt="logo" class="logo-360-page">
-      <h2 class="product-name">125 ml False Bottom Ice Cream Round Container</h2>
-
-      <model-viewer src="./assets/models/IML-Ice-cream-round/125ml-false-bottom-Ice-cream-round.glb"
-        ar-modes="webxr scene-viewer quick-look" camera-controls tone-mapping="neutral" poster="poster.webp"
-        shadow-intensity="1" camera-orbit="29.2deg 72.2deg 0.2008m" field-of-view="30deg"
-        min-camera-orbit="auto auto 0.25m" max-camera-orbit="auto auto 0.25m" min-field-of-view="20.26deg" disable-pan
-        disable-tap></model-viewer>
-      <div class="progress-bar hide" slot="progress-bar">
-        <div class="update-bar"></div>
+    <!-- Drop zone overlay -->
+    <div id="drop-zone">
+      <div class="drop-ring">
+        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#EA580C" stroke-width="1.5">
+          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+          <polyline points="17 8 12 3 7 8"/>
+          <line x1="12" y1="3" x2="12" y2="15"/>
+        </svg>
       </div>
-      </model-viewer>
+      <p>Drop model file</p>
+      <small>Release to load</small>
     </div>
 
-    <a class="lightbox-close" href="#" onclick="javascript:window.close()"></a>
-    <div class="icon-360">
-      <img src="../global assets/Images/commonThings/360-icon-black.webp" alt="">
+    <!-- Loading -->
+    <div id="loading">
+      <div class="spinner"></div>
+      <p>Loading <span id="loading-name">model</span>...</p>
     </div>
 
-  </div>
-  <!-- ==================================125 ml false bottom Ice Cream round Container end============================================================================== -->
+    <!-- Model info badge -->
+    <div id="info-badge">
+      <div><strong id="badge-name">&mdash;</strong></div>
+      <div id="badge-stats"></div>
+    </div>
 
-
-
-  <!-- ****************Ice Cream round Container End************************  -->
-
-
-
-
-
-
-
-  <!-- ****************Sweet box 16 container start************************  -->
-
-  <!-- ================================Sweetbox 16 250  start========================================================== -->
-
-  <div class="lightbox-target" id="SB-16-250">
-    <div class="position-relative bg-[#bdbdbd] " style="background-color: #bdbdbd;">
-
-      <img src="./assets/images/logo.svg" alt="logo" class="logo-360-page">
-      <h2 class="product-name">SB-16-250 G</h2>
-
-      <model-viewer src="./assets/models/IML-Sweetbox/250/SB-16-250.glb" ar-modes="webxr scene-viewer quick-look"
-        camera-controls tone-mapping="neutral" poster="poster.webp" shadow-intensity="1"
-        camera-orbit="-19.1deg 57.59deg 0.379m" field-of-view="30deg" min-camera-orbit="auto auto 0.45m" max-camera-orbit="auto auto 0.45m"
-        min-field-of-view="20.26deg" disable-pan disable-tap></model-viewer>
-      <div class="progress-bar hide" slot="progress-bar">
-        <div class="update-bar"></div>
+    <!-- HUD buttons -->
+    <div id="hud">
+      <button class="hud-btn" id="reset-cam-btn" title="Reset camera">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/>
+          <path d="M3 3v5h5"/>
+        </svg>
+      </button>
+      <button class="hud-btn" id="wireframe-btn" title="Toggle wireframe">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <polygon points="12 2 22 8.5 22 15.5 12 22 2 15.5 2 8.5 12 2"/>
+        </svg>
+      </button>
+      <button class="hud-btn active" id="grid-btn" title="Toggle floor">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+          <line x1="3" y1="15" x2="21" y2="15"/>
+        </svg>
+      </button>
+      <div class="hud-btn-container" style="position: relative; display: inline-block;">
+        <button class="hud-btn" id="bg-palette-btn" title="Background color">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"/>
+            <circle cx="12" cy="12" r="6" fill="currentColor"/>
+          </svg>
+        </button>
+        <div class="bg-palette-popover" id="bg-palette-popover">
+          <div class="custom-color-picker-container">
+            <div class="color-map-wrapper">
+              <canvas id="color-map" width="180" height="120"></canvas>
+              <div id="color-map-cursor"></div>
+            </div>
+            <div class="hue-bar-wrapper">
+              <input type="range" id="hue-slider" min="0" max="360" value="230" />
+            </div>
+            <div class="color-preview-row">
+              <div id="color-preview-swatch"></div>
+              <input type="text" id="color-hex-input" value="#424357" readonly />
+            </div>
+          </div>
+        </div>
       </div>
-      </model-viewer>
+      <button class="hud-btn" id="bg-btn" title="Cycle background">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="5"/>
+          <line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/>
+          <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+          <line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/>
+          <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+        </svg>
+      </button>
+      <button class="hud-btn" id="fullscreen-btn" title="Toggle Fullscreen">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
     </div>
 
-    <a class="lightbox-close" href="#" onclick="javascript:window.close()"></a>
-    <div class="icon-360">
-      <img src="../global assets/Images/commonThings/360-icon-black.webp" alt="">
-    </div>
-
+    <div id="axes-label">X &middot; Y &middot; Z</div>
+    <div id="toast"></div>
   </div>
-  <!-- ==================================Sweetbox 16 250 end============================================================================== -->
 
-
-  <!-- ================================Sweetbox 16 500 start========================================================== -->
-
-  <div class="lightbox-target" id="SB-16-500">
-    <div class="position-relative bg-[#bdbdbd] " style="background-color: #bdbdbd;">
-
-      <img src="./assets/images/logo.svg" alt="logo" class="logo-360-page">
-      <h2 class="product-name">SB-16-500 G</h2>
-
-      <model-viewer src="./assets/models/IML-Sweetbox/500/SB-16-500.glb" ar-modes="webxr scene-viewer quick-look"
-        camera-controls exposure="1" tone-mapping="neutral" poster="poster.webp" shadow-intensity="1"
-        camera-orbit="-25.83deg 60.4deg 0.4924m" field-of-view="30deg" min-camera-orbit="auto auto 0.54m" max-camera-orbit="auto auto 0.54m"
-        min-field-of-view="20.26deg" disable-pan disable-tap></model-viewer>
-      <div class="progress-bar hide" slot="progress-bar">
-        <div class="update-bar"></div>
+  <!-- Homescreen Selector -->
+  <main id="homescreen">
+    <div class="homescreen-hero">
+      <h1>Sri Mathurams Medical Engineering</h1>
+      <p>Select a product model to begin customisation or 3D viewing</p>
+    </div>
+    
+    <div class="product-grid-section">
+      <h2 class="section-heading">Customisation Models</h2>
+      <div class="product-grid">
+        <a href="#fowler-cot" class="product-card">
+          <div class="product-card-preview">
+            <model-viewer src="assets/models/customisation-models/fowler-cot/3d_model.glb" loading="lazy" auto-rotate rotation-per-second="12deg" interaction-prompt="none" shadow-intensity="0.5" shadow-softness="0.8" style="width:100%; height:100%; pointer-events:none;"></model-viewer>
+          </div>
+          <h3>Fowler Cot</h3>
+          <p>Customise head & foot panel, rails, wheels, and operation modes</p>
+        </a>
+        <a href="#icu" class="product-card">
+          <div class="product-card-preview">
+            <model-viewer src="assets/models/customisation-models/icu-cot/3d_model.glb" loading="lazy" auto-rotate rotation-per-second="12deg" interaction-prompt="none" shadow-intensity="0.5" shadow-softness="0.8" style="width:100%; height:100%; pointer-events:none;"></model-viewer>
+          </div>
+          <h3>ICU Cot</h3>
+          <p>Full 3D customisation with dynamic part replacement</p>
+        </a>
+        <a href="#labor-cot" class="product-card">
+          <div class="product-card-preview">
+            <model-viewer src="assets/models/customisation-models/labor-cot/3d_model.glb" loading="lazy" auto-rotate rotation-per-second="12deg" interaction-prompt="none" shadow-intensity="0.5" shadow-softness="0.8" style="width:100%; height:100%; pointer-events:none;"></model-viewer>
+          </div>
+          <h3>Labor Cot</h3>
+          <p>Explore medical delivery beds options</p>
+        </a>
+        <a href="#hi-lo" class="product-card">
+          <div class="product-card-preview">
+            <model-viewer src="assets/models/customisation-models/hi-lo-stretcher/3d_model.glb" loading="lazy" auto-rotate rotation-per-second="12deg" interaction-prompt="none" shadow-intensity="0.5" shadow-softness="0.8" style="width:100%; height:100%; pointer-events:none;"></model-viewer>
+          </div>
+          <h3>Hi-Lo Stretcher</h3>
+          <p>Interactive configurator for patient transfer stretchers</p>
+        </a>
+        <a href="#couch" class="product-card">
+          <div class="product-card-preview">
+            <model-viewer src="assets/models/customisation-models/deluxe-examination-couch/3d_model.glb" loading="lazy" auto-rotate rotation-per-second="12deg" interaction-prompt="none" shadow-intensity="0.5" shadow-softness="0.8" style="width:100%; height:100%; pointer-events:none;"></model-viewer>
+          </div>
+          <h3>Deluxe Examination Couch</h3>
+          <p>Customise cabinet and drawer colors</p>
+        </a>
       </div>
-      </model-viewer>
-
-
     </div>
 
-    <a class="lightbox-close" href="#" onclick="javascript:window.close()"></a>
-    <div class="icon-360">
-      <img src="../global assets/Images/commonThings/360-icon-black.webp" alt="">
-    </div>
-
-  </div>
-  <!-- ==================================Sweetbox 16 500 end============================================================================== -->
-
-
-  <!-- ================================Sweetbox 16 1000 start========================================================== -->
-
-  <div class="lightbox-target" id="SB-16-1000">
-    <div class="position-relative bg-[#bdbdbd] " style="background-color: #bdbdbd;">
-
-      <img src="./assets/images/logo.svg" alt="logo" class="logo-360-page">
-  <h2 class="product-name">SB-16-1000 G</h2>
-
-      <model-viewer src="./assets/models/IML-Sweetbox/1000/SB-16-1000.glb" ar-modes="webxr scene-viewer quick-look"
-        camera-controls tone-mapping="neutral" poster="poster.webp" shadow-intensity="1"
-        camera-orbit="-20.78deg 57.85deg 0.6048m" field-of-view="30deg" min-camera-orbit="auto auto 0.61m" max-camera-orbit="auto auto 0.61m"
-        min-field-of-view="20.26deg" disable-pan disable-tap></model-viewer>
-      <div class="progress-bar hide" slot="progress-bar">
-        <div class="update-bar"></div>
+    <div class="product-grid-section">
+      <h2 class="section-heading">View-Only Models</h2>
+      <div class="product-grid">
+        <a href="#semi-fowler" class="product-card view-only-card">
+          <div class="product-card-preview">
+            <model-viewer src="assets/models/view-only-models/semi-fowler-cot.glb" loading="lazy" auto-rotate rotation-per-second="12deg" interaction-prompt="none" shadow-intensity="0.5" shadow-softness="0.8" style="width:100%; height:100%; pointer-events:none;"></model-viewer>
+          </div>
+          <h3>Semi Fowler Cot</h3>
+          <p>3D visual representation</p>
+        </a>
+        <a href="#over-bed-table" class="product-card view-only-card">
+          <div class="product-card-preview">
+            <model-viewer src="assets/models/view-only-models/over-bed-table.glb" loading="lazy" auto-rotate rotation-per-second="12deg" interaction-prompt="none" shadow-intensity="0.5" shadow-softness="0.8" style="width:100%; height:100%; pointer-events:none;"></model-viewer>
+          </div>
+          <h3>Over Bed Table</h3>
+          <p>3D visual representation</p>
+        </a>
+        <a href="#attender-cot-deluxe" class="product-card view-only-card">
+          <div class="product-card-preview">
+            <model-viewer src="assets/models/view-only-models/attender-cot/attender-cot-deluxe.glb" loading="lazy" auto-rotate rotation-per-second="12deg" interaction-prompt="none" shadow-intensity="0.5" shadow-softness="0.8" style="width:100%; height:100%; pointer-events:none;"></model-viewer>
+          </div>
+          <h3>Attender Cot Deluxe</h3>
+          <p>3D visual representation</p>
+        </a>
+        <a href="#attender-cot" class="product-card view-only-card">
+          <div class="product-card-preview">
+            <model-viewer src="assets/models/view-only-models/attender-cot/attender-cot.glb" loading="lazy" auto-rotate rotation-per-second="12deg" interaction-prompt="none" shadow-intensity="0.5" shadow-softness="0.8" style="width:100%; height:100%; pointer-events:none;"></model-viewer>
+          </div>
+          <h3>Attender Cot Plain</h3>
+          <p>3D visual representation</p>
+        </a>
+        <a href="#bedside-locker-deluxe" class="product-card view-only-card">
+          <div class="product-card-preview">
+            <model-viewer src="assets/models/view-only-models/bedside-locker/bedside-locker-deluxe.glb" loading="lazy" auto-rotate rotation-per-second="12deg" interaction-prompt="none" shadow-intensity="0.5" shadow-softness="0.8" style="width:100%; height:100%; pointer-events:none;"></model-viewer>
+          </div>
+          <h3>Bed Sidelocker Deluxe Wood</h3>
+          <p>3D visual representation</p>
+        </a>
+        <a href="#bedside-locker" class="product-card view-only-card">
+          <div class="product-card-preview">
+            <model-viewer src="assets/models/view-only-models/bedside-locker/bedside-locker.glb" loading="lazy" auto-rotate rotation-per-second="12deg" interaction-prompt="none" shadow-intensity="0.5" shadow-softness="0.8" style="width:100%; height:100%; pointer-events:none;"></model-viewer>
+          </div>
+          <h3>Bedside Locker Plain</h3>
+          <p>3D visual representation</p>
+        </a>
       </div>
-      </model-viewer>
     </div>
-
-    <a class="lightbox-close" href="#" onclick="javascript:window.close()"></a>
-    <div class="icon-360">
-      <img src="../global assets/Images/commonThings/360-icon-black.webp" alt="">
-    </div>
-
-  </div>
-  <!-- ==================================Sweetbox 16 1000 end============================================================================== -->
-
-  <!-- ================================Sweetbox 16 250 5 side  start========================================================== -->
-
-  <div class="lightbox-target" id="SB-16-250-5side">
-    <div class="position-relative bg-[#bdbdbd] " style="background-color: #bdbdbd;">
-
-      <img src="./assets/images/logo.svg" alt="logo" class="logo-360-page">
-  <h2 class="product-name">SB-16-250 5 side</h2>
-  
-      <model-viewer src="./assets/models/IML-Sweetbox/250/SB-16-250-5side.glb" ar-modes="webxr scene-viewer quick-look"
-        camera-controls tone-mapping="neutral" poster="poster.webp" shadow-intensity="1"
-        camera-orbit="-19.1deg 57.59deg 0.379m" field-of-view="30deg" min-camera-orbit="auto auto 0.45m" max-camera-orbit="auto auto 0.45m"
-        min-field-of-view="20.26deg" disable-pan disable-tap></model-viewer>
-      <div class="progress-bar hide" slot="progress-bar">
-        <div class="update-bar"></div>
-      </div>
-      </model-viewer>
-    </div>
-
-    <a class="lightbox-close" href="#" onclick="javascript:window.close()"></a>
-    <div class="icon-360">
-      <img src="../global assets/Images/commonThings/360-icon-black.webp" alt="">
-    </div>
-
-  </div>
-  <!-- ==================================Sweetbox 16 250 end============================================================================== -->
-
-
-  <!-- ================================Sweetbox 16 500 start========================================================== -->
-
-  <div class="lightbox-target" id="SB-16-500-5side">
-    <div class="position-relative bg-[#bdbdbd] " style="background-color: #bdbdbd;">
-
-      <img src="./assets/images/logo.svg" alt="logo" class="logo-360-page">
-  <h2 class="product-name">SB-16-500 5 side</h2>
-
-      <model-viewer src="./assets/models/IML-Sweetbox/500/SB-16-500-5side.glb" ar-modes="webxr scene-viewer quick-look"
-        camera-controls exposure="1" tone-mapping="neutral" poster="poster.webp" shadow-intensity="1"
-        camera-orbit="-25.83deg 60.4deg 0.4924m" field-of-view="30deg" min-camera-orbit="auto auto 0.54m" max-camera-orbit="auto auto 0.54m"
-        min-field-of-view="20.26deg" disable-pan disable-tap></model-viewer>
-      <div class="progress-bar hide" slot="progress-bar">
-        <div class="update-bar"></div>
-      </div>
-      </model-viewer>
-    </div>
-
-    <a class="lightbox-close" href="#" onclick="javascript:window.close()"></a>
-    <div class="icon-360">
-      <img src="../global assets/Images/commonThings/360-icon-black.webp" alt="">
-    </div>
-
-  </div>
-  <!-- ==================================Sweetbox 16 500 end============================================================================== -->
-
-
-  <!-- ****************Sweet box 16 container end************************  -->
-
-
-
-
-
-  <!-- ****************Sweet box TE container start************************  -->
-
-  <!-- ================================Sweetbox R-250-TE-JUMBO  start========================================================== -->
-
-  <div class="lightbox-target" id="R-250-TE-JUMBO">
-    <div class="position-relative bg-[#bdbdbd] " style="background-color: #bdbdbd;">
-
-      <img src="./assets/images/logo.svg" alt="logo" class="logo-360-page">
-  <h2 class="product-name">R-250-TE-JUMBO G</h2>
-
-      <model-viewer src="./assets/models/IML-Sweetbox/250/R-250-TE-JUMBO.glb" ar-modes="webxr scene-viewer quick-look"
-        camera-controls tone-mapping="neutral" poster="poster.webp" shadow-intensity="1"
-        camera-orbit="-22.46deg 55.9deg 0.368m" field-of-view="30deg" min-camera-orbit="auto auto 0.45m" max-camera-orbit="auto auto 0.45m"
-        min-field-of-view="20.26deg" disable-pan disable-tap></model-viewer>
-      <div class="progress-bar hide" slot="progress-bar">
-        <div class="update-bar"></div>
-      </div>
-      </model-viewer>
-    </div>
-
-    <a class="lightbox-close" href="#" onclick="javascript:window.close()"></a>
-    <div class="icon-360">
-      <img src="../global assets/Images/commonThings/360-icon-black.webp" alt="">
-    </div>
-
-  </div>
-  <!-- ==================================Sweetbox R-250-TE-JUMBO end============================================================================== -->
-  <!-- ================================Sweetbox SB-TE-250-G start========================================================== -->
-
-  <div class="lightbox-target" id="SB-TE-250-G">
-    <div class="position-relative bg-[#bdbdbd] " style="background-color: #bdbdbd;">
-
-      <img src="./assets/images/logo.svg" alt="logo" class="logo-360-page">
-  <h2 class="product-name">SB-TE-250 G</h2>
-  
-      <model-viewer src="./assets/models/IML-Sweetbox/250/SB-TE-250-G.glb" ar-modes="webxr scene-viewer quick-look"
-        camera-controls tone-mapping="neutral" poster="poster.webp" shadow-intensity="1"
-        camera-orbit="-19.66deg 64.89deg 0.3336m" field-of-view="30deg" min-camera-orbit="auto auto 0.45m" max-camera-orbit="auto auto 0.45m"
-        min-field-of-view="20.26deg" disable-pan disable-tap></model-viewer>
-      <div class="progress-bar hide" slot="progress-bar">
-        <div class="update-bar"></div>
-      </div>
-      </model-viewer>
-    </div>
-
-    <a class="lightbox-close" href="#" onclick="javascript:window.close()"></a>
-    <div class="icon-360">
-      <img src="../global assets/Images/commonThings/360-icon-black.webp" alt="">
-    </div>
-
-  </div>
-  <!-- ==================================Sweetbox SB-TE-250-G end============================================================================== -->
-  <!-- ================================Sweetbox R-500-TE-JUMBO start========================================================== -->
-
-  <div class="lightbox-target" id="R-500-TE-JUMBO">
-    <div class="position-relative bg-[#bdbdbd] " style="background-color: #bdbdbd;">
-
-      <img src="./assets/images/logo.svg" alt="logo" class="logo-360-page">
-  <h2 class="product-name">R-500-TE-JUMBO G</h2>
-
-      <model-viewer src="./assets/models/IML-Sweetbox/500/R-500-TE-JUMBO.glb" ar-modes="webxr scene-viewer quick-look"
-        camera-controls tone-mapping="neutral" poster="poster.webp" shadow-intensity="1"
-        camera-orbit="695.9deg 60.96deg 0.4612m" field-of-view="30deg" min-camera-orbit="auto auto 0.54m" max-camera-orbit="auto auto 0.54m"
-        min-field-of-view="20.26deg" disable-pan disable-tap></model-viewer>
-      <div class="progress-bar hide" slot="progress-bar">
-        <div class="update-bar"></div>
-      </div>
-      </model-viewer>
-    </div>
-
-    <a class="lightbox-close" href="#" onclick="javascript:window.close()"></a>
-    <div class="icon-360">
-      <img src="../global assets/Images/commonThings/360-icon-black.webp" alt="">
-    </div>
-
-  </div>
-  <!-- ==================================Sweetbox R-500-TE-JUMBO end============================================================================== -->
-  <!-- ================================Sweetbox SB-TE-500-G  start========================================================== -->
-
-  <div class="lightbox-target" id="SB-TE-500-G">
-    <div class="position-relative bg-[#bdbdbd] " style="background-color: #bdbdbd;">
-
-      <img src="./assets/images/logo.svg" alt="logo" class="logo-360-page">
-  <h2 class="product-name">SB-TE-500 G</h2>
-
-      <model-viewer src="./assets/models/IML-Sweetbox/500/SB-TE-500-G.glb" ar-modes="webxr scene-viewer quick-look"
-        camera-controls tone-mapping="neutral" poster="poster.webp" shadow-intensity="1"
-        camera-orbit="691.4deg 73.88deg 0.4447m" field-of-view="30deg" min-camera-orbit="auto auto 0.54m" max-camera-orbit="auto auto 0.54m"
-        min-field-of-view="20.26deg" disable-pan disable-tap></model-viewer>
-      <div class="progress-bar hide" slot="progress-bar">
-        <div class="update-bar"></div>
-      </div>
-      </model-viewer>
-    </div>
-
-    <a class="lightbox-close" href="#" onclick="javascript:window.close()"></a>
-    <div class="icon-360">
-      <img src="../global assets/Images/commonThings/360-icon-black.webp" alt="">
-    </div>
-
-  </div>
-  <!-- ==================================Sweetbox SB-TE-500-G end============================================================================== -->
-  <!-- ================================Sweetbox SB-TE-1000-G start========================================================== -->
-
-  <div class="lightbox-target" id="SB-TE-1000-G">
-    <div class="position-relative bg-[#bdbdbd] " style="background-color: #bdbdbd;">
-
-      <img src="./assets/images/logo.svg" alt="logo" class="logo-360-page">
-  <h2 class="product-name">SB-TE-1000 G</h2>
-  
-      <model-viewer src="./assets/models/IML-Sweetbox/1000/SB-TE-1000-G.glb" ar-modes="webxr scene-viewer quick-look"
-        camera-controls tone-mapping="neutral" poster="poster.webp" shadow-intensity="1"
-        camera-orbit="346.5deg 67.13deg 0.5842m" field-of-view="30deg" min-camera-orbit="auto auto 0.6m" max-camera-orbit="auto auto 0.6m"
-        min-field-of-view="20.26deg" disable-pan disable-tap></model-viewer>
-      <div class="progress-bar hide" slot="progress-bar">
-        <div class="update-bar"></div>
-      </div>
-      </model-viewer>
-    </div>
-
-    <a class="lightbox-close" href="#" onclick="javascript:window.close()"></a>
-    <div class="icon-360">
-      <img src="../global assets/Images/commonThings/360-icon-black.webp" alt="">
-    </div>
-
-  </div>
-  <!-- ==================================Sweetbox SB-TE-1000-G end============================================================================== -->
-  <!-- ================================Sweetbox R-1000-TE-JUMBO start========================================================== -->
-
-  <div class="lightbox-target" id="R-1000-TE-JUMBO">
-    <div class="position-relative bg-[#bdbdbd] " style="background-color: #bdbdbd;">
-
-      <img src="./assets/images/logo.svg" alt="logo" class="logo-360-page">
-  <h2 class="product-name">R-1000-TE-JUMBO G</h2>
-  
-      <model-viewer src="./assets/models/IML-Sweetbox/1000/R-1000-TE-JUMBO.glb" ar-modes="webxr scene-viewer quick-look"
-        camera-controls tone-mapping="neutral" poster="poster.webp" shadow-intensity="1"
-        camera-orbit="341.5deg 63.21deg 0.6464m" field-of-view="30deg" min-camera-orbit="auto auto 0.67m" max-camera-orbit="auto auto 0.67m"
-        min-field-of-view="20.26deg" disable-pan disable-tap></model-viewer>
-      <div class="progress-bar hide" slot="progress-bar">
-        <div class="update-bar"></div>
-      </div>
-      </model-viewer>
-    </div>
-
-    <a class="lightbox-close" href="#" onclick="javascript:window.close()"></a>
-    <div class="icon-360">
-      <img src="../global assets/Images/commonThings/360-icon-black.webp" alt="">
-    </div>
-
-  </div>
-  <!-- ==================================Sweetbox R-1000-TE-JUMBO end============================================================================== -->
-
-
-
-  <!-- ****************Sweet box 16 container end************************  -->
-
-
-
-
-
-
-  <!-- ****************Biriyani Rectangle container start************************  -->
-
-  <!-- ================================Biriyani Rectangle BT-14-500-ML  start========================================================== -->
-
-  <div class="lightbox-target" id="BT-14-500-ML">
-    <div class="position-relative bg-[#bdbdbd] " style="background-color: #bdbdbd;">
-
-      <img src="./assets/images/logo.svg" alt="logo" class="logo-360-page">
-  <h2 class="product-name">BT-14-500 ml</h2>
-
-      <model-viewer src="./assets/models/IML-Briyani-Rectangular/BT-14-500-ML.glb"
-        ar-modes="webxr scene-viewer quick-look" camera-controls tone-mapping="neutral" poster="poster.webp"
-        shadow-intensity="1" camera-orbit="343.7deg 63.18deg 0.4237m" field-of-view="30deg"
-        min-camera-orbit="auto auto 0.45m" max-camera-orbit="auto auto 0.45m" min-field-of-view="20.26deg" disable-pan
-        disable-tap></model-viewer>
-      <div class="progress-bar hide" slot="progress-bar">
-        <div class="update-bar"></div>
-      </div>
-      </model-viewer>
-    </div>
-
-    <a class="lightbox-close" href="#" onclick="javascript:window.close()"></a>
-    <div class="icon-360">
-      <img src="../global assets/Images/commonThings/360-icon-black.webp" alt="">
-    </div>
-
-  </div>
-  <!-- ==================================Biriyani Rectangle BT-14-500-ML  end============================================================================== -->
-  <!-- ================================Biriyani Rectangle BT-14-650-ML start========================================================== -->
-
-  <div class="lightbox-target" id="BT-14-650-ML">
-    <div class="position-relative bg-[#bdbdbd] " style="background-color: #bdbdbd;">
-
-      <img src="./assets/images/logo.svg" alt="logo" class="logo-360-page">
-  <h2 class="product-name">BT-14-650 ml</h2>
-
-      <model-viewer src="./assets/models/IML-Briyani-Rectangular/BT-14-650-ML.glb"
-        ar-modes="webxr scene-viewer quick-look" camera-controls tone-mapping="neutral" poster="poster.webp"
-        shadow-intensity="1" camera-orbit="-29.2deg 66.01deg 0.4219m" field-of-view="30deg"
-        min-camera-orbit="auto auto 0.47m" max-camera-orbit="auto auto 0.47m" min-field-of-view="20.26deg" disable-pan
-        disable-tap></model-viewer>
-      <div class="progress-bar hide" slot="progress-bar">
-        <div class="update-bar"></div>
-      </div>
-      </model-viewer>
-    </div>
-
-    <a class="lightbox-close" href="#" onclick="javascript:window.close()"></a>
-    <div class="icon-360">
-      <img src="../global assets/Images/commonThings/360-icon-black.webp" alt="">
-    </div>
-
-  </div>
-  <!-- ==================================Biriyani Rectangle BT-14-650-ML  end============================================================================== -->
-  <!-- ================================Biriyani Rectangle BT-14-750-ML  start========================================================== -->
-
-  <div class="lightbox-target" id="BT-14-750-ML">
-    <div class="position-relative bg-[#bdbdbd] " style="background-color: #bdbdbd;">
-
-      <img src="./assets/images/logo.svg" alt="logo" class="logo-360-page">
-  <h2 class="product-name">BT-14-750 ml</h2>
-
-      <model-viewer src="./assets/models/IML-Briyani-Rectangular/BT-14-750-ML.glb"
-        ar-modes="webxr scene-viewer quick-look" camera-controls tone-mapping="neutral" poster="poster.webp"
-        shadow-intensity="1" camera-orbit="-26.96deg 63.77deg 0.422m" field-of-view="30deg"
-        min-camera-orbit="auto auto 0.43m" max-camera-orbit="auto auto 0.43m" min-field-of-view="20.26deg" disable-pan
-        disable-tap></model-viewer>
-      <div class="progress-bar hide" slot="progress-bar">
-        <div class="update-bar"></div>
-      </div>
-      </model-viewer>
-    </div>
-
-    <a class="lightbox-close" href="#" onclick="javascript:window.close()"></a>
-    <div class="icon-360">
-      <img src="../global assets/Images/commonThings/360-icon-black.webp" alt="">
-    </div>
-
-  </div>
-  <!-- ==================================Biriyani Rectangle BT-14-750-ML  end============================================================================== -->
-  <!-- ================================Biriyani Rectangle BT-14-1000-ML  start========================================================== -->
-
-  <div class="lightbox-target" id="BT-14-1000-ML">
-    <div class="position-relative bg-[#bdbdbd] " style="background-color: #bdbdbd;">
-
-      <img src="./assets/images/logo.svg" alt="logo" class="logo-360-page">
-  <h2 class="product-name">BT-14-1000 ml</h2>
-
-      <model-viewer src="./assets/models/IML-Briyani-Rectangular/BT-14-1000-ML.glb"
-        ar-modes="webxr scene-viewer quick-look" camera-controls tone-mapping="neutral" poster="poster.webp"
-        shadow-intensity="1" camera-orbit="-35.38deg 62.64deg 0.4454m" field-of-view="30deg"
-        min-camera-orbit="auto auto 0.46m" max-camera-orbit="auto auto 0.46m" min-field-of-view="20.26deg" disable-pan
-        disable-tap></model-viewer>
-      <div class="progress-bar hide" slot="progress-bar">
-        <div class="update-bar"></div>
-      </div>
-      </model-viewer>
-    </div>
-
-    <a class="lightbox-close" href="#" onclick="javascript:window.close()"></a>
-    <div class="icon-360">
-      <img src="../global assets/Images/commonThings/360-icon-black.webp" alt="">
-    </div>
-
-  </div>
-  <!-- ==================================Biriyani Rectangle BT-14-1000-ML  end============================================================================== -->
-
-
-  <!-- ****************Biriyani Rectangle container end************************  -->
-
-
-
-
-
-
-
-  <!-- ****************Ice Cream Oval container Start************************  -->
-
-  <!-- ================================Ice Cream Oval 100-ml-Oval start========================================================== -->
-
-  <div class="lightbox-target" id="100-ml-Oval">
-    <div class="position-relative bg-[#bdbdbd] " style="background-color: #bdbdbd;">
-
-      <img src="./assets/images/logo.svg" alt="logo" class="logo-360-page">
-  <h2 class="product-name">100 ml Ice Cream Oval</h2>
-
-      <model-viewer src="./assets/models/IML-Ice-cream-Oval/100-ml-Oval.glb" ar-modes="webxr scene-viewer quick-look"
-        camera-controls tone-mapping="neutral" poster="poster.webp" shadow-intensity="1"
-        camera-orbit="142.7deg 61.52deg 0.1886m" field-of-view="30deg" min-camera-orbit="auto auto 0.3m"
-        max-camera-orbit="auto auto 0.3m" min-field-of-view="20.26deg" disable-pan disable-tap></model-viewer>
-      <div class="progress-bar hide" slot="progress-bar">
-        <div class="update-bar"></div>
-      </div>
-      </model-viewer>
-    </div>
-
-    <a class="lightbox-close" href="#" onclick="javascript:window.close()"></a>
-    <div class="icon-360">
-      <img src="../global assets/Images/commonThings/360-icon-black.webp" alt="">
-    </div>
-
-  </div>
-  <!-- ==================================Ice Cream Oval 100-ml-Oval  end============================================================================== -->
-  <!-- ================================Ice Cream Oval 100-ml-Oval(with Spoon) start========================================================== -->
-
-  <div class="lightbox-target" id="100-ml-Oval(with Spoon)">
-    <div class="position-relative bg-[#bdbdbd] " style="background-color: #bdbdbd;">
-
-        <img src="./assets/images/logo.svg" alt="logo" class="logo-360-page">
-  <h2 class="product-name">100 ml Ice Cream Oval with Spoon</h2>
-
-      <model-viewer src="./assets/models/IML-Ice-cream-Oval/100-ml-Oval(with Spoon).glb"
-        ar-modes="webxr scene-viewer quick-look" camera-controls exposure="0.65" tone-mapping="neutral"
-        poster="poster.webp" shadow-intensity="1" camera-orbit="147.7deg 76.12deg 0.3167m" field-of-view="30deg"
-        min-camera-orbit="auto auto 0.35m" max-camera-orbit="auto auto 0.35m" min-field-of-view="20.26deg" disable-pan
-        disable-tap></model-viewer>
-      <div class="progress-bar hide" slot="progress-bar">
-        <div class="update-bar"></div>
-      </div>
-      </model-viewer>
-    </div>
-
-    <a class="lightbox-close" href="#" onclick="javascript:window.close()"></a>
-    <div class="icon-360">
-      <img src="../global assets/Images/commonThings/360-icon-black.webp" alt="">
-    </div>
-
-  </div>
-  <!-- ==================================Ice Cream Oval 100-ml-Oval(with Spoon)  end============================================================================== -->
-  <!-- ================================Ice Cream Oval 125-ml-Oval  start========================================================== -->
-
-  <div class="lightbox-target" id="125-ml-Oval">
-    <div class="position-relative bg-[#bdbdbd] " style="background-color: #bdbdbd;">
-
-        <img src="./assets/images/logo.svg" alt="logo" class="logo-360-page">
-  <h2 class="product-name">125 ml Ice Cream Oval</h2>
-
-      <model-viewer src="./assets/models/IML-Ice-cream-Oval/125-ml-Oval.glb" ar-modes="webxr scene-viewer quick-look"
-        camera-controls tone-mapping="neutral" poster="poster.webp" shadow-intensity="1"
-        camera-orbit="-23.59deg 59.84deg 0.1854m" field-of-view="30deg" min-camera-orbit="auto auto 0.3m"
-        max-camera-orbit="auto auto 0.3m" min-field-of-view="20.26deg" disable-pan disable-tap></model-viewer>
-      <div class="progress-bar hide" slot="progress-bar">
-        <div class="update-bar"></div>
-      </div>
-      </model-viewer>
-    </div>
-
-    <a class="lightbox-close" href="#" onclick="javascript:window.close()"></a>
-    <div class="icon-360">
-      <img src="../global assets/Images/commonThings/360-icon-black.webp" alt="">
-    </div>
-
-  </div>
-  <!-- ==================================Ice Cream Oval 125-ml-Oval  end============================================================================== -->
-  <!-- ================================Ice Cream Oval 500-ml-Oval  start========================================================== -->
-
-  <div class="lightbox-target" id="520-ml-Oval">
-    <div class="position-relative bg-[#bdbdbd] " style="background-color: #bdbdbd;">
-
-        <img src="./assets/images/logo.svg" alt="logo" class="logo-360-page">
-  <h2 class="product-name">520 ml Ice Cream Oval</h2>
-
-      <model-viewer src="./assets/models/IML-Ice-cream-Oval/520-ml-Oval.glb" ar-modes="webxr scene-viewer quick-look"
-        camera-controls tone-mapping="neutral" poster="poster.webp" shadow-intensity="1"
-        camera-orbit="-30.32deg 66.57deg 0.3138m" field-of-view="30deg" min-camera-orbit="auto auto 0.35m"
-        max-camera-orbit="auto auto 0.35m" min-field-of-view="20.26deg" disable-pan disable-tap></model-viewer>
-      <div class="progress-bar hide" slot="progress-bar">
-        <div class="update-bar"></div>
-      </div>
-      </model-viewer>
-    </div>
-
-    <a class="lightbox-close" href="#" onclick="javascript:window.close()"></a>
-    <div class="icon-360">
-      <img src="../global assets/Images/commonThings/360-icon-black.webp" alt="">
-    </div>
-
-  </div>
-  <!-- ==================================Ice Cream Oval 500-ml-Oval  end============================================================================== -->
-
-
-  <!-- ****************Ice Cream Oval container end************************  -->
-
-
-
-
-  <!-- ****************IML Beverage Cup Start************************  -->
-
-  <!-- ================================200 ml beverage cup  start========================================================== -->
-
-  <div class="lightbox-target" id="200-ml-beverage-cup">
-    <div class="position-relative bg-[#bdbdbd] " style="background-color: #bdbdbd;">
-
-        <img src="./assets/images/logo.svg" alt="logo" class="logo-360-page">
-  <h2 class="product-name">200 ml Beverage Cup</h2>
-
-      <model-viewer src="./assets/models/IML-Beverage-Cup/200-ml-beverage-cup.glb"
-        ar-modes="webxr scene-viewer quick-look" camera-controls tone-mapping="neutral" poster="poster.webp"
-        shadow-intensity="1" camera-orbit="10.11deg 83.4deg 0.2735m" field-of-view="30deg"
-        min-camera-orbit="auto auto 0.35m"
-        max-camera-orbit="auto auto 0.35m" min-field-of-view="20.26deg" disable-pan disable-tap></model-viewer>
-      <div class="progress-bar hide" slot="progress-bar">
-        <div class="update-bar"></div>
-      </div>
-      </model-viewer>
-    </div>
-
-    <a class="lightbox-close" href="#" onclick="javascript:window.close()"></a>
-    <div class="icon-360">
-      <img src="../global assets/Images/commonThings/360-icon-black.webp" alt="">
-    </div>
-
-  </div>
-  <!-- ==================================200 ml beverage cup  end============================================================================== -->
-  <!-- ================================300 ml beverage cup  start========================================================== -->
-
-  <div class="lightbox-target" id="300-ml-beverage-cup">
-    <div class="position-relative bg-[#bdbdbd] " style="background-color: #bdbdbd;">
-
-       <img src="./assets/images/logo.svg" alt="logo" class="logo-360-page">
-  <h2 class="product-name">300 ml Beverage Cup</h2>
-
-      <model-viewer src="./assets/models/IML-Beverage-Cup/300-ml-beverage-cup.glb"
-        ar-modes="webxr scene-viewer quick-look" camera-controls tone-mapping="neutral" poster="poster.webp"
-        shadow-intensity="1" camera-orbit="465deg 83.99deg 0.2632m" field-of-view="30deg"
-        min-camera-orbit="auto auto 0.35m"
-        max-camera-orbit="auto auto 0.35m" min-field-of-view="20.26deg" disable-pan disable-tap></model-viewer>
-      <div class="progress-bar hide" slot="progress-bar">
-        <div class="update-bar"></div>
-      </div>
-      </model-viewer>
-    </div>
-
-    <a class="lightbox-close" href="#" onclick="javascript:window.close()"></a>
-    <div class="icon-360">
-      <img src="../global assets/Images/commonThings/360-icon-black.webp" alt="">
-    </div>
-
-  </div>
-  <!-- ==================================300 ml beverage cup  end============================================================================== -->
-
-
-  <!-- ****************Beverage Cup container end************************  -->
-
-
-
-
-  <!--******************* model ends *************************-->
-
-
-
-
-  <script src='./js/jquery-2.0.3.min.js'></script>
-  <script src='./js/underscore-min.js'></script>
-  <script src='./js/backbone-min.js'></script>
-  <script src="./script.js"></script>
-
-  <script type="module" src="./js/model-viewer.min.js"></script>
-  <!-- <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/4.2.0/model-viewer.min.js"></script> -->
-  <link rel="stylesheet" href="./css/font-awesome.min.css">
-  <script src="./js/three.min.js"></script>
+  </main>
+
+</div>
+
+<script type="importmap">
+  {
+    "imports": {
+      "three": "https://unpkg.com/three@0.128.0/build/three.module.js"
+    }
+  }
+</script>
+<script type="module" src="app.js?v=20260824_5"></script>
 
 </body>
-
 </html>
