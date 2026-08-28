@@ -214,13 +214,15 @@
 
         /* Autoplay Icon Active State */
         .icon-btn.active {
-            background: linear-gradient(135deg, #14B8A6, #0D9488) !important;
-            box-shadow: 0 0 0 2px rgba(20, 184, 166, 0.3);
+            background: #E67429 !important;
+            box-shadow: 0 0 0 2px rgba(230, 116, 41, 0.3) !important;
         }
 
-        .icon-btn.active svg {
+        .icon-btn.active svg,
+        .icon-btn.active img {
             stroke: #ffffff !important;
             fill: #ffffff !important;
+            filter: none !important;
         }
 
         /* Mobile Responsive */
@@ -584,45 +586,50 @@
                     <span class="mobile-toc-number">03</span>
                     <span class="mobile-toc-title">Products</span>
                 </li>
-                <li class="tb-link mobile-toc-item" data-page="4" data-audio-path="../audios/IML-round-container.mp3">
+                <li class="tb-link mobile-toc-item" data-page="4">
                     <span class="mobile-toc-number">04</span>
-                    <span class="mobile-toc-title">IML Round Container</span>
+                    <span class="mobile-toc-title">3D Experience</span>
                 </li>
-                <li class="tb-link mobile-toc-item" data-page="5" data-audio-path="../audios/IML-round-bucket.mp3">
+                <li class="tb-link mobile-toc-item" data-page="5">
                     <span class="mobile-toc-number">05</span>
-                    <span class="mobile-toc-title">IML Round Bucket</span>
+                    <span class="mobile-toc-title">Ward Furniture</span>
                 </li>
-                <li class="tb-link mobile-toc-item" data-page="6"
-                    data-audio-path="../audios/IML-biriyani-rectangular.mp3">
+                <li class="tb-link mobile-toc-item" data-page="11">
                     <span class="mobile-toc-number">06</span>
-                    <span class="mobile-toc-title">IML Biryani Rectangle</span>
+                    <span class="mobile-toc-title">ICU & Critical Care</span>
                 </li>
-                <li class="tb-link mobile-toc-item" data-page="8" data-audio-path="../audios/IML-sweetbox.mp3">
+                <li class="tb-link mobile-toc-item" data-page="13">
                     <span class="mobile-toc-number">07</span>
-                    <span class="mobile-toc-title">IML Sweet Box</span>
+                    <span class="mobile-toc-title">Labor & Maternity</span>
                 </li>
-
-                <li class="tb-link mobile-toc-item" data-page="10" data-audio-path="../audios/IML-square-bucket.mp3">
+                <li class="tb-link mobile-toc-item" data-page="15">
                     <span class="mobile-toc-number">08</span>
-                    <span class="mobile-toc-title">IML Square Bucket</span>
+                    <span class="mobile-toc-title">Emergency & Patient Transfer</span>
                 </li>
-                <li class="tb-link mobile-toc-item" data-page="11" data-audio-path="../audios/IML-beverage-cup.mp3">
+                <li class="tb-link mobile-toc-item" data-page="21">
                     <span class="mobile-toc-number">09</span>
-                    <span class="mobile-toc-title">IML Beverage Cup</span>
+                    <span class="mobile-toc-title">Medical Trolleys</span>
                 </li>
-                <li class="tb-link mobile-toc-item" data-page="12" data-audio-path="../audios/IML-ice-cream-round.mp3">
+                <li class="tb-link mobile-toc-item" data-page="28">
                     <span class="mobile-toc-number">10</span>
-                    <span class="mobile-toc-title">IML Ice Cream Round</span>
+                    <span class="mobile-toc-title">Examination & Consultation</span>
                 </li>
-                <li class="tb-link mobile-toc-item" data-page="13" data-audio-path="../audios/IML-ice-cream-oval.mp3">
+                <li class="tb-link mobile-toc-item" data-page="33">
                     <span class="mobile-toc-number">11</span>
-                    <span class="mobile-toc-title">IML Ice Cream Oval </span>
+                    <span class="mobile-toc-title">Stainless Steel Furniture & Ward Accessories</span>
                 </li>
-                <li class=" tb-link mobile-toc-item" data-page="14" data-audio-path="../audios/contact-us.mp3">
+                <li class="tb-link mobile-toc-item" data-page="37">
                     <span class="mobile-toc-number">12</span>
-                    <span class="mobile-toc-title">Contact us</span>
+                    <span class="mobile-toc-title">General Furniture</span>
                 </li>
-
+                <li class="tb-link mobile-toc-item" data-page="39">
+                    <span class="mobile-toc-number">13</span>
+                    <span class="mobile-toc-title">Accessories</span>
+                </li>
+                <li class="tb-link mobile-toc-item" data-page="42">
+                    <span class="mobile-toc-number">14</span>
+                    <span class="mobile-toc-title">Contact Us</span>
+                </li>
             </ul>
         </div>
         <div id="mobileTocOverlay" class="mobile-toc-overlay"></div>
@@ -688,188 +695,87 @@
         </div>
 
         <!-- Add this right after the opening <div class="catalog-app"> tag -->
+        <!-- Brand Logo Header (Top Left) -->
+        <div class="top-left-brand">
+            <img src="../global assets/bottom-navbar/logo.svg" alt="Sri Mathurams Logo" />
+        </div>
+
         <div id="topIconNav" class="top-icon-navigation">
-            <!-- Table of Contents -->
+            <!-- Group 1: Navigation Controls (First page, Play, Last page) -->
+            <div class="nav-btn-group">
+                <button class="icon-btn" id="iconFrontPage" title="First Page" disabled>
+                    <img src="../global assets/bottom-navbar/previous-play-icon.svg" alt="First Page" />
+                </button>
+                <button class="icon-btn" id="iconAutoplay" title="Autoplay">
+                    <img src="../global assets/bottom-navbar/play-icon.svg" alt="Autoplay" />
+                </button>
+                <button class="icon-btn" id="iconSkipForward" title="Last Page">
+                    <img src="../global assets/bottom-navbar/next-play-icon.svg" alt="Last Page" />
+                </button>
+            </div>
+
+            <!-- TOC Button -->
             <button class="icon-btn" id="iconTOC" title="Table of Contents">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <line x1="3" y1="6" x2="21" y2="6" />
-                    <line x1="3" y1="12" x2="21" y2="12" />
-                    <line x1="3" y1="18" x2="21" y2="18" />
-                </svg>
+                <img src="../global assets/bottom-navbar/table-of-content-icon.svg" alt="TOC" />
             </button>
 
+            <!-- Thumbnail Grid Button -->
+            <button class="icon-btn" id="desktopThumbToggle" title="Thumbnails">
+                <img src="../global assets/bottom-navbar/thumbnail-icon.svg" alt="Thumbnails" />
+            </button>
+
+            <!-- Search Button -->
+            <button class="icon-btn" id="iconText" title="Search">
+                <img src="../global assets/bottom-navbar/search-icon.svg" alt="Search" />
+            </button>
 
             <!-- Audio Toggle -->
             <button class="icon-btn bgm-toggle" id="bgmButton" title="Audio">
-
                 <audio id="bgmAudio" loop>
                     <source src="../audios/a-promise(chosic.com).mp3" type="audio/wav">
                 </audio>
-                <img id="musicOnImg" src="../global assets/icons/music-on-icon.svg" class="w-[1.8vw] h-[1.8vw]">
-                <img id="musicOffImg" src="../global assets/icons/music-off-icon.svg"
-                    class="w-[1.5vw] h-[1.5vw] hidden">
-
+                <img id="musicOnImg" src="../global assets/bottom-navbar/music-on-icon.svg" alt="Music On" />
+                <img id="musicOffImg" src="../global assets/bottom-navbar/music-on-icon.svg" alt="Music Off" class="hidden" style="filter: opacity(0.3) grayscale(1);" />
             </button>
 
-            <!-- Zoom Out -->
-            <!-- <button class="icon-btn" id="iconZoomOut" title="Zoom Out" >
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-      <circle cx="11" cy="11" r="8"/>
-      <line x1="7" y1="11" x2="15" y2="11"/>
-      <line x1="21" y1="21" x2="16.65" y2="16.65"/>
-    </svg>
-  </button> -->
-            <!-- Zoom Control Widget -->
-
-            <button id="zoomOutBtn" class="zoom-btn icon-btn" title="Zoom Out">
-
-                <img src="../global assets/icons/zoom-out-icon.svg" title="zoom out" class="w-[1.5vw]" />
+            <!-- Fullscreen Button -->
+            <button class="icon-btn full-screen" id="full-screen-btn" title="Fullscreen">
+                <img src="../global assets/bottom-navbar/full-screen-icon.svg" alt="Fullscreen" />
             </button>
 
-            <input type="range" id="zoomSlider" min="50" max="150" value="100" step="10" class="zoom-slider hidden" />
-            <span id="zoomPercentage" class="zoom-percentage hidden">100%</span>
-            <button id="zoomInBtn" class="zoom-btn icon-btn" title="Zoom In">
-
-                <img src="../global assets/icons/zoom-in-icon.svg" title="zoom in" class="w-[1.5vw]" />
+            <!-- Share Button -->
+            <button class="icon-btn" id="shareBtn" title="Share">
+                <img src="../global assets/bottom-navbar/share-icon.svg" alt="Share" />
             </button>
 
-
-
-
-            <!-- Zoom In -->
-            <!-- <button class="icon-btn" id="iconZoomIn" title="Zoom In">
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-      <circle cx="11" cy="11" r="8"/>
-      <line x1="11" y1="7" x2="11" y2="15"/>
-      <line x1="7" y1="11" x2="15" y2="11"/>
-      <line x1="21" y1="21" x2="16.65" y2="16.65"/>
-    </svg>
-  </button> -->
-
-            <!-- front Page -->
-            <button class="icon-btn" id="iconFrontPage" title="Front Page" disabled>
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <polygon points="19 4 9 12 19 20 19 4" />
-                    <line x1="5" y1="5" x2="5" y2="19" />
-                </svg>
-            </button>
-
-            <!-- Previous Page -->
-            <button class="icon-btn" id="iconPrevPage" title="Previous Page" disabled>
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <polyline points="15 18 9 12 15 6" />
-                </svg>
-            </button>
-
-            <!-- Next Page -->
-            <button class="icon-btn" id="iconNextPage" title="Next Page">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <polyline points="9 18 15 12 9 6" />
-                </svg>
-            </button>
-
-            <!-- Skip Forward -->
-            <button class="icon-btn" id="iconSkipForward" title="Skip Forward">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <polygon points="5 4 15 12 5 20 5 4" />
-                    <line x1="19" y1="5" x2="19" y2="19" />
-                </svg>
-            </button>
-
-
-
-            <!-- Search Tool -->
-            <button class="icon-btn" id="iconText" title="Text Tool">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                    stroke-linecap="round" stroke-linejoin="round">
-                    <circle cx="11" cy="11" r="8"></circle>
-                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-                </svg>
-
-            </button>
-
-            <!-- autoplay icon -->
-
-            <!-- Autoplay Toggle -->
-            <button class="icon-btn" id="iconAutoplay" title="Auto Play">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <circle cx="12" cy="12" r="10" />
-                    <polygon points="10 8 16 12 10 16 10 8" fill="currentColor" />
-                </svg>
-            </button>
-
-            <!-- <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <circle cx="12" cy="12" r="10" stroke="#333333" stroke-width="2" fill="none"/>
-  <path d="M10 8L16 12L10 16V8Z" fill="#333333"/>
-</svg>
-
-<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <circle cx="12" cy="12" r="10" stroke="#0D9488" stroke-width="2" fill="none"/>
-  <rect x="9" y="8" width="2" height="8" fill="#0D9488"/>
-  <rect x="13" y="8" width="2" height="8" fill="#0D9488"/>
-</svg> -->
-
-            <!-- Autoplay Progress Bar -->
-            <!-- <div class="autoplay-progress-bar" id="autoplayProgress"></div> -->
-
-            <!-- share icon  -->
-
-            <button class="icon-btn" id="shareBtn" title="Text Tool">
-
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <circle cx="18" cy="5" r="3" />
-                    <circle cx="6" cy="12" r="3" />
-                    <circle cx="18" cy="19" r="3" />
-                    <line x1="8.6" y1="13.5" x2="15.4" y2="17.5" />
-                    <line x1="15.4" y1="6.5" x2="8.6" y2="10.5" />
-                </svg>
-            </button>
-
-            <!-- download icon  -->
-            <button class="icon-btn" id="download-btn" title="Text Tool">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M12 3v12" />
-                    <polyline points="7 10 12 15 17 10" />
-                    <rect x="4" y="19" width="16" height="2" />
-                </svg>
-            </button>
-
-
-
-            <!-- Fullscreen -->
-            <button class="icon-btn full-screen " id="full-screen-btn" title="Fullscreen">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path
-                        d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3" />
-                </svg>
+            <!-- Download Button -->
+            <button class="icon-btn" id="download-btn" title="Download">
+                <img src="../global assets/bottom-navbar/download-icon.svg" alt="Download" />
             </button>
         </div>
 
-
-        <!-- <img src="../global assets/icons/full-screen-icon.svg" alt="full-screen-icon" id="full-screen-bt" class="absolute bottom-[0%] right-[2%] cursor-pointer w-[2vw] h-[2vw] full-screen  z-[910]" style="transform: translateY(-50%);"/> -->
-
-
-
-
-
-
-
-
-        <!-- <div class="absolute bottom-[1%] left-[2%] font-inter font-small text text-black text-[1vw]  z-[91] page-no" style="transform: translateY(-50%);">
-  <p>Page <span id="page-no"></span></p>
-</div> -->
-
-        <!-- Page Controller -->
+        <!-- Page Controller (Bottom Left) -->
         <div class="page-controller">
-            <span class="page-label">Page</span>
-
+                        <img src="../global assets/Images/commonThings/left-page-shadow.svg" alt="left-page-shadow" class="gutter-shadow shadow-left absolute h-[100%] top-[0%] right-[-1%] z-[4]" />
+                        <img src="../global assets/Images/commonThings/right-page-shadow.svg" alt="right-page-shadow" class="gutter-shadow shadow-right absolute h-[100%] top-[0%] left-[-1%] z-[4]" />
             <input type="number" id="pageInput" min="1" value="1" />
-
-            <span class="divider">/</span>
-
             <strong id="totalPages">0</strong>
+            <button id="goPageBtn" class="go-btn">
+                <img src="../global assets/bottom-navbar/go-icon.svg" alt="Go" />
+            </button>
+        </div>
 
-            <button id="goPageBtn" class="go-btn">Go</button>
+        <!-- Zoom Control Container (Bottom Right) -->
+        <div class="zoom-control-container">
+            <span class="zoom-label">Zoom :</span>
+            <button id="zoomOutBtn" class="zoom-btn icon-btn" title="Zoom Out">
+                <img src="../global assets/bottom-navbar/zoom-out-icon.svg" alt="Zoom Out" />
+            </button>
+            <input type="range" id="zoomSlider" min="50" max="150" value="100" step="10" class="zoom-slider hidden" />
+            <span id="zoomPercentage" class="zoom-percentage hidden">100%</span>
+            <button id="zoomInBtn" class="zoom-btn icon-btn" title="Zoom In">
+                <img src="../global assets/bottom-navbar/zoom-in-icon.svg" alt="Zoom In" />
+            </button>
         </div>
 
 
@@ -891,106 +797,104 @@
             <div id="navOverlay" class="nav-overlay"></div>
 
             <nav id="tocNav" class="toc-floating " aria-label="Table of Contents">
-                <div class="toc-title">Table of contents</div>
+                <div class="toc-header-container flex justify-between items-center">
+                    <div class="toc-title">Table of Contents</div>
+                    <button id="closeTocBtn" class="w-[1.5vw] h-[1.5vw] flex items-center justify-center text-gray-400 hover:text-gray-600 transition-colors duration-200 cursor-pointer">
+                        <svg class="w-[1.2vw] h-[1.2vw]" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                            <path d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
+                </div>
+                <div class="toc-header-underline"></div>
                 <ul class="toc-list">
                     <li class="tb-link cursor-pointer" data-page="1" data-audio-path="../audios/home.mp3"><a><span
-                                class="mobile-toc-number">1</span> Home</a></li>
+                                class="mobile-toc-number">01</span> Home</a></li>
                     <li class="tb-link cursor-pointer" data-page="2" data-audio-path="../audios/about-us.mp3"><a><span
-                                class="mobile-toc-number">2</span>About us</a></li>
+                                class="mobile-toc-number">02</span>About us</a></li>
                     <li class="tb-link cursor-pointer" data-page="3" data-audio-path="../audios/products.mp3"><a> <span
-                                class="mobile-toc-number">3</span>Products</a>
-                    </li>
-                    <li class="tb-link cursor-pointer " data-page="4"
-                        data-audio-path="../audios/IML-round-container.mp3" style="margin-left: 2vw;">
-                        <a><span class="mobile-toc-number">4</span>IML Round Container</a>
-                    </li>
-                    <li class="tb-link cursor-pointer" data-page="5" data-audio-path="../audios/IML-round-bucket.mp3"
-                        style="margin-left: 2vw;">
-                        <a><span class="mobile-toc-number">5</span>IML Round Bucket</a>
-                    </li>
-
-                    <li class="tb-link cursor-pointer" data-page="6"
-                        data-audio-path="../audios/IML-biriyani-rectangular.mp3" style="margin-left: 2vw;">
-                        <a><span class="mobile-toc-number">6</span>IML Biryani Rectangle</a>
-                    </li>
-
-                    <li class="tb-link cursor-pointer" data-page="8" data-audio-path="../audios/IML-sweetbox.mp3"
-                        style="margin-left: 2vw;">
-                        <a><span class="mobile-toc-number">7</span>IML Sweet Box</a>
-                    </li>
-                    <!-- <li class="tb-link cursor-pointer" data-page="7" data-audio-path="" style="margin-left: 2vw;">
-                        <a><span class="mobile-toc-number">7</span></a> -->
-                    <!-- </li> -->
-
-                    <!-- <li class="tb-link cursor-pointer" data-page="9" data-audio-path="" style="margin-left: 2vw;">
-                        <a><span class="mobile-toc-number">9</span></a> -->
-                    <!-- </li> -->
-                    <li class="tb-link cursor-pointer" data-page="10" data-audio-path="../audios/IML-square-bucket.mp3"
-                        style="margin-left: 2vw;">
-                        <a><span class="mobile-toc-number">8</span>IML Square Bucket </a>
-                    </li>
-                    <li class="tb-link cursor-pointer" data-page="11" data-audio-path="../audios/IML-beverage-cup.mp3"
-                        style="margin-left: 2vw;">
-                        <a><span class="mobile-toc-number">9</span>IML Beverage Cup</a>
-                    </li>
-                    <li class="tb-link cursor-pointer" data-page="12"
-                        data-audio-path="../audios/IML-ice-cream-round.mp3" style="margin-left: 2vw;">
-                        <a><span class="mobile-toc-number">10</span>IML Ice Cream Round
-                        </a>
-                    </li>
-
-                    <li class="tb-link cursor-pointer" data-page="13" data-audio-path="../audios/IML-ice-cream-oval.mp3"
-                        style="margin-left: 2vw;">
-                        <a><span class="mobile-toc-number">11</span>IML Ice Cream Oval
-                        </a>
-                    </li>
-                    <li class="tb-link cursor-pointer" data-page="14" data-audio-path="../audios/contact-us.mp3">
-                        <a><span class="mobile-toc-number">12</span>Contact Us
-                        </a>
-                    </li>
+                                class="mobile-toc-number">03</span>Products</a></li>
+                    <li class="tb-link cursor-pointer" data-page="4"><a><span
+                                class="mobile-toc-number">04</span>3D Experience</a></li>
+                    <li class="tb-link cursor-pointer" data-page="5"><a><span
+                                class="mobile-toc-number">05</span>Ward Furniture</a></li>
+                    <li class="tb-link cursor-pointer" data-page="11"><a><span
+                                class="mobile-toc-number">06</span>ICU & Critical Care</a></li>
+                    <li class="tb-link cursor-pointer" data-page="13"><a><span
+                                class="mobile-toc-number">07</span>Labor & Maternity</a></li>
+                    <li class="tb-link cursor-pointer" data-page="15"><a><span
+                                class="mobile-toc-number">08</span>Emergency & Patient Transfer</a></li>
+                    <li class="tb-link cursor-pointer" data-page="21"><a><span
+                                class="mobile-toc-number">09</span>Medical Trolleys</a></li>
+                    <li class="tb-link cursor-pointer" data-page="28"><a><span
+                                class="mobile-toc-number">10</span>Examination & Consultation</a></li>
+                    <li class="tb-link cursor-pointer" data-page="33"><a><span
+                                class="mobile-toc-number">11</span>Stainless Steel Furniture & Ward Accessories</a></li>
+                    <li class="tb-link cursor-pointer" data-page="37"><a><span
+                                class="mobile-toc-number">12</span>General Furniture</a></li>
+                    <li class="tb-link cursor-pointer" data-page="39"><a><span
+                                class="mobile-toc-number">13</span>Accessories</a></li>
+                    <li class="tb-link cursor-pointer" data-page="42"><a><span
+                                class="mobile-toc-number">14</span>Contact Us</a></li>
                 </ul>
             </nav>
 
+            <!-- Thumbnail Drawer Panel (Desktop Only) -->
+            <div id="thumbnailDrawer" class="thumbnail-drawer" aria-label="Page Thumbnails">
+                <div class="toc-header-container flex justify-between items-center">
+                    <div class="toc-title">Page Thumbnails</div>
+                    <button id="closeThumbBtn" class="w-[1.5vw] h-[1.5vw] flex items-center justify-center text-gray-400 hover:text-gray-600 transition-colors duration-200 cursor-pointer">
+                        <svg class="w-[1.2vw] h-[1.2vw]" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                            <path d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
+                </div>
+                <div class="toc-header-underline"></div>
+                <div id="thumbnailGrid" class="thumb-grid-container custom-scrollbar">
+                    <!-- Grid items will be populated dynamically by JS -->
+                </div>
+            </div>
 
             <div id="navOverlay1" class="nav-overlay1"></div>
 
             <nav id="tocNav1" class="toc-floating1 " aria-label="Table of Contents">
-
-                <ul class="toc-list1 flex gap-[1vw] ">
-                    <li class="tb-link cursor-pointer pb-[.5vw]" data-page="1"><a class="w-[5.2vw] h-[7vw]"><img
-                                src="../global assets/Images/Thumbnail-Images/page-1.webp" class="mb-[.5vw]" />
-                            <p class="text-[.7vw] text-center mt-[.2vw] text-white">page 1</p>
-                        </a></li>
-                    <li class="tb-link cursor-pointer pb-[.5vw]" data-page="2"><a class="w-[10vw] h-[7vw]"><img
-                                src="../global assets/Images/Thumbnail-Images/page-2-3.webp" class="mb-[.5vw]" />
-                            <p class="text-[.7vw] text-center mt-[.2vw] text-white">page 2-3</p>
-                        </a></li>
-                    <li class="tb-link cursor-pointer pb-[.5vw]" data-page="4"><a class="w-[10vw] h-[7vw]"> <img
-                                src="../global assets/Images/Thumbnail-Images/page-4-5.webp" class="mb-[.5vw]" />
-                            <p class="text-[.7vw] text-center mt-[.2vw] text-white">page 4-5</p>
-                        </a></li>
-                    <li class="tb-link cursor-pointer pb-[.5vw]" data-page="6"><a class="w-[10vw] h-[7vw]"> <img
-                                src="../global assets/Images/Thumbnail-Images/page-6-7.webp" class="mb-[.5vw]" />
-                            <p class="text-[.7vw] text-center mt-[.2vw] text-white">page 6-7</p>
-                        </a></li>
-                    <li class="tb-link cursor-pointer pb-[.5vw]" data-page="8"><a class="w-[10vw] h-[7vw]"> <img
-                                src="../global assets/Images/Thumbnail-Images/page-8-9.webp" class="mb-[.5vw]" />
-                            <p class="text-[.7vw] text-center mt-[.2vw] text-white">page 8-9</p>
-                        </a></li>
-                    <li class="tb-link cursor-pointer pb-[.5vw]" data-page="10"><a class="w-[10vw] h-[7vw]"> <img
-                                src="../global assets/Images/Thumbnail-Images/page-10-11.webp" class="mb-[.5vw]" />
-                            <p class="text-[.7vw] text-center mt-[.2vw] text-white">page 10-11</p>
-                        </a></li>
-                    <li class="tb-link cursor-pointer pb-[.5vw]" data-page="12"><a class="w-[10vw] h-[7vw]"> <img
-                                src="../global assets/Images/Thumbnail-Images/page-12-13.webp" class="mb-[.5vw]" />
-                            <p class="text-[.7vw] text-center mt-[.2vw] text-white">page 12-13</p>
-                        </a></li>
-                    <li class="tb-link cursor-pointer pb-[.5vw]" data-page="14"><a class="w-[10vw] h-[7vw]"> <img
-                                src="../global assets/Images/Thumbnail-Images/page-14.webp" class="mb-[.5vw]" />
-                            <p class="text-[.7vw] text-center mt-[.2vw] text-white">page 14-15</p>
-                        </a></li>
-
-
+                <div class="toc-header-container flex justify-between items-center">
+                    <div class="toc-title">Table of Contents</div>
+                    <button id="closeTocBtn1" class="flex items-center justify-center text-gray-400 hover:text-gray-600 transition-colors duration-200 cursor-pointer">
+                        <svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                            <path d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
+                </div>
+                <div class="toc-header-underline"></div>
+                <ul class="toc-list">
+                    <li class="tb-link cursor-pointer" data-page="1" data-audio-path="../audios/home.mp3"><a><span
+                                class="mobile-toc-number">01</span> Home</a></li>
+                    <li class="tb-link cursor-pointer" data-page="2" data-audio-path="../audios/about-us.mp3"><a><span
+                                class="mobile-toc-number">02</span>About us</a></li>
+                    <li class="tb-link cursor-pointer" data-page="3" data-audio-path="../audios/products.mp3"><a> <span
+                                class="mobile-toc-number">03</span>Products</a></li>
+                    <li class="tb-link cursor-pointer" data-page="4"><a><span
+                                class="mobile-toc-number">04</span>3D Experience</a></li>
+                    <li class="tb-link cursor-pointer" data-page="5"><a><span
+                                class="mobile-toc-number">05</span>Ward Furniture</a></li>
+                    <li class="tb-link cursor-pointer" data-page="11"><a><span
+                                class="mobile-toc-number">06</span>ICU & Critical Care</a></li>
+                    <li class="tb-link cursor-pointer" data-page="13"><a><span
+                                class="mobile-toc-number">07</span>Labor & Maternity</a></li>
+                    <li class="tb-link cursor-pointer" data-page="15"><a><span
+                                class="mobile-toc-number">08</span>Emergency & Patient Transfer</a></li>
+                    <li class="tb-link cursor-pointer" data-page="21"><a><span
+                                class="mobile-toc-number">09</span>Medical Trolleys</a></li>
+                    <li class="tb-link cursor-pointer" data-page="28"><a><span
+                                class="mobile-toc-number">10</span>Examination & Consultation</a></li>
+                    <li class="tb-link cursor-pointer" data-page="33"><a><span
+                                class="mobile-toc-number">11</span>Stainless Steel Furniture & Ward Accessories</a></li>
+                    <li class="tb-link cursor-pointer" data-page="37"><a><span
+                                class="mobile-toc-number">12</span>General Furniture</a></li>
+                    <li class="tb-link cursor-pointer" data-page="39"><a><span
+                                class="mobile-toc-number">13</span>Accessories</a></li>
+                    <li class="tb-link cursor-pointer" data-page="42"><a><span
+                                class="mobile-toc-number">14</span>Contact Us</a></li>
                 </ul>
             </nav>
 
@@ -1005,122 +909,74 @@
 
 
             <!-- Share Modal -->
+            <!-- Share Modal - Redesigned Premium Theme -->
             <div id="shareModal"
-                class="hidden fixed w-[92vw] max-w-[32vw] bg-gradient-to-br from-emerald-50 to-green-100 rounded-[1.5vw] shadow-2xl z-[1111111111] overflow-hidden border border-green-200"
+                class="hidden fixed w-[92vw] max-w-[28vw] bg-white rounded-2xl shadow-2xl z-[1111111111] overflow-hidden border border-gray-200"
                 style="top: 50%; left: 50%; transform: translate(-50%,-50%);">
 
-                <!-- Decorative Top Bar -->
-                <div class="h-[0.4vw] bg-gradient-to-r from-teal-500 via-teal-500 to-teal-500"></div>
-
-                <!-- Header -->
-                <div class="flex justify-between items-center px-[1.5vw] py-[1vw]">
-                    <div class="flex items-center gap-[0.5vw]">
-                        <div
-                            class="w-[2vw] h-[2vw] bg-gradient-to-br from-teal-500 to-teal-500  rounded-full flex items-center justify-center shadow-lg">
-                            <svg class="w-[1vw] h-[1vw] text-white" fill="none" stroke="currentColor"
-                                viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" />
-                            </svg>
-                        </div>
-                        <h2
-                            class="text-[1.1vw] font-bold bg-gradient-to-r from-teal-500 to-teal-500 bg-clip-text text-transparent">
-                            Spread the Word</h2>
+                <!-- Header Block with Orange Gradient Background -->
+                <div class="bg-gradient-to-r from-[#E67429] to-[#ff8b3d] px-[1.5vw] py-[1.2vw] flex justify-between items-center relative">
+                    <div class="flex flex-col text-white">
+                        <!-- <span class="text-[0.65vw] uppercase tracking-widest text-white! font-bold">Document Access</span> -->
+                        <h2 class="text-white font-semibold text-[1.3vw] mt-[0.1vw]">Share Catalogue</h2>
                     </div>
                     <button id="closeBtn"
-                        class="w-[1.8vw] h-[1.8vw] flex items-center justify-center rounded-full bg-white hover:bg-red-50 text-gray-400 hover:text-red-500 transition-all duration-300 shadow-sm hover:shadow-md hover:rotate-90 cursor-pointer">
-                        <svg class="w-[0.8vw] h-[0.8vw]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
-                                d="M6 18L18 6M6 6l12 12" />
+                        class="w-[1.8vw] h-[1.8vw] flex items-center justify-center rounded-full bg-white text-[#242424] hover:bg-white/90 transition-all duration-200 cursor-pointer shadow-sm">
+                        <svg class="w-[0.8vw] h-[0.8vw]" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                            <path d="M6 18L18 6M6 6l12 12" />
                         </svg>
                     </button>
                 </div>
 
-                <!-- Content -->
-                <div class="px-[1.5vw] pb-[1.5vw]">
+                <!-- Content Area -->
+                <div class="p-[1.5vw] space-y-[1.2vw]">
+                    
 
-                    <!-- Link Section -->
-                    <div class="bg-white rounded-[1vw] p-[1vw] shadow-sm border border-green-100 mb-[1vw]">
-                        <label
-                            class="text-[0.7vw] font-semibold text-teal-600 uppercase tracking-wider mb-[0.5vw] block">🔗
-                            Shareable Link</label>
-                        <div class="flex gap-[0.8vw]">
-                            <div class="flex-1 relative">
-                                <input id="shareInput" type="text" readonly
-                                    class="w-full h-[2.5vw] px-[1vw] border-2 border-green-200 rounded-[0.6vw] text-[0.75vw] font-mono bg-green-50/50 focus:bg-white focus:border-emerald-500 focus:outline-none transition-all duration-300 text-gray-700"
-                                    placeholder="Your link will appear here..." />
-                            </div>
+                    <!-- Link Copy Section -->
+                    <div class="space-y-[0.4vw]">
+                        <span class="text-[0.65vw] font-bold text-gray-500 uppercase tracking-wider block">Document URL</span>
+                        <div class="flex gap-[0.6vw]">
+                            <input id="shareInput" type="text" readonly
+                                class="flex-1 h-[2.4vw] px-[0.8vw] bg-white border border-gray-200 rounded-lg text-[0.75vw] font-mono text-gray-700 focus:outline-none focus:border-[#E67429] transition-all"
+                                placeholder="Catalog link" />
                             <div class="relative">
-                                <button id="copyBtn"
-                                    class="h-[2.5vw] px-[1.5vw] flex items-center gap-[0.4vw] bg-gradient-to-r from-teal-600 to-teal-600 hover:from-teal-700 hover:to-teal-700 text-white rounded-[0.6vw] text-[0.75vw] font-bold transition-all duration-300 active:scale-95 shadow-lg hover:shadow-xl cursor-pointer group">
-                                    <svg class="w-[1vw] h-[1vw] group-hover:rotate-12 transition-transform" fill="none"
-                                        stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
-                                    </svg>
-                                    Copy Link
+                                <button id="copyBtn" class="h-[2.4vw] px-[1vw] bg-[#E67429] hover:bg-[#c35c1a] text-white font-semibold text-[0.75vw] rounded-lg transition-all cursor-pointer">
+                                    Copy
                                 </button>
                                 <span id="copiedMsg"
-                                    class="hidden absolute -top-[2.5vw] left-1/2 -translate-x-1/2 bg-emerald-600 text-white px-[1vw] py-[0.4vw] rounded-[0.4vw] text-[0.7vw] font-semibold whitespace-nowrap shadow-lg animate-bounce">
-                                    ✓ Got it!
+                                    class="hidden absolute -top-[2.5vw] left-1/2 -translate-x-1/2 bg-green-600 text-white px-[1vw] py-[0.4vw] rounded-[0.4vw] text-[0.7vw] font-semibold whitespace-nowrap shadow-lg">
+                                    Link copied!
                                 </span>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Social Share Section -->
-                    <div class="bg-white rounded-[1vw] p-[1vw] shadow-sm border border-green-100">
-                        <span
-                            class="text-[0.7vw] font-semibold text-teal-600 uppercase tracking-wider mb-[0.8vw] block">
-                            Share Via
-                        </span>
-                        <div class="flex gap-[0.8vw]">
-                            <!-- WhatsApp -->
-                            <button id="whatsappBtn"
-                                class="group flex-1 h-[3vw] flex flex-col items-center justify-center bg-gradient-to-br from-green-50 to-green-100 hover:from-green-500 hover:to-green-600 border-2 border-green-200 hover:border-green-500 rounded-[0.8vw] transition-all duration-300 hover:shadow-lg hover:-translate-y-[0.2vw] cursor-pointer"
-                                title="WhatsApp">
-                                <img src="../global assets/icons/whatsapp-icon.svg" alt="whatsapp"
-                                    class="w-[1.2vw] h-[1.2vw] group-hover:scale-110 transition-transform" />
-                                <span
-                                    class="text-[0.5vw] font-medium text-green-700 group-hover:text-white mt-[0.2vw]">WhatsApp</span>
-                            </button>
-
-                            <!-- Twitter -->
-                            <button id="twitterBtn"
-                                class="group flex-1 h-[3vw] flex flex-col items-center justify-center bg-gradient-to-br from-sky-50 to-sky-100 hover:from-sky-500 hover:to-sky-600 border-2 border-sky-200 hover:border-sky-500 rounded-[0.8vw] transition-all duration-300 hover:shadow-lg hover:-translate-y-[0.2vw] cursor-pointer"
-                                title="Twitter">
-                                <img src="../global assets/icons/twitter-icon.svg" alt="twitter"
-                                    class="w-[1.2vw] h-[1.2vw] group-hover:scale-110 transition-transform" />
-                                <span
-                                    class="text-[0.5vw] font-medium text-sky-700 group-hover:text-white mt-[0.2vw]">Twitter</span>
-                            </button>
-
-                            <!-- Facebook -->
-                            <button id="facebookBtn"
-                                class="group flex-1 h-[3vw] flex flex-col items-center justify-center bg-gradient-to-br from-blue-50 to-blue-100 hover:from-blue-600 hover:to-blue-700 border-2 border-blue-200 hover:border-blue-600 rounded-[0.8vw] transition-all duration-300 hover:shadow-lg hover:-translate-y-[0.2vw] cursor-pointer"
-                                title="Facebook">
-                                <img src="../global assets/icons/facebook-icon.svg" alt="facebook"
-                                    class="w-[1.2vw] h-[1.2vw] group-hover:scale-110 transition-transform" />
-                                <span
-                                    class="text-[0.5vw] font-medium text-blue-700 group-hover:text-white mt-[0.2vw]">Facebook</span>
-                            </button>
-
-                            <!-- LinkedIn -->
-                            <button id="linkedInBtn"
-                                class="group flex-1 h-[3vw] flex flex-col items-center justify-center bg-gradient-to-br from-indigo-50 to-indigo-100 hover:from-indigo-600 hover:to-indigo-700 border-2 border-indigo-200 hover:border-indigo-600 rounded-[0.8vw] transition-all duration-300 hover:shadow-lg hover:-translate-y-[0.2vw] cursor-pointer"
-                                title="LinkedIn">
-                                <img src="../global assets/icons/linked-in-icon.svg" alt="linkedin"
-                                    class="w-[1.2vw] h-[1.2vw] group-hover:scale-110 transition-transform" />
-                                <span
-                                    class="text-[0.5vw] font-medium text-indigo-700 group-hover:text-white mt-[0.2vw]">LinkedIn</span>
-                            </button>
-                        </div>
+                    <!-- Separator with Text -->
+                    <div class="flex items-center justify-center my-[1vw]">
+                        <div class="flex-grow border-t border-[#E67429]/30"></div>
+                        <span class="mx-[0.8vw] text-[0.65vw] font-bold text-[#E67429] uppercase tracking-wider">Send via</span>
+                        <div class="flex-grow border-t border-[#E67429]/30"></div>
                     </div>
-                </div>
 
-                <!-- Bottom Decorative Element -->
-                <div
-                    class="absolute bottom-0 left-0 right-0 h-[0.2vw] bg-gradient-to-r from-transparent via-green-400 to-transparent opacity-50">
+                    <!-- Social channels -->
+                    <div class="grid grid-cols-4 gap-[0.6vw]">
+                        <button id="whatsappBtn" class="flex flex-col items-center justify-center p-[0.6vw] bg-white border border-gray-200 hover:border-green-500/50 hover:bg-green-50/20 rounded-xl transition-all cursor-pointer group shadow-sm">
+                            <i class="fa-brands fa-whatsapp text-[1.4vw] text-green-500 mb-[0.2vw]"></i>
+                            <span class="text-[0.6vw] text-gray-500 group-hover:text-gray-800">WhatsApp</span>
+                        </button>
+                        <button id="twitterBtn" class="flex flex-col items-center justify-center p-[0.6vw] bg-white border border-gray-200 hover:border-gray-400 hover:bg-gray-50 rounded-xl transition-all cursor-pointer group shadow-sm">
+                            <i class="fa-brands fa-x-twitter text-[1.4vw] text-black mb-[0.2vw]"></i>
+                            <span class="text-[0.6vw] text-gray-500 group-hover:text-gray-800">Twitter</span>
+                        </button>
+                        <button id="facebookBtn" class="flex flex-col items-center justify-center p-[0.6vw] bg-white border border-gray-200 hover:border-blue-500/50 hover:bg-blue-50/20 rounded-xl transition-all cursor-pointer group shadow-sm">
+                            <i class="fa-brands fa-facebook text-[1.4vw] text-blue-600 mb-[0.2vw]"></i>
+                            <span class="text-[0.6vw] text-gray-500 group-hover:text-gray-800">Facebook</span>
+                        </button>
+                        <button id="linkedInBtn" class="flex flex-col items-center justify-center p-[0.6vw] bg-white border border-gray-200 hover:border-blue-400/50 hover:bg-blue-50/20 rounded-xl transition-all cursor-pointer group shadow-sm">
+                            <i class="fa-brands fa-linkedin text-[1.4vw] text-blue-500 mb-[0.2vw]"></i>
+                            <span class="text-[0.6vw] text-gray-500 group-hover:text-gray-800">LinkedIn</span>
+                        </button>
+                    </div>
                 </div>
             </div>
 
@@ -1407,10 +1263,18 @@
 
                     <!-- ******************************* Front Page 25 Start ***************************** -->
 
+
+
+                    <!-- ******************************* Front Page 25 end ***************************** -->
+
+
+                    <!-- *******************************  Page 1 Start *************************** -->
                     <div class="page">
+                        <img src="../global assets/Images/commonThings/left-page-shadow.svg" alt="left-page-shadow" class="gutter-shadow shadow-left absolute h-[100%] top-[0%] right-[-1%] z-[4]" />
+                        <img src="../global assets/Images/commonThings/right-page-shadow.svg" alt="right-page-shadow" class="gutter-shadow shadow-right absolute h-[100%] top-[0%] left-[-1%] z-[4]" />
                         <img src="../global assets/Images/commonThings/logo.svg" alt="logo"
                             class="absolute w-[30%] top-[2%] left-[2%] z-[3]" />
-                        <img src="../global assets/Images/home-page/background-image.webp" alt="background-image"
+                        <img src="../global assets/Images/Thumbnail-Images/page-1.webp" alt="background-image"
                             class="absolute w-[100%] top-[0%] left-[0%] h-[100%]" />
                         <img src="../global assets/Images/commonThings/website-link.svg" alt="website-link"
                             class="absolute w-[30%] top-[1.25%] right-[3.5%]" />
@@ -1435,15 +1299,12 @@
                         <img src="../global assets/Images/home-page/bottom-icons.svg" alt="bottom-icons"
                             class="absolute w-[80%] bottom-[1%] left-[10%]" />
                     </div>
-
-                    <!-- ******************************* Front Page 25 end ***************************** -->
-
-
-                    <!-- *******************************  Page 1 Start *************************** -->
                     <!-- *******************************  Page 1 end ***************************** -->
                     <!-- *******************************  Page 2 Start *************************** -->
 
                     <div class="page">
+                        <img src="../global assets/Images/commonThings/left-page-shadow.svg" alt="left-page-shadow" class="gutter-shadow shadow-left absolute h-[100%] top-[0%] right-[-1%] z-[4]" />
+                        <img src="../global assets/Images/commonThings/right-page-shadow.svg" alt="right-page-shadow" class="gutter-shadow shadow-right absolute h-[100%] top-[0%] left-[-1%] z-[4]" />
                         <img src="../global assets/Images/about-us/logo.svg" alt="logo"
                             class="absolute w-[30%] top-[2%] left-[2%] z-[3]" />
                         <img src="../global assets/Images/about-us/background-image.webp" alt="background-image"
@@ -1451,15 +1312,15 @@
                         <img src="../global assets/Images/about-us/about-us-text.svg" alt="website-link"
                             class="absolute w-[20%] top-[1.25%] right-[3.5%]" />
                         <img src="../global assets/Images/about-us/content.svg" alt="model-no-text"
-                            class="absolute w-[75%] top-[10%] left-[12.5%]" />
+                            class="absolute w-[75%] top-[10%] left-[12.5%] page-2-left" />
                         <img src="../global assets/Images/about-us/white-bg.webp" alt="heartbeat-line"
                             class="absolute w-[90%] top-[34%] right-[5%]" />
                         <img src="../global assets/Images/about-us/our-vision.svg" alt="vision"
-                            class="absolute w-[28%] top-[38%] left-[8%]" />
+                            class="absolute w-[28%] top-[38%] left-[8%] page-2-up" />
                         <img src="../global assets/Images/about-us/our-mission.svg" alt="mission"
-                            class="absolute w-[28%] top-[38%] left-[36%]" />
+                            class="absolute w-[28%] top-[38%] left-[36%] page-2-left" />
                         <img src="../global assets/Images/about-us/our-values.svg" alt="mission"
-                            class="absolute w-[28%] top-[38%] left-[64%]" />
+                            class="absolute w-[28%] top-[38%] left-[64%] page-2-right" />
                         <img src="../global assets/Images/about-us/bottom-icons.svg" alt="bottom-icons"
                             class="absolute w-[80%] top-[65%] left-[10%]" />
                         <img src="../global assets/Images/about-us/bottom-image.webp" alt="bottom-icons"
@@ -1470,6 +1331,8 @@
                     <!-- *******************************  Page 3 Start *************************** -->
 
                     <div class="page">
+                        <img src="../global assets/Images/commonThings/left-page-shadow.svg" alt="left-page-shadow" class="gutter-shadow shadow-left absolute h-[100%] top-[0%] right-[-1%] z-[4]" />
+                        <img src="../global assets/Images/commonThings/right-page-shadow.svg" alt="right-page-shadow" class="gutter-shadow shadow-right absolute h-[100%] top-[0%] left-[-1%] z-[4]" />
                         <img src="../global assets/Images/table-of-content/background-image.webp" alt="background-image"
                             class="absolute w-[100%] top-[0%] left-[0%] h-[100%]" />
                         <img src="../global assets/Images/table-of-content/logo.svg" alt="logo"
@@ -1503,6 +1366,8 @@
                     <!-- *******************************  Page 3 end ***************************** -->
                     <!-- *******************************  Page 4 Start *************************** -->
                      <div class="page">
+                        <img src="../global assets/Images/commonThings/left-page-shadow.svg" alt="left-page-shadow" class="gutter-shadow shadow-left absolute h-[100%] top-[0%] right-[-1%] z-[4]" />
+                        <img src="../global assets/Images/commonThings/right-page-shadow.svg" alt="right-page-shadow" class="gutter-shadow shadow-right absolute h-[100%] top-[0%] left-[-1%] z-[4]" />
                         <img src="../global assets/Images/commonThings/logo.svg" alt="logo"
                             class="absolute w-[30%] top-[2%] left-[2%] z-[3]" />
                         <img src="../global assets/Images/3D-experience-center/background-image.webp" alt="background-image"
@@ -1553,6 +1418,8 @@
                     <!-- *******************************  Page 4 end ***************************** -->
                     <!-- *******************************  Page 5 Start *************************** -->
                     <div class="page">
+                        <img src="../global assets/Images/commonThings/left-page-shadow.svg" alt="left-page-shadow" class="gutter-shadow shadow-left absolute h-[100%] top-[0%] right-[-1%] z-[4]" />
+                        <img src="../global assets/Images/commonThings/right-page-shadow.svg" alt="right-page-shadow" class="gutter-shadow shadow-right absolute h-[100%] top-[0%] left-[-1%] z-[4]" />
                         <img src="../global assets/Images/commonThings/logo.svg" alt="logo"
                             class="absolute w-[30%] top-[2%] left-[2%] z-[3]" />
                         <img src="../global assets/Images/commonThings/background-image.webp" alt="background-image"
@@ -1582,6 +1449,8 @@
                     <!-- *******************************  Page 5 end ***************************** -->
                     <!-- *******************************  Page 6 Start ***************************** -->
                     <div class="page">
+                        <img src="../global assets/Images/commonThings/left-page-shadow.svg" alt="left-page-shadow" class="gutter-shadow shadow-left absolute h-[100%] top-[0%] right-[-1%] z-[4]" />
+                        <img src="../global assets/Images/commonThings/right-page-shadow.svg" alt="right-page-shadow" class="gutter-shadow shadow-right absolute h-[100%] top-[0%] left-[-1%] z-[4]" />
                         <img src="../global assets/Images/commonThings/logo.svg" alt="logo"
                             class="absolute w-[30%] top-[2%] left-[2%] z-[3]" />
                         <img src="../global assets/Images/commonThings/background-image.webp" alt="background-image"
@@ -1613,6 +1482,8 @@
                     <!-- *******************************  Page 6 end ***************************** -->
                     <!-- *******************************  Page 7 Start *************************** -->
                     <div class="page">
+                        <img src="../global assets/Images/commonThings/left-page-shadow.svg" alt="left-page-shadow" class="gutter-shadow shadow-left absolute h-[100%] top-[0%] right-[-1%] z-[4]" />
+                        <img src="../global assets/Images/commonThings/right-page-shadow.svg" alt="right-page-shadow" class="gutter-shadow shadow-right absolute h-[100%] top-[0%] left-[-1%] z-[4]" />
                         <img src="../global assets/Images/commonThings/logo.svg" alt="logo"
                             class="absolute w-[30%] top-[2%] left-[2%] z-[3]" />
                         <img src="../global assets/Images/commonThings/background-image.webp" alt="background-image"
@@ -1651,6 +1522,8 @@
                     <!-- *******************************  Page 7 end ***************************** -->
                     <!-- *******************************  Page 8 Start *************************** -->
                     <div class="page">
+                        <img src="../global assets/Images/commonThings/left-page-shadow.svg" alt="left-page-shadow" class="gutter-shadow shadow-left absolute h-[100%] top-[0%] right-[-1%] z-[4]" />
+                        <img src="../global assets/Images/commonThings/right-page-shadow.svg" alt="right-page-shadow" class="gutter-shadow shadow-right absolute h-[100%] top-[0%] left-[-1%] z-[4]" />
                         <img src="../global assets/Images/commonThings/logo.svg" alt="logo"
                             class="absolute w-[30%] top-[2%] left-[2%] z-[3]" />
                         <img src="../global assets/Images/commonThings/background-image.webp" alt="background-image"
@@ -1694,6 +1567,8 @@
                     <!-- *******************************  Page 8 end ***************************** -->
                     <!-- *******************************  Page 9 Start *************************** -->
                     <div class="page">
+                        <img src="../global assets/Images/commonThings/left-page-shadow.svg" alt="left-page-shadow" class="gutter-shadow shadow-left absolute h-[100%] top-[0%] right-[-1%] z-[4]" />
+                        <img src="../global assets/Images/commonThings/right-page-shadow.svg" alt="right-page-shadow" class="gutter-shadow shadow-right absolute h-[100%] top-[0%] left-[-1%] z-[4]" />
                         <img src="../global assets/Images/commonThings/logo.svg" alt="logo"
                             class="absolute w-[30%] top-[2%] left-[2%] z-[3]" />
                         <img src="../global assets/Images/commonThings/background-image.webp" alt="background-image"
@@ -1732,6 +1607,8 @@
                     <!-- *******************************  Page 9 end ***************************** -->
                     <!-- *******************************  Page 10 Start *************************** -->
                     <div class="page">
+                        <img src="../global assets/Images/commonThings/left-page-shadow.svg" alt="left-page-shadow" class="gutter-shadow shadow-left absolute h-[100%] top-[0%] right-[-1%] z-[4]" />
+                        <img src="../global assets/Images/commonThings/right-page-shadow.svg" alt="right-page-shadow" class="gutter-shadow shadow-right absolute h-[100%] top-[0%] left-[-1%] z-[4]" />
                         <img src="../global assets/Images/commonThings/logo.svg" alt="logo"
                             class="absolute w-[30%] top-[2%] left-[2%] z-[3]" />
                         <img src="../global assets/Images/commonThings/background-image.webp" alt="background-image"
@@ -1771,6 +1648,8 @@
                     <!-- ICU & Critical Care  -->
                     <!-- *******************************  Page 11 Start *************************** -->
                     <div class="page">
+                        <img src="../global assets/Images/commonThings/left-page-shadow.svg" alt="left-page-shadow" class="gutter-shadow shadow-left absolute h-[100%] top-[0%] right-[-1%] z-[4]" />
+                        <img src="../global assets/Images/commonThings/right-page-shadow.svg" alt="right-page-shadow" class="gutter-shadow shadow-right absolute h-[100%] top-[0%] left-[-1%] z-[4]" />
                         <img src="../global assets/Images/commonThings/logo.svg" alt="logo"
                             class="absolute w-[30%] top-[2%] left-[2%] z-[3]" />
                         <img src="../global assets/Images/commonThings/background-image.webp" alt="background-image"
@@ -1804,6 +1683,8 @@
                     <!-- *******************************  Page 11 end ***************************** -->
                     <!-- *******************************  Page 12 Start *************************** -->
                     <div class="page">
+                        <img src="../global assets/Images/commonThings/left-page-shadow.svg" alt="left-page-shadow" class="gutter-shadow shadow-left absolute h-[100%] top-[0%] right-[-1%] z-[4]" />
+                        <img src="../global assets/Images/commonThings/right-page-shadow.svg" alt="right-page-shadow" class="gutter-shadow shadow-right absolute h-[100%] top-[0%] left-[-1%] z-[4]" />
                         <img src="../global assets/Images/commonThings/logo.svg" alt="logo"
                             class="absolute w-[30%] top-[2%] left-[2%] z-[3]" />
                         <img src="../global assets/Images/commonThings/background-image.webp" alt="background-image"
@@ -1836,6 +1717,8 @@
 
                     <!-- *******************************  Page 13 Start *************************** -->
                     <div class="page">
+                        <img src="../global assets/Images/commonThings/left-page-shadow.svg" alt="left-page-shadow" class="gutter-shadow shadow-left absolute h-[100%] top-[0%] right-[-1%] z-[4]" />
+                        <img src="../global assets/Images/commonThings/right-page-shadow.svg" alt="right-page-shadow" class="gutter-shadow shadow-right absolute h-[100%] top-[0%] left-[-1%] z-[4]" />
                         <img src="../global assets/Images/commonThings/logo.svg" alt="logo"
                             class="absolute w-[30%] top-[2%] left-[2%] z-[3]" />
                         <img src="../global assets/Images/commonThings/background-image.webp" alt="background-image"
@@ -1874,6 +1757,8 @@
                     <!-- *******************************  Page 13 end ***************************** -->
                     <!-- *******************************  Page 14 Start *************************** -->
                     <div class="page">
+                        <img src="../global assets/Images/commonThings/left-page-shadow.svg" alt="left-page-shadow" class="gutter-shadow shadow-left absolute h-[100%] top-[0%] right-[-1%] z-[4]" />
+                        <img src="../global assets/Images/commonThings/right-page-shadow.svg" alt="right-page-shadow" class="gutter-shadow shadow-right absolute h-[100%] top-[0%] left-[-1%] z-[4]" />
                         <img src="../global assets/Images/commonThings/logo.svg" alt="logo"
                             class="absolute w-[30%] top-[2%] left-[2%] z-[3]" />
                         <img src="../global assets/Images/commonThings/background-image-2.webp" alt="background-image"
@@ -1916,6 +1801,8 @@
 
                     <!-- *******************************  Page 15 Start *************************** -->
                     <div class="page">
+                        <img src="../global assets/Images/commonThings/left-page-shadow.svg" alt="left-page-shadow" class="gutter-shadow shadow-left absolute h-[100%] top-[0%] right-[-1%] z-[4]" />
+                        <img src="../global assets/Images/commonThings/right-page-shadow.svg" alt="right-page-shadow" class="gutter-shadow shadow-right absolute h-[100%] top-[0%] left-[-1%] z-[4]" />
                         <img src="../global assets/Images/commonThings/logo.svg" alt="logo"
                             class="absolute w-[30%] top-[2%] left-[2%] z-[3]" />
                         <img src="../global assets/Images/commonThings/background-image.webp" alt="background-image"
@@ -1949,6 +1836,8 @@
                     <!-- *******************************  Page 15 end ***************************** -->
                     <!-- *******************************  Page 16 Start *************************** -->
                     <div class="page">
+                        <img src="../global assets/Images/commonThings/left-page-shadow.svg" alt="left-page-shadow" class="gutter-shadow shadow-left absolute h-[100%] top-[0%] right-[-1%] z-[4]" />
+                        <img src="../global assets/Images/commonThings/right-page-shadow.svg" alt="right-page-shadow" class="gutter-shadow shadow-right absolute h-[100%] top-[0%] left-[-1%] z-[4]" />
                         <img src="../global assets/Images/commonThings/logo.svg" alt="logo"
                             class="absolute w-[30%] top-[2%] left-[2%] z-[3]" />
                         <img src="../global assets/Images/commonThings/background-image.webp" alt="background-image"
@@ -1983,6 +1872,8 @@
                     <!-- *******************************  Page 17 Start *************************** -->
 
                     <div class="page">
+                        <img src="../global assets/Images/commonThings/left-page-shadow.svg" alt="left-page-shadow" class="gutter-shadow shadow-left absolute h-[100%] top-[0%] right-[-1%] z-[4]" />
+                        <img src="../global assets/Images/commonThings/right-page-shadow.svg" alt="right-page-shadow" class="gutter-shadow shadow-right absolute h-[100%] top-[0%] left-[-1%] z-[4]" />
                         <img src="../global assets/Images/commonThings/logo.svg" alt="logo"
                             class="absolute w-[30%] top-[2%] left-[2%] z-[3]" />
                         <img src="../global assets/Images/commonThings/background-image.webp" alt="background-image"
@@ -2014,6 +1905,8 @@
                     <!-- *******************************  Page 17 end ***************************** -->
                     <!-- *******************************  Page 18 Start *************************** -->
                     <div class="page">
+                        <img src="../global assets/Images/commonThings/left-page-shadow.svg" alt="left-page-shadow" class="gutter-shadow shadow-left absolute h-[100%] top-[0%] right-[-1%] z-[4]" />
+                        <img src="../global assets/Images/commonThings/right-page-shadow.svg" alt="right-page-shadow" class="gutter-shadow shadow-right absolute h-[100%] top-[0%] left-[-1%] z-[4]" />
                         <img src="../global assets/Images/commonThings/logo.svg" alt="logo"
                             class="absolute w-[30%] top-[2%] left-[2%] z-[3]" />
                         <img src="../global assets/Images/commonThings/background-image.webp" alt="background-image"
@@ -2043,12 +1936,13 @@
                     <!-- *******************************  Page 18 end ***************************** -->
                     <!-- *******************************  Page 19 Start *************************** -->
                     <div class="page">
+                        <img src="../global assets/Images/commonThings/left-page-shadow.svg" alt="left-page-shadow" class="gutter-shadow shadow-left absolute h-[100%] top-[0%] right-[-1%] z-[4]" />
+                        <img src="../global assets/Images/commonThings/right-page-shadow.svg" alt="right-page-shadow" class="gutter-shadow shadow-right absolute h-[100%] top-[0%] left-[-1%] z-[4]" />
                         <img src="../global assets/Images/commonThings/logo.svg" alt="logo"
                             class="absolute w-[30%] top-[2%] left-[2%] z-[3]" />
                         <img src="../global assets/Images/commonThings/background-image-2.webp" alt="background-image"
                             class="absolute w-[100%] top-[0%] left-[0%]" />
-                        <img src="../global assets/Images/commonThings/left-page-shadow.svg" alt="right-page-shadow"
-                            class="absolute  h-[100%] top-[0%] right-[-1%] z-[4]" />
+                        
                         <img src="../global assets/Images/products/emergency-and-patient-transfer/emergency-and-patient-transfer-top-text.svg"
                             alt="ward-furniture-top-text" class="absolute w-[65%] top-[2%] right-[0%]" />
                         <img src="../global assets/Images/commonThings/model-no-text.svg" alt="model-no-text"
@@ -2082,14 +1976,15 @@
                     <!-- *******************************  Page 19 end ***************************** -->
                     <!-- *******************************  Page 20 Start *************************** -->
                     <div class="page">
+                        <img src="../global assets/Images/commonThings/left-page-shadow.svg" alt="left-page-shadow" class="gutter-shadow shadow-left absolute h-[100%] top-[0%] right-[-1%] z-[4]" />
+                        <img src="../global assets/Images/commonThings/right-page-shadow.svg" alt="right-page-shadow" class="gutter-shadow shadow-right absolute h-[100%] top-[0%] left-[-1%] z-[4]" />
                         <img src="../global assets/Images/commonThings/logo.svg" alt="logo"
                             class="absolute w-[30%] top-[2%] left-[2%] z-[3]" />
                         <img src="../global assets/Images/commonThings/background-image-2.webp" alt="background-image"
                             class="absolute w-[100%] top-[0%] left-[0%]" />
                         <img src="../global assets/Images/products/emergency-and-patient-transfer/emergency-and-patient-transfer-top-text.svg"
                             alt="ward-furniture-top-text" class="absolute w-[65%] top-[2%] right-[0%]" />
-                        <img src="../global assets/Images/commonThings/right-page-shadow.svg" alt="right-page-shadow"
-                            class="absolute  h-[100%] top-[0%] left-[-1%] z-[4]" />
+                        
 
                         <img src="../global assets/Images/commonThings/model-no-text.svg" alt="model-no-text"
                             class="absolute w-[12%] top-[11%] left-[5%]" />
@@ -2115,6 +2010,8 @@
                     </div>
                     <!-- *******************************  Page 20 end ***************************** -->
                     <div class="page">
+                        <img src="../global assets/Images/commonThings/left-page-shadow.svg" alt="left-page-shadow" class="gutter-shadow shadow-left absolute h-[100%] top-[0%] right-[-1%] z-[4]" />
+                        <img src="../global assets/Images/commonThings/right-page-shadow.svg" alt="right-page-shadow" class="gutter-shadow shadow-right absolute h-[100%] top-[0%] left-[-1%] z-[4]" />
                         <img src="../global assets/Images/commonThings/logo.svg" alt="logo"
                             class="absolute w-[30%] top-[2%] left-[2%] z-[3]" />
                         <img src="../global assets/Images/commonThings/background-image-2.webp" alt="background-image"
@@ -2148,12 +2045,13 @@
                     </div>
                     <!-- *******************************  Page 21 Start *************************** -->
                     <div class="page">
+                        <img src="../global assets/Images/commonThings/left-page-shadow.svg" alt="left-page-shadow" class="gutter-shadow shadow-left absolute h-[100%] top-[0%] right-[-1%] z-[4]" />
+                        <img src="../global assets/Images/commonThings/right-page-shadow.svg" alt="right-page-shadow" class="gutter-shadow shadow-right absolute h-[100%] top-[0%] left-[-1%] z-[4]" />
                         <img src="../global assets/Images/commonThings/logo.svg" alt="logo"
                             class="absolute w-[30%] top-[2%] left-[2%] z-[3]" />
                         <img src="../global assets/Images/commonThings/background-image-2.webp" alt="background-image"
                             class="absolute w-[100%] top-[0%] left-[0%]" />
-                        <img src="../global assets/Images/commonThings/left-page-shadow.svg" alt="right-page-shadow"
-                            class="absolute  h-[100%] top-[0%] right-[-1%] z-[4]" />
+                        
                         <img src="../global assets/Images/products/medical-trolleys/medical-trolleys-top-text.svg"
                             alt="ward-furniture-top-text" class="absolute w-[65%] top-[2%] right-[0%]" />
                         <img src="../global assets/Images/commonThings/model-no-text.svg" alt="model-no-text"
@@ -2179,6 +2077,8 @@
                     <!-- *******************************  Page 21 end ***************************** -->
                     <!-- *******************************  Page 22 Start *************************** -->
                     <div class="page">
+                        <img src="../global assets/Images/commonThings/left-page-shadow.svg" alt="left-page-shadow" class="gutter-shadow shadow-left absolute h-[100%] top-[0%] right-[-1%] z-[4]" />
+                        <img src="../global assets/Images/commonThings/right-page-shadow.svg" alt="right-page-shadow" class="gutter-shadow shadow-right absolute h-[100%] top-[0%] left-[-1%] z-[4]" />
                         <img src="../global assets/Images/commonThings/logo.svg" alt="logo"
                             class="absolute w-[30%] top-[2%] left-[2%] z-[3]" />
                         <img src="../global assets/Images/commonThings/background-image.webp" alt="background-image"
@@ -2217,12 +2117,13 @@
                     <!-- *******************************  Page 22 end ***************************** -->
                     <!-- *******************************  Page 23 Start *************************** -->
                     <div class="page">
+                        <img src="../global assets/Images/commonThings/left-page-shadow.svg" alt="left-page-shadow" class="gutter-shadow shadow-left absolute h-[100%] top-[0%] right-[-1%] z-[4]" />
+                        <img src="../global assets/Images/commonThings/right-page-shadow.svg" alt="right-page-shadow" class="gutter-shadow shadow-right absolute h-[100%] top-[0%] left-[-1%] z-[4]" />
                         <img src="../global assets/Images/commonThings/logo.svg" alt="logo"
                             class="absolute w-[30%] top-[2%] left-[2%] z-[3]" />
                         <img src="../global assets/Images/commonThings/background-image-2.webp" alt="background-image"
                             class="absolute w-[100%] top-[0%] left-[0%]" />
-                        <img src="../global assets/Images/commonThings/right-page-shadow.svg" alt="right-page-shadow"
-                            class="absolute  h-[100%] top-[0%] left-[-1%] z-[4]" />
+                        
 
                         <img src="../global assets/Images/products/medical-trolleys/medical-trolleys-top-text.svg"
                             alt="ward-furniture-top-text" class="absolute w-[65%] top-[2%] right-[0%]" />
@@ -2259,6 +2160,8 @@
                     <!-- *******************************  Page 23 end ***************************** -->
                     <!-- *******************************  Page 24 Start *************************** -->
                     <div class="page">
+                        <img src="../global assets/Images/commonThings/left-page-shadow.svg" alt="left-page-shadow" class="gutter-shadow shadow-left absolute h-[100%] top-[0%] right-[-1%] z-[4]" />
+                        <img src="../global assets/Images/commonThings/right-page-shadow.svg" alt="right-page-shadow" class="gutter-shadow shadow-right absolute h-[100%] top-[0%] left-[-1%] z-[4]" />
                         <img src="../global assets/Images/commonThings/logo.svg" alt="logo"
                             class="absolute w-[30%] top-[2%] left-[2%] z-[3]" />
                         <img src="../global assets/Images/commonThings/background-image-2.webp" alt="background-image"
@@ -2298,6 +2201,8 @@
                     <!-- *******************************  Page 24 end ***************************** -->
                     <!-- *******************************  Page 25 Start *************************** -->
                     <div class="page">
+                        <img src="../global assets/Images/commonThings/left-page-shadow.svg" alt="left-page-shadow" class="gutter-shadow shadow-left absolute h-[100%] top-[0%] right-[-1%] z-[4]" />
+                        <img src="../global assets/Images/commonThings/right-page-shadow.svg" alt="right-page-shadow" class="gutter-shadow shadow-right absolute h-[100%] top-[0%] left-[-1%] z-[4]" />
                         <img src="../global assets/Images/commonThings/logo.svg" alt="logo"
                             class="absolute w-[30%] top-[2%] left-[2%] z-[3]" />
                         <img src="../global assets/Images/commonThings/background-image-2.webp" alt="background-image"
@@ -2349,6 +2254,8 @@
                     <!-- *******************************  Page 25 end ***************************** -->
                     <!-- *******************************  Page 26 Start *************************** -->
                     <div class="page">
+                        <img src="../global assets/Images/commonThings/left-page-shadow.svg" alt="left-page-shadow" class="gutter-shadow shadow-left absolute h-[100%] top-[0%] right-[-1%] z-[4]" />
+                        <img src="../global assets/Images/commonThings/right-page-shadow.svg" alt="right-page-shadow" class="gutter-shadow shadow-right absolute h-[100%] top-[0%] left-[-1%] z-[4]" />
                         <img src="../global assets/Images/commonThings/logo.svg" alt="logo"
                             class="absolute w-[30%] top-[2%] left-[2%] z-[3]" />
                         <img src="../global assets/Images/commonThings/background-image-2.webp" alt="background-image"
@@ -2407,6 +2314,8 @@
 
                     <!-- *******************************  Page 27 Start *************************** -->
                      <div class="page">
+                        <img src="../global assets/Images/commonThings/left-page-shadow.svg" alt="left-page-shadow" class="gutter-shadow shadow-left absolute h-[100%] top-[0%] right-[-1%] z-[4]" />
+                        <img src="../global assets/Images/commonThings/right-page-shadow.svg" alt="right-page-shadow" class="gutter-shadow shadow-right absolute h-[100%] top-[0%] left-[-1%] z-[4]" />
                         <img src="../global assets/Images/commonThings/logo.svg" alt="logo"
                             class="absolute w-[30%] top-[2%] left-[2%] z-[3]" />
                         <img src="../global assets/Images/commonThings/background-image.webp" alt="background-image"
@@ -2433,6 +2342,8 @@
                     <!-- *******************************  Page 27 end ***************************** -->
                     <!-- *******************************  Page 28 Start *************************** -->
                     <div class="page">
+                        <img src="../global assets/Images/commonThings/left-page-shadow.svg" alt="left-page-shadow" class="gutter-shadow shadow-left absolute h-[100%] top-[0%] right-[-1%] z-[4]" />
+                        <img src="../global assets/Images/commonThings/right-page-shadow.svg" alt="right-page-shadow" class="gutter-shadow shadow-right absolute h-[100%] top-[0%] left-[-1%] z-[4]" />
                         <img src="../global assets/Images/commonThings/logo.svg" alt="logo"
                             class="absolute w-[30%] top-[2%] left-[2%] z-[3]" />
                         <img src="../global assets/Images/commonThings/background-image.webp" alt="background-image"
@@ -2459,6 +2370,8 @@
                     <!-- *******************************  Page 28 end ***************************** -->
                      <!-- *******************************  Page 29 Start *************************** -->
                       <div class="page">
+                        <img src="../global assets/Images/commonThings/left-page-shadow.svg" alt="left-page-shadow" class="gutter-shadow shadow-left absolute h-[100%] top-[0%] right-[-1%] z-[4]" />
+                        <img src="../global assets/Images/commonThings/right-page-shadow.svg" alt="right-page-shadow" class="gutter-shadow shadow-right absolute h-[100%] top-[0%] left-[-1%] z-[4]" />
                         <img src="../global assets/Images/commonThings/logo.svg" alt="logo"
                             class="absolute w-[30%] top-[2%] left-[2%] z-[3]" />
                         <img src="../global assets/Images/commonThings/background-image.webp" alt="background-image"
@@ -2485,6 +2398,8 @@
                     <!-- *******************************  Page 29 end ***************************** -->
                      <!-- *******************************  Page 30 Start *************************** -->
                     <div class="page">
+                        <img src="../global assets/Images/commonThings/left-page-shadow.svg" alt="left-page-shadow" class="gutter-shadow shadow-left absolute h-[100%] top-[0%] right-[-1%] z-[4]" />
+                        <img src="../global assets/Images/commonThings/right-page-shadow.svg" alt="right-page-shadow" class="gutter-shadow shadow-right absolute h-[100%] top-[0%] left-[-1%] z-[4]" />
                         <img src="../global assets/Images/commonThings/logo.svg" alt="logo"
                             class="absolute w-[30%] top-[2%] left-[2%] z-[3]" />
                         <img src="../global assets/Images/commonThings/background-image-2.webp" alt="background-image"
@@ -2543,6 +2458,8 @@
                     <!-- *******************************  Page 30 end ***************************** -->
                      <!-- *******************************  Page 31 Start *************************** -->
                     <div class="page">
+                        <img src="../global assets/Images/commonThings/left-page-shadow.svg" alt="left-page-shadow" class="gutter-shadow shadow-left absolute h-[100%] top-[0%] right-[-1%] z-[4]" />
+                        <img src="../global assets/Images/commonThings/right-page-shadow.svg" alt="right-page-shadow" class="gutter-shadow shadow-right absolute h-[100%] top-[0%] left-[-1%] z-[4]" />
                         <img src="../global assets/Images/commonThings/logo.svg" alt="logo"
                             class="absolute w-[30%] top-[2%] left-[2%] z-[3]" />
                         <img src="../global assets/Images/commonThings/background-image-2.webp" alt="background-image"
@@ -2591,12 +2508,13 @@
 
                      <!-- *******************************  Page 32 Start *************************** -->
                     <div class="page">
+                        <img src="../global assets/Images/commonThings/left-page-shadow.svg" alt="left-page-shadow" class="gutter-shadow shadow-left absolute h-[100%] top-[0%] right-[-1%] z-[4]" />
+                        <img src="../global assets/Images/commonThings/right-page-shadow.svg" alt="right-page-shadow" class="gutter-shadow shadow-right absolute h-[100%] top-[0%] left-[-1%] z-[4]" />
                         <img src="../global assets/Images/commonThings/logo.svg" alt="logo"
                             class="absolute w-[30%] top-[2%] left-[2%] z-[3]" />
                         <img src="../global assets/Images/commonThings/background-image-2.webp" alt="background-image"
                             class="absolute w-[100%] top-[0%] left-[0%]" />
-                        <img src="../global assets/Images/commonThings/right-page-shadow.svg" alt="right-page-shadow"
-                            class="absolute  h-[100%] top-[0%] left-[-1%] z-[4]" />
+                        
 
                         <img src="../global assets/Images/products/stainless-steel-furniture-and-ward-accessories/stainless-steel-furniture-and-ward-accessories-top-text.svg"
                             alt="ward-furniture-top-text" class="absolute w-[65%] top-[2%] right-[0%]" />
@@ -2633,12 +2551,13 @@
                     <!-- *******************************  Page 32 end ***************************** -->
                      <!-- *******************************  Page 33 Start *************************** -->
                     <div class="page">
+                        <img src="../global assets/Images/commonThings/left-page-shadow.svg" alt="left-page-shadow" class="gutter-shadow shadow-left absolute h-[100%] top-[0%] right-[-1%] z-[4]" />
+                        <img src="../global assets/Images/commonThings/right-page-shadow.svg" alt="right-page-shadow" class="gutter-shadow shadow-right absolute h-[100%] top-[0%] left-[-1%] z-[4]" />
                         <img src="../global assets/Images/commonThings/logo.svg" alt="logo"
                             class="absolute w-[30%] top-[2%] left-[2%] z-[3]" />
                         <img src="../global assets/Images/commonThings/background-image-2.webp" alt="background-image"
                             class="absolute w-[100%] top-[0%] left-[0%]" />
-                        <img src="../global assets/Images/commonThings/right-page-shadow.svg" alt="right-page-shadow"
-                            class="absolute  h-[100%] top-[0%] left-[-1%] z-[4]" />
+                        
 
                         <img src="../global assets/Images/products/stainless-steel-furniture-and-ward-accessories/stainless-steel-furniture-and-ward-accessories-top-text.svg"
                             alt="ward-furniture-top-text" class="absolute w-[65%] top-[2%] right-[0%]" />
@@ -2675,12 +2594,13 @@
                     <!-- *******************************  Page 33 end ***************************** -->
                      <!-- *******************************  Page 34 Start *************************** -->
                       <div class="page">
+                        <img src="../global assets/Images/commonThings/left-page-shadow.svg" alt="left-page-shadow" class="gutter-shadow shadow-left absolute h-[100%] top-[0%] right-[-1%] z-[4]" />
+                        <img src="../global assets/Images/commonThings/right-page-shadow.svg" alt="right-page-shadow" class="gutter-shadow shadow-right absolute h-[100%] top-[0%] left-[-1%] z-[4]" />
                         <img src="../global assets/Images/commonThings/logo.svg" alt="logo"
                             class="absolute w-[30%] top-[2%] left-[2%] z-[3]" />
                         <img src="../global assets/Images/commonThings/background-image-2.webp" alt="background-image"
                             class="absolute w-[100%] top-[0%] left-[0%]" />
-                        <img src="../global assets/Images/commonThings/right-page-shadow.svg" alt="right-page-shadow"
-                            class="absolute  h-[100%] top-[0%] left-[-1%] z-[4]" />
+                        
 
                         <img src="../global assets/Images/products/stainless-steel-furniture-and-ward-accessories/stainless-steel-furniture-and-ward-accessories-top-text.svg"
                             alt="ward-furniture-top-text" class="absolute w-[65%] top-[2%] right-[0%]" />
@@ -2717,12 +2637,13 @@
                     <!-- *******************************  Page 34 end ***************************** -->
                      <!-- *******************************  Page 35 Start *************************** -->
                     <div class="page">
+                        <img src="../global assets/Images/commonThings/left-page-shadow.svg" alt="left-page-shadow" class="gutter-shadow shadow-left absolute h-[100%] top-[0%] right-[-1%] z-[4]" />
+                        <img src="../global assets/Images/commonThings/right-page-shadow.svg" alt="right-page-shadow" class="gutter-shadow shadow-right absolute h-[100%] top-[0%] left-[-1%] z-[4]" />
                         <img src="../global assets/Images/commonThings/logo.svg" alt="logo"
                             class="absolute w-[30%] top-[2%] left-[2%] z-[3]" />
                         <img src="../global assets/Images/commonThings/background-image-2.webp" alt="background-image"
                             class="absolute w-[100%] top-[0%] left-[0%]" />
-                        <img src="../global assets/Images/commonThings/right-page-shadow.svg" alt="right-page-shadow"
-                            class="absolute  h-[100%] top-[0%] left-[-1%] z-[4]" />
+                        
 
                         <img src="../global assets/Images/products/stainless-steel-furniture-and-ward-accessories/stainless-steel-furniture-and-ward-accessories-top-text.svg"
                             alt="ward-furniture-top-text" class="absolute w-[65%] top-[2%] right-[0%]" />
@@ -2759,12 +2680,13 @@
                     <!-- *******************************  Page 35 end ***************************** -->
                      <!-- *******************************  Page 36 Start *************************** -->
                       <div class="page">
+                        <img src="../global assets/Images/commonThings/left-page-shadow.svg" alt="left-page-shadow" class="gutter-shadow shadow-left absolute h-[100%] top-[0%] right-[-1%] z-[4]" />
+                        <img src="../global assets/Images/commonThings/right-page-shadow.svg" alt="right-page-shadow" class="gutter-shadow shadow-right absolute h-[100%] top-[0%] left-[-1%] z-[4]" />
                         <img src="../global assets/Images/commonThings/logo.svg" alt="logo"
                             class="absolute w-[30%] top-[2%] left-[2%] z-[3]" />
                         <img src="../global assets/Images/commonThings/background-image-2.webp" alt="background-image"
                             class="absolute w-[100%] top-[0%] left-[0%]" />
-                        <img src="../global assets/Images/commonThings/right-page-shadow.svg" alt="right-page-shadow"
-                            class="absolute  h-[100%] top-[0%] left-[-1%] z-[4]" />
+                        
 
                         <img src="../global assets/Images/products/general-furniture/general-furniture-top-text.svg"
                             alt="ward-furniture-top-text" class="absolute w-[65%] top-[2%] right-[0%]" />
@@ -2801,6 +2723,8 @@
                     <!-- *******************************  Page 36 end ***************************** -->
                     <!-- *******************************  Page 37 Start *************************** -->
                      <div class="page">
+                        <img src="../global assets/Images/commonThings/left-page-shadow.svg" alt="left-page-shadow" class="gutter-shadow shadow-left absolute h-[100%] top-[0%] right-[-1%] z-[4]" />
+                        <img src="../global assets/Images/commonThings/right-page-shadow.svg" alt="right-page-shadow" class="gutter-shadow shadow-right absolute h-[100%] top-[0%] left-[-1%] z-[4]" />
                         <img src="../global assets/Images/commonThings/logo.svg" alt="logo"
                             class="absolute w-[30%] top-[2%] left-[2%] z-[3]" />
                         <img src="../global assets/Images/commonThings/background-image.webp" alt="background-image"
@@ -2826,12 +2750,13 @@
                      <!-- *******************************  Page 37 end ***************************** -->
                     <!-- *******************************  Page 38 Start *************************** -->
                      <div class="page">
+                        <img src="../global assets/Images/commonThings/left-page-shadow.svg" alt="left-page-shadow" class="gutter-shadow shadow-left absolute h-[100%] top-[0%] right-[-1%] z-[4]" />
+                        <img src="../global assets/Images/commonThings/right-page-shadow.svg" alt="right-page-shadow" class="gutter-shadow shadow-right absolute h-[100%] top-[0%] left-[-1%] z-[4]" />
                         <img src="../global assets/Images/commonThings/logo.svg" alt="logo"
                             class="absolute w-[30%] top-[2%] left-[2%] z-[3]" />
                         <img src="../global assets/Images/commonThings/background-image-2.webp" alt="background-image"
                             class="absolute w-[100%] top-[0%] left-[0%]" />
-                        <img src="../global assets/Images/commonThings/right-page-shadow.svg" alt="right-page-shadow"
-                            class="absolute  h-[100%] top-[0%] left-[-1%] z-[4]" />
+                        
 
                         <img src="../global assets/Images/products/accessories/accessories-top-text.svg"
                             alt="ward-furniture-top-text" class="absolute w-[65%] top-[2%] right-[0%]" />
@@ -2865,12 +2790,13 @@
                      <!-- *******************************  Page 38 end ***************************** -->
                     <!-- *******************************  Page 39 Start *************************** -->
                      <div class="page">
+                        <img src="../global assets/Images/commonThings/left-page-shadow.svg" alt="left-page-shadow" class="gutter-shadow shadow-left absolute h-[100%] top-[0%] right-[-1%] z-[4]" />
+                        <img src="../global assets/Images/commonThings/right-page-shadow.svg" alt="right-page-shadow" class="gutter-shadow shadow-right absolute h-[100%] top-[0%] left-[-1%] z-[4]" />
                         <img src="../global assets/Images/commonThings/logo.svg" alt="logo"
                             class="absolute w-[30%] top-[2%] left-[2%] z-[3]" />
                         <img src="../global assets/Images/commonThings/background-image-2.webp" alt="background-image"
                             class="absolute w-[100%] top-[0%] left-[0%]" />
-                        <img src="../global assets/Images/commonThings/right-page-shadow.svg" alt="right-page-shadow"
-                            class="absolute  h-[100%] top-[0%] left-[-1%] z-[4]" />
+                        
 
                         <img src="../global assets/Images/products/accessories/accessories-top-text.svg"
                             alt="ward-furniture-top-text" class="absolute w-[65%] top-[2%] right-[0%]" />
@@ -2906,12 +2832,13 @@
                     <!-- *******************************  Page 40 *************************** -->
 
                     <div class="page">
+                        <img src="../global assets/Images/commonThings/left-page-shadow.svg" alt="left-page-shadow" class="gutter-shadow shadow-left absolute h-[100%] top-[0%] right-[-1%] z-[4]" />
+                        <img src="../global assets/Images/commonThings/right-page-shadow.svg" alt="right-page-shadow" class="gutter-shadow shadow-right absolute h-[100%] top-[0%] left-[-1%] z-[4]" />
                         <img src="../global assets/Images/commonThings/logo.svg" alt="logo"
                             class="absolute w-[30%] top-[2%] left-[2%] z-[3]" />
                         <img src="../global assets/Images/commonThings/background-image-2.webp" alt="background-image"
                             class="absolute w-[100%] top-[0%] left-[0%]" />
-                        <img src="../global assets/Images/commonThings/left-page-shadow.svg" alt="right-page-shadow"
-                            class="absolute  h-[100%] top-[0%] right-[-1%] z-[4]" />
+                        
                         <img src="../global assets/Images/commonThings/bottom-background.webp" alt="background"
                             class="absolute w-[100%] bottom-0 left-0" />
                         <img src="../global assets/Images/commonThings/website-link.svg" alt="website-link"
@@ -2921,6 +2848,8 @@
 
                       <!-- *******************************  Page 41 Start Contact us *************************** -->
                        <div class="page">
+                        <img src="../global assets/Images/commonThings/left-page-shadow.svg" alt="left-page-shadow" class="gutter-shadow shadow-left absolute h-[100%] top-[0%] right-[-1%] z-[4]" />
+                        <img src="../global assets/Images/commonThings/right-page-shadow.svg" alt="right-page-shadow" class="gutter-shadow shadow-right absolute h-[100%] top-[0%] left-[-1%] z-[4]" />
                         <img src="../global assets/Images/commonThings/logo.svg" alt="logo"
                             class="absolute w-[30%] top-[2%] left-[2%] z-[3]" />
                         <img src="../global assets/Images/contact-us/top-right-image.webp" alt="background" class="absolute w-[55%] right-0 top-0"/>
@@ -2947,16 +2876,21 @@
                      
 
 
-                    <a ignore="1" class="ui-arrow-control ui-arrow-next-page next-arrow">
-                        <img src="../global assets/icons/next-page-icon.svg" class="z-1111" />
-                    </a>
-                    <a ignore="1" class="ui-arrow-control ui-arrow-previous-page prev-arrow">
-                        <img src="../global assets/icons/previous-page.svg" class="1111" />
-                    </a>
                 </div>
             </div>
 
         </div>
+
+        <a ignore="1" class="ui-arrow-control ui-arrow-next-page next-arrow">
+            <svg class="w-[18px] h-[18px] z-1111" viewBox="0 0 42 42" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M15.75 7L29.75 21L15.75 35" stroke="#E67429" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+        </a>
+        <a ignore="1" class="ui-arrow-control ui-arrow-previous-page prev-arrow">
+            <svg class="w-[18px] h-[18px] z-1111" viewBox="0 0 42 42" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M26.25 7L12.25 21L26.25 35" stroke="#E67429" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+        </a>
 
         <audio id="flipaudio" src="../audios/flipsound-new.mp3"></audio>
 
@@ -3005,110 +2939,55 @@
         <!-- <div id="searchOverlay" class="fixed inset-0  bg-opacity-50 z-[999] hidden transition-opacity duration-300"></div> -->
 
         <!-- Search Modal - Green/White/Teal Theme -->
+        <!-- Search Modal - Redesigned Premium Theme -->
+        <!-- Search Modal - Redesigned Premium Theme (White/Light) -->
+        <!-- Search Modal - Redesigned Premium Theme (White/Light) -->
         <div id="searchModal"
-            class="fixed top-[2%] left-[2%] bg-gradient-to-b from-teal-600 via-teal-600 to-teal-700 z-[100000000000] hidden w-[18vw] h-[20%] rounded-lg shadow-2xl overflow-hidden">
-
-
-            <div class="relative p-[1vw]">
-
-                <!-- Header Section -->
-                <div class="flex items-center justify-between mb-[1vw]">
-                    <div class="flex items-center gap-[0.5vw]">
-                        <div
-                            class="w-[2vw] h-[2vw] bg-white/20 backdrop-blur-sm rounded-lg flex items-center justify-center">
-                            <svg class="w-[1vw] h-[1vw] text-white" fill="none" stroke="currentColor"
-                                viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                            </svg>
-                        </div>
-                        <div>
-                            <h2 class="text-white font-bold text-[1vw]">Quick Find</h2>
-                            <p class="text-emerald-100 text-[0.6vw]">Search anything</p>
-                        </div>
-                    </div>
-                    <button id="closeSearchModal"
-                        class="w-[1.8vw] h-[1.8vw] bg-white/90 hover:bg-white rounded-full flex items-center justify-center transition-all hover:rotate-90 duration-300 cursor-pointer group">
-                        <svg class="w-[0.8vw] h-[0.8vw] text-teal-600 group-hover:text-red-500" fill="none"
-                            stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
-                                d="M6 18L18 6M6 6l12 12" />
+            class="fixed top-[2%] left-[2%] bg-white border border-gray-200 z-[100000000000] hidden w-[18vw] rounded-2xl shadow-2xl overflow-hidden p-[1vw]">
+            
+            <!-- Header Section -->
+            <div class="flex items-center justify-between mb-[1vw] relative">
+                <div class="flex items-center gap-[0.6vw]">
+                    <!-- Orange circle icon -->
+                    <div class="w-[2vw] h-[2vw] bg-[#E67429] rounded-full flex items-center justify-center shadow-sm">
+                        <svg class="w-[0.9vw] h-[0.9vw] text-white" fill="none" stroke="#ffffff" stroke-width="3" viewBox="0 0 24 24">
+                            <circle cx="11" cy="11" r="8" />
+                            <line x1="21" y1="21" x2="16.65" y2="16.65" />
                         </svg>
-                    </button>
-                </div>
-
-                <!-- Search Input Container -->
-                <div class="relative group">
-                    <div
-                        class="absolute inset-0  rounded-[0.8vw] blur-sm opacity-50 group-hover:opacity-70 transition-opacity">
                     </div>
-                    <div class="relative flex items-center bg-white rounded-[0.8vw] overflow-hidden ">
-                        <div class="pl-[1vw] text-teal-600">
-                            <svg class="w-[1vw] h-[1vw]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                            </svg>
-                        </div>
-                        <input type="text" id="searchInput" placeholder="Type your query here..."
-                            class="flex-1 outline-none text-gray-700 px-[0.8vw] py-[0.6vw] text-[0.75vw] w-[9vw] h-[2.5vw] placeholder:text-gray-400 font-medium"
-                            autocomplete="off" />
-                        <button id="SearchModal"
-                            class="h-[2.5vw] px-[.5vw] bg-gradient-to-r from-teal-800 to-teal-800 hover:from-teal-600 hover:to-teal-500 text-white font-semibold text-[0.7vw] transition-all duration-300 cursor-pointer flex items-center gap-[0.3vw] group">
-                            <span>Search</span>
-                            <svg class="w-[0.8vw] h-[0.8vw] group-hover:translate-x-[0.2vw] transition-transform"
-                                fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                            </svg>
-                        </button>
-                    </div>
+                    <h2 class="text-[#1a2b49] font-semibold text-[0.9vw]">Find Product</h2>
                 </div>
+                <!-- Close Button -->
+                <button id="closeSearchModal"
+                    class="absolute top-[0.3vw] right-0 w-[1.2vw] h-[1.2vw] flex items-center justify-center text-gray-400 hover:text-gray-600 transition-all duration-200 cursor-pointer">
+                    <svg class="w-[1.1vw] h-[1.1vw]" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                        <path d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
+            </div>
 
-                <!-- Quick Filters -->
-                <div class="mt-[1vw] hidden flex gap-[0.4vw]">
-                    <button
-                        class="px-[0.8vw] py-[0.3vw] bg-white/20 backdrop-blur-sm hover:bg-white/30 text-white text-[0.6vw] rounded-full border border-white/30 transition-all cursor-pointer">
-                        All
-                    </button>
-                    <button
-                        class="px-[0.8vw] py-[0.3vw] bg-white/10 backdrop-blur-sm hover:bg-white/30 text-white/80 hover:text-white text-[0.6vw] rounded-full border border-white/20 transition-all cursor-pointer">
-                        Recent
-                    </button>
-                    <button
-                        class="px-[0.8vw] py-[0.3vw] bg-white/10 backdrop-blur-sm hover:bg-white/30 text-white/80 hover:text-white text-[0.6vw] rounded-full border border-white/20 transition-all cursor-pointer">
-                        Popular
-                    </button>
+            <!-- Search Input Container -->
+            <div class="relative flex items-center bg-white border border-gray-200 rounded-xl overflow-hidden transition-all duration-300 focus-within:border-[#E67429] shadow-sm">
+                <div class="pl-[0.6vw] text-gray-400">
+                    <svg class="w-[0.9vw] h-[0.9vw]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                        <circle cx="11" cy="11" r="8" />
+                        <line x1="21" y1="21" x2="16.65" y2="16.65" />
+                    </svg>
                 </div>
-
-                <!-- Divider -->
-                <div class="my-[1vw] hidden h-[0.1vw] bg-gradient-to-r from-transparent via-white/30 to-transparent">
-                </div>
-
-                <!-- Search Results Container -->
-                <div
-                    class="bg-white/10 hidden backdrop-blur-sm rounded-[0.8vw] p-[1vw] min-h-[20vw] max-h-[35vw] overflow-y-auto custom-scrollbar">
-                    <div id="searchResults" class="space-y-[0.5vw]">
-                        <!-- Initial State -->
-                        <div class="text-center py-[5vw]">
-                            <div
-                                class="w-[4vw] h-[4vw] mx-auto mb-[1vw] bg-white/20 rounded-full flex items-center justify-center">
-                                <svg class="w-[2vw] h-[2vw] text-white/60" fill="none" stroke="currentColor"
-                                    viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
-                                        d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
-                                </svg>
-                            </div>
-                            <p class="text-white/80 text-[0.8vw] font-medium">Start typing to discover</p>
-                            <p class="text-white/60 text-[0.6vw] mt-[0.3vw]">Quick search across all content</p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Search Stats -->
-                <div class="mt-[1vw] hidden flex items-center justify-between px-[0.5vw]">
-                    <span class="text-white/60 text-[0.6vw]">0 results</span>
-                    <span class="text-white/60 text-[0.6vw]">Press ESC to close</span>
-                </div>
+                <input type="text" id="searchInput" placeholder="Search by name, code or category"
+                    class="flex-1 bg-transparent border-none outline-none text-gray-700 px-[0.6vw] py-[0.5vw] text-[0.75vw] w-full placeholder:text-gray-400 font-medium"
+                    autocomplete="off" />
+                <button id="SearchModal"
+                    class="h-[2.1vw] w-[2.5vw] bg-[#E67429] hover:bg-[#c35c1a] text-white rounded-r-xl transition-all duration-200 cursor-pointer flex items-center justify-center">
+                    <svg class="w-[0.9vw] h-[0.9vw]" fill="none" stroke="#ffffff" stroke-width="2.5" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+                    </svg>
+                </button>
+            </div>
+            
+            <!-- Results Container -->
+            <div id="searchResults" class="mt-[0.6vw] max-h-[15vw] overflow-y-auto custom-scrollbar space-y-[0.4vw]">
+                <!-- Results dynamically populated here -->
             </div>
         </div>
 
@@ -3343,17 +3222,16 @@
 
             // ============== Page 1 - Home ==============
             if (page === 1) {
-
+                
             }
 
             // ============== Page 2-3 - About Us & Table of Contents ==============
             if (page === 2 || page === 3) {
-
-            }
-
-            if (page === 3) {
-
-            }
+                // Page2LeftAnimation();
+                // Page2RightAnimation();
+                // Page2UpAnimation();
+                // Page2DownAnimation();
+                }
 
             // ============== Page 4-5 - Round Containers ==============
             if (page === 4 || page === 5) {
@@ -3427,10 +3305,9 @@
             updateActiveThumbnail(page);
         });
 
-
         function resetPageImages() {
             // const allAnimatedImages = document.querySelectorAll("[data-image-animation], [data-3d-image-animation]");
-            const allAnimatedImages = document.querySelectorAll(".beverage-up-img, .beverage-left-img, .beverage-right-img, .beverage-popup-1, .beverage-popup-2, .beverage-popup-3, .up-img, .down-img, .right-img, .left-img,  .page-1-left, .page-1-right, .page-1-up, .page-1-down, .page-2-left, .page-2-right, .page-2-up, .page-2-up-2, .page-2-down, .popup_images2, .oval-popup-1, .oval-popup-2, .oval-popup-3, .oval-popup-4, .oval-popup-5, .oval-popup-6, .oval-popup-7, .oval-popup-8,  .oval-popup-9, .oval-popup-10, .oval-popup-11, .oval-popup-12,  .oval-down-img, .oval-up-img, .oval-rigth-img, .oval-left-img, .right-line-img, .left-line-img, .biriyani-500-popup-1, .biriyani-500-popup-2, .biriyani-500-popup-3, .biriyani-650-popup-1, .biriyani-650-popup-2, .biriyani-650-popup-3, .biriyani-500-container-img, .biriyani-650-container-img, .biriyani-500-text, .biriyani-500-content, .biriyani-500-measurement, .biriyani-650-text, .biriyani-650-content, .biriyani-650-measurement, .biriyani-750-popup-1, .biriyani-750-popup-2, .biriyani-750-popup-3, .biriyani-1000-popup-1, .biriyani-1000-popup-2, .biriyani-1000-popup-3, .biriyani-750-container-img, .biriyani-1000-container-img, .biriyani-750-text, .biriyani-750-content, .biriyani-750-measurement, .biriyani-1000-text, .biriyani-1000-content, .biriyani-1000-measurement, #contact-us-logo, #contact-us-lets-talk, #contact-us-left-img, #contact-us-food-img, #contact-us-phone-icon, #contact-us-call-us, #contact-us-number-1, #contact-us-number-2, #contact-us-number-3, #contact-us-location-icon, #contact-us-visit-us, #contact-us-location, #contact-us-location-2, #contact-us-email-icon, #contact-us-email-us, #contact-us-email-link, #contact-us-email-link-2, #contact-us-consultation, #contact-us-qr-code, #contact-us-explore, #contact-us-website, .toc-iml-packaging, .toc-product-range, .toc-auto-scroll, .toc-round-container, .toc-round-bucket, .toc-sweet-box, .toc-biriyani-rect, .toc-square-bucket, .toc-icecream-oval, .toc-icecream-round, .toc-beverage-cup, .toc-bottom-food ");
+            const allAnimatedImages = document.querySelectorAll(".page-2-left, .page-2-right, .page-2-up");
             allAnimatedImages.forEach((img) => {
                 gsap.set(img, {
                     opacity: 0,
@@ -3439,7 +3316,7 @@
                     scale: 1
                 });
             });
-            gsap.set('.beverage-up-img, .beverage-left-img, .beverage-right-img, .beverage-popup-1, .beverage-popup-2, .beverage-popup-3, .up-img, .down-img, .right-img, .left-img, .page-1-left, .page-1-right, .page-1-up, .page-1-down, .page-2-left, .page-2-right, .page-2-up, .page-2-up-2, .page-2-down, .popup_images2, .oval-popup-1, .oval-popup-2, .oval-popup-3, .oval-popup-4, .oval-popup-5, .oval-popup-6, .oval-popup-7, .oval-popup-8,  .oval-popup-9, .oval-popup-10, .oval-popup-11, .oval-popup-12,  .oval-down-img, .oval-up-img, .oval-rigth-img, .oval-left-img, .right-line-img, .left-line-img .biriyani-500-popup-1, .biriyani-500-popup-2, .biriyani-500-popup-3, .biriyani-650-popup-1, .biriyani-650-popup-2, .biriyani-650-popup-3, .biriyani-500-container-img, .biriyani-650-container-img, .biriyani-500-text, .biriyani-500-content, .biriyani-500-measurement, .biriyani-650-text, .biriyani-650-content, .biriyani-650-measurement, .biriyani-750-popup-1, .biriyani-750-popup-2, .biriyani-750-popup-3, .biriyani-1000-popup-1, .biriyani-1000-popup-2, .biriyani-1000-popup-3, .biriyani-750-container-img, .biriyani-1000-container-img, .biriyani-750-text, .biriyani-750-content, .biriyani-750-measurement, .biriyani-1000-text, .biriyani-1000-content, .biriyani-1000-measurement, #contact-us-logo, #contact-us-lets-talk, #contact-us-left-img, #contact-us-food-img, #contact-us-phone-icon, #contact-us-call-us, #contact-us-number-1, #contact-us-number-2, #contact-us-number-3, #contact-us-location-icon, #contact-us-visit-us, #contact-us-location, #contact-us-location-2, #contact-us-email-icon, #contact-us-email-us, #contact-us-email-link, #contact-us-email-link-2, #contact-us-consultation, #contact-us-qr-code, #contact-us-explore, #contact-us-website, .toc-iml-packaging, .toc-product-range, .toc-auto-scroll, .toc-round-container, .toc-round-bucket, .toc-sweet-box, .toc-biriyani-rect, .toc-square-bucket, .toc-icecream-oval, .toc-icecream-round, .toc-beverage-cup, .toc-bottom-food  ', { opacity: 0 });
+            gsap.set('.page-2-left, .page-2-right, .page-2-up', { opacity: 0 });
         }
 
         function Page2LeftAnimation() {
@@ -3479,18 +3356,6 @@
                     opacity: 1,
                     y: 0,                  // move to normal position
                     duration: 1.5,
-                    stagger: 0.5,          // reveal one by one if multiple
-                    ease: "power3.out"
-                }
-            );
-
-            gsap.fromTo(
-                ".page-2-up-2",
-                { opacity: 0, y: -80 },   // start: hidden + shifted to the right
-                {
-                    opacity: 1,
-                    y: 0,                  // move to normal position
-                    duration: 2,
                     stagger: 0.5,          // reveal one by one if multiple
                     ease: "power3.out"
                 }
@@ -3555,179 +3420,6 @@
 
         }
 
-        function IceCreamOvalAnimation() {
-            const configs = [
-                { className: '.oval-popup-1', stagger: 0.5 },
-                { className: '.oval-popup-2', stagger: 0.5 },
-                { className: '.oval-popup-3', stagger: 0.5 },
-                { className: '.oval-popup-4', stagger: 0.5 },
-                { className: '.oval-popup-5', stagger: 0.5 },
-                { className: '.oval-popup-6', stagger: 0.5 },
-                { className: '.oval-popup-7', stagger: 0.5 },
-                { className: '.oval-popup-8', stagger: 0.5 },
-                { className: '.oval-popup-9', stagger: 0.5 },
-                { className: '.oval-popup-10', stagger: 0.5 },
-                { className: '.oval-popup-11', stagger: 0.5 },
-                { className: '.oval-popup-12', stagger: 0.5 },
-            ];
-
-            configs.forEach(({ className, stagger }) => {
-                gsap.fromTo(
-                    className,
-                    { opacity: 0, scale: 0.5 },
-                    {
-                        opacity: 1,
-                        scale: 1,
-                        duration: 1.5,
-                        stagger: stagger,
-                        ease: "power3.out"
-                    }
-                );
-            });
-
-
-            const animations = [
-                { selector: ".oval-down-img", from: { y: 100 } },
-                { selector: ".oval-up-img", from: { y: -100 } },
-                { selector: ".oval-right-img", from: { x: 80 } },
-                { selector: ".oval-left-img", from: { x: -80 } },
-            ];
-
-            animations.forEach(({ selector, from }) => {
-                gsap.fromTo(
-                    selector,
-                    { opacity: 0, ...from },
-                    {
-                        opacity: 1,
-                        x: 0,
-                        y: 0,
-                        duration: 1.5,
-                        stagger: 0.1,
-                        ease: "power3.out"
-                    }
-                );
-            });
-
-            gsap.fromTo(
-                ".left-line-img",
-                { opacity: 0, x: -80 },   // start: hidden + shifted to the right
-                {
-                    opacity: 1,
-                    x: 0,                  // move to normal position
-                    duration: 1.5,
-                    stagger: 0.1,          // reveal one by one if multiple
-                    ease: "power3.out"
-                }
-            );
-            gsap.fromTo(
-                ".right-line-img",
-                { opacity: 0, x: 80 },   // start: hidden + shifted to the right
-                {
-                    opacity: 1,
-                    x: 0,                  // move to normal position
-                    duration: 1.5,
-                    stagger: 0.1,          // reveal one by one if multiple
-                    ease: "power3.out"
-                }
-            );
-        }
-
-
-
-
-        function BeverageCupAnimation() {
-
-            // ✅ RESET GSAP elements
-            gsap.set([
-                ".beverage-popup-1",
-                ".beverage-popup-2",
-                ".beverage-popup-3"
-            ], { opacity: 0, scale: 0.5 });
-
-            gsap.set(".beverage-up-img", { opacity: 0, y: -100 });
-            gsap.set(".beverage-right-img", { opacity: 0, x: 80 });
-            gsap.set(".beverage-left-img", { opacity: 0, x: -80 });
-
-            // ✅ RESET reveal items
-            const items = document.querySelectorAll('.beverage-reveal');
-            items.forEach(item => {
-                item.classList.remove('show');
-            });
-
-            // =========================
-            // 🎬 GSAP POPUP ANIMATION
-            // =========================
-            const configs = [
-                { className: '.beverage-popup-1', stagger: 0.5 },
-                { className: '.beverage-popup-2', stagger: 0.5 },
-                { className: '.beverage-popup-3', stagger: 0.5 },
-            ];
-
-            configs.forEach(({ className, stagger }) => {
-                gsap.to(className, {
-                    opacity: 1,
-                    scale: 1,
-                    duration: 1.5,
-                    stagger: stagger,
-                    ease: "power3.out"
-                });
-            });
-
-            // =========================
-            // 🎬 SIDE ANIMATIONS
-            // =========================
-            const animations = [
-                { selector: ".beverage-up-img", to: { y: 0 } },
-                { selector: ".beverage-right-img", to: { x: 0 } },
-                { selector: ".beverage-left-img", to: { x: 0 } },
-            ];
-
-            animations.forEach(({ selector, to }) => {
-                gsap.to(selector, {
-                    opacity: 1,
-                    ...to,
-                    duration: 1.5,
-                    stagger: 0.1,
-                    ease: "power3.out"
-                });
-            });
-
-            // RESET
-            const items200 = document.querySelectorAll('.beverage-reveal-200');
-            const items300 = document.querySelectorAll('.beverage-reveal-300');
-
-            [...items200, ...items300].forEach(item => {
-                item.classList.remove('show');
-            });
-
-            // =========================
-            // 🎬 RUN BOTH AT SAME TIME
-            // =========================
-
-            // 200ml reveal
-            items200.forEach((item, index) => {
-                setTimeout(() => {
-                    item.classList.add('show');
-                }, index * 300);
-            });
-
-            // 300ml reveal (same timing, parallel)
-            items300.forEach((item, index) => {
-                setTimeout(() => {
-                    item.classList.add('show');
-                }, index * 300);
-            });
-
-
-            gsap.to(".beverage-popup-2, .beverage-popup-3", {
-                y: -6,              // small upward movement
-                duration: 2,
-                ease: "sine.inOut",
-                yoyo: true,
-                repeat: -1
-            });
-
-        }
 
         function DownAnimation() {
             gsap.fromTo(
@@ -3792,507 +3484,9 @@
 
 
 
-        function RoundBucketAnimation() {
-            // Get all animated elements on the round bucket page
-            const animatedEls = document.querySelectorAll(
-                '.rb-text-slide, .rb-img-tl, .rb-img-tr, .rb-img-bl, .rb-img-br, .rb-icon-popup'
-            );
-
-            // Remove and re-add animation classes to force replay
-            animatedEls.forEach(el => {
-                el.style.animation = 'none';
-                el.style.opacity = '0';
-                el.offsetHeight; // Force reflow — this is the key trick
-                el.style.animation = '';
-                el.style.opacity = '';
-            });
-        }
-
-
-
-        // Biriyani Rectangle page 1 Animation code start 
-
-        function BiriyaniRectangleAnimation() {
-
-            // ========================= 
-            // 🔄 RESET
-            // =========================
-            gsap.set([
-                ".biriyani-500-popup-1",
-                ".biriyani-500-popup-2",
-                ".biriyani-500-popup-3",
-                ".biriyani-650-popup-1",
-                ".biriyani-650-popup-2",
-                ".biriyani-650-popup-3"
-            ], { opacity: 0, scale: 0.5 });
-
-            gsap.set(".biriyani-500-container-img", { opacity: 0, x: -80 });   // left side
-            gsap.set(".biriyani-650-container-img", { opacity: 0, x: 80 });    // right side
-
-            gsap.set([
-                ".biriyani-500-text",
-                ".biriyani-500-content",
-                ".biriyani-500-measurement",
-                ".biriyani-650-text",
-                ".biriyani-650-content",
-                ".biriyani-650-measurement"
-            ], { opacity: 0 });
-
-
-            // =========================
-            // 🎬 BT-14-500ml ANIMATIONS
-            // =========================
-
-            // img-1, img-2, img-3 → popup scale animation
-            const configs500 = [
-                { className: '.biriyani-500-popup-1', delay: 0 },
-                { className: '.biriyani-500-popup-2', delay: 0.3 },
-                { className: '.biriyani-500-popup-3', delay: 0.6 },
-            ];
-
-            configs500.forEach(({ className, delay }) => {
-                gsap.to(className, {
-                    opacity: 1,
-                    scale: 1,
-                    duration: 1.2,
-                    delay: delay,
-                    ease: "power3.out"
-                });
-            });
-
-            // container-img → slides in from LEFT
-            gsap.to(".biriyani-500-container-img", {
-                opacity: 1,
-                x: 0,
-                duration: 1.5,
-                delay: 0.3,
-                ease: "power3.out"
-            });
-
-            // text, content, measurement → reveal (fade in)
-            const reveal500 = [
-                { className: '.biriyani-500-text', delay: 0.5 },
-                { className: '.biriyani-500-content', delay: 0.8 },
-                { className: '.biriyani-500-measurement', delay: 1.1 },
-            ];
-
-            reveal500.forEach(({ className, delay }) => {
-                gsap.to(className, {
-                    opacity: 1,
-                    duration: 1,
-                    delay: delay,
-                    ease: "power2.out"
-                });
-            });
-
-
-            // =========================
-            // 🎬 BT-14-650ml ANIMATIONS
-            // =========================
-
-            // img-1, img-2, img-3 → popup scale animation
-            const configs650 = [
-                { className: '.biriyani-650-popup-1', delay: 0.2 },
-                { className: '.biriyani-650-popup-2', delay: 0.5 },
-                { className: '.biriyani-650-popup-3', delay: 0.8 },
-            ];
-
-            configs650.forEach(({ className, delay }) => {
-                gsap.to(className, {
-                    opacity: 1,
-                    scale: 1,
-                    duration: 1.2,
-                    delay: delay,
-                    ease: "power3.out"
-                });
-            });
-
-            // container-img → slides in from RIGHT
-            gsap.to(".biriyani-650-container-img", {
-                opacity: 1,
-                x: 0,
-                duration: 1.5,
-                delay: 0.3,
-                ease: "power3.out"
-            });
-
-            // text, content, measurement → reveal (fade in)
-            const reveal650 = [
-                { className: '.biriyani-650-text', delay: 0.5 },
-                { className: '.biriyani-650-content', delay: 0.8 },
-                { className: '.biriyani-650-measurement', delay: 1.1 },
-            ];
-
-            reveal650.forEach(({ className, delay }) => {
-                gsap.to(className, {
-                    opacity: 1,
-                    duration: 1,
-                    delay: delay,
-                    ease: "power2.out"
-                });
-            });
-        }
-
-        // Biriyani Rectangle page 1 Animation code end 
-
-
-        // Biriyani Rectangle page 2 Animation code start 
-
-        function BiriyaniRectanglePage2Animation() {
-
-            // =========================
-            // 🔄 RESET
-            // =========================
-            gsap.set([
-                ".biriyani-750-popup-1",
-                ".biriyani-750-popup-2",
-                ".biriyani-750-popup-3",
-                ".biriyani-1000-popup-1",
-                ".biriyani-1000-popup-2",
-                ".biriyani-1000-popup-3"
-            ], { opacity: 0, scale: 0.5 });
-
-            gsap.set(".biriyani-750-container-img", { opacity: 0, x: 80 });    // right side
-            gsap.set(".biriyani-1000-container-img", { opacity: 0, x: -80 });  // left side
-
-            gsap.set([
-                ".biriyani-750-text",
-                ".biriyani-750-content",
-                ".biriyani-750-measurement",
-                ".biriyani-1000-text",
-                ".biriyani-1000-content",
-                ".biriyani-1000-measurement"
-            ], { opacity: 0 });
-
-
-            // =========================
-            // 🎬 BT-14-750ml ANIMATIONS
-            // =========================
-
-            // img-1, img-2, img-3 → popup scale animation
-            const configs750 = [
-                { className: '.biriyani-750-popup-1', delay: 0 },
-                { className: '.biriyani-750-popup-2', delay: 0.3 },
-                { className: '.biriyani-750-popup-3', delay: 0.6 },
-            ];
-
-            configs750.forEach(({ className, delay }) => {
-                gsap.to(className, {
-                    opacity: 1,
-                    scale: 1,
-                    duration: 1.2,
-                    delay: delay,
-                    ease: "power3.out"
-                });
-            });
-
-            // container-img → slides in from RIGHT
-            gsap.to(".biriyani-750-container-img", {
-                opacity: 1,
-                x: 0,
-                duration: 1.5,
-                delay: 0.3,
-                ease: "power3.out"
-            });
-
-            // text, content, measurement → reveal (fade in)
-            const reveal750 = [
-                { className: '.biriyani-750-text', delay: 0.5 },
-                { className: '.biriyani-750-content', delay: 0.8 },
-                { className: '.biriyani-750-measurement', delay: 1.1 },
-            ];
-
-            reveal750.forEach(({ className, delay }) => {
-                gsap.to(className, {
-                    opacity: 1,
-                    duration: 1,
-                    delay: delay,
-                    ease: "power2.out"
-                });
-            });
-
-
-            // =========================
-            // 🎬 BT-14-1000ml ANIMATIONS
-            // =========================
-
-            // img-1, img-2, img-3 → popup scale animation
-            const configs1000 = [
-                { className: '.biriyani-1000-popup-1', delay: 0.2 },
-                { className: '.biriyani-1000-popup-2', delay: 0.5 },
-                { className: '.biriyani-1000-popup-3', delay: 0.8 },
-            ];
-
-            configs1000.forEach(({ className, delay }) => {
-                gsap.to(className, {
-                    opacity: 1,
-                    scale: 1,
-                    duration: 1.2,
-                    delay: delay,
-                    ease: "power3.out"
-                });
-            });
-
-            // container-img → slides in from LEFT
-            gsap.to(".biriyani-1000-container-img", {
-                opacity: 1,
-                x: 0,
-                duration: 1.5,
-                delay: 0.3,
-                ease: "power3.out"
-            });
-
-            // text, content, measurement → reveal (fade in)
-            const reveal1000 = [
-                { className: '.biriyani-1000-text', delay: 0.5 },
-                { className: '.biriyani-1000-content', delay: 0.8 },
-                { className: '.biriyani-1000-measurement', delay: 1.1 },
-            ];
-
-            reveal1000.forEach(({ className, delay }) => {
-                gsap.to(className, {
-                    opacity: 1,
-                    duration: 1,
-                    delay: delay,
-                    ease: "power2.out"
-                });
-            });
-        }
-
-
-        // ============== Contact Us Animation ==============
-        function ContactUsAnimation() {
-
-            // =========================
-            // 🔄 RESET
-            // =========================
-            gsap.set([
-                "#contact-us-logo",
-                "#contact-us-lets-talk",
-                "#contact-us-left-img",
-                "#contact-us-food-img",
-                "#contact-us-phone-icon",
-                "#contact-us-call-us",
-                "#contact-us-number-1",
-                "#contact-us-number-2",
-                "#contact-us-number-3",
-                "#contact-us-location-icon",
-                "#contact-us-visit-us",
-                "#contact-us-location",
-                "#contact-us-location-2",
-                "#contact-us-email-icon",
-                "#contact-us-email-us",
-                "#contact-us-email-link",
-                "#contact-us-email-link-2",
-                "#contact-us-consultation",
-                "#contact-us-qr-code",
-                "#contact-us-explore",
-                "#contact-us-website"
-            ], { opacity: 0, x: 0, y: 0, scale: 1 });
-
-            // =========================
-            // 🎬 ANIMATIONS
-            // =========================
-
-            // Logo drops from top
-            gsap.fromTo("#contact-us-logo",
-                { opacity: 0, y: -40 },
-                { opacity: 1, y: 0, duration: 0.7, ease: "power3.out", delay: 0.1 }
-            );
-
-            // Left decorative img slides from left
-            gsap.fromTo("#contact-us-left-img",
-                { opacity: 0, x: -80 },
-                { opacity: 1, x: 0, duration: 1, ease: "power3.out", delay: 0.2 }
-            );
-
-            // Food img slides from right
-            gsap.fromTo("#contact-us-food-img",
-                { opacity: 0, x: 80 },
-                { opacity: 1, x: 0, duration: 1, ease: "power3.out", delay: 0.2 }
-            );
-
-            // "Let's Talk" slides from left
-            gsap.fromTo("#contact-us-lets-talk",
-                { opacity: 0, x: -60 },
-                { opacity: 1, x: 0, duration: 0.8, ease: "power3.out", delay: 0.4 }
-            );
-
-            // Phone icon pops up
-            gsap.fromTo("#contact-us-phone-icon",
-                { opacity: 0, scale: 0.3 },
-                { opacity: 1, scale: 1, duration: 0.6, ease: "back.out(1.7)", delay: 0.6 }
-            );
-
-            // Call us fades from left
-            gsap.fromTo("#contact-us-call-us",
-                { opacity: 0, x: -30 },
-                { opacity: 1, x: 0, duration: 0.6, ease: "power2.out", delay: 0.7 }
-            );
-
-            // Phone numbers reveal one by one from left
-            gsap.fromTo("#contact-us-number-1",
-                { opacity: 0, x: -40 },
-                { opacity: 1, x: 0, duration: 0.5, ease: "power2.out", delay: 0.8 }
-            );
-            gsap.fromTo("#contact-us-number-2",
-                { opacity: 0, x: -40 },
-                { opacity: 1, x: 0, duration: 0.5, ease: "power2.out", delay: 0.95 }
-            );
-            gsap.fromTo("#contact-us-number-3",
-                { opacity: 0, x: -40 },
-                { opacity: 1, x: 0, duration: 0.5, ease: "power2.out", delay: 1.1 }
-            );
-
-            // Location icon pops up
-            gsap.fromTo("#contact-us-location-icon",
-                { opacity: 0, scale: 0.3 },
-                { opacity: 1, scale: 1, duration: 0.6, ease: "back.out(1.7)", delay: 1.2 }
-            );
-
-            // Visit us fades from left
-            gsap.fromTo("#contact-us-visit-us",
-                { opacity: 0, x: -30 },
-                { opacity: 1, x: 0, duration: 0.6, ease: "power2.out", delay: 1.3 }
-            );
-
-            // Location address slides from bottom
-            gsap.fromTo("#contact-us-location",
-                { opacity: 0, y: 20 },
-                { opacity: 1, y: 0, duration: 0.6, ease: "power2.out", delay: 1.4 }
-            );
-
-            gsap.fromTo("#contact-us-location-2",
-                { opacity: 0, y: 20 },
-                { opacity: 1, y: 0, duration: 0.6, ease: "power2.out", delay: 1.45 }
-            );
-
-            // Email icon pops up
-            gsap.fromTo("#contact-us-email-icon",
-                { opacity: 0, scale: 0.3 },
-                { opacity: 1, scale: 1, duration: 0.6, ease: "back.out(1.7)", delay: 1.5 }
-            );
-
-            // Email us fades from left
-            gsap.fromTo("#contact-us-email-us",
-                { opacity: 0, x: -30 },
-                { opacity: 1, x: 0, duration: 0.6, ease: "power2.out", delay: 1.6 }
-            );
-
-            // Email link slides from bottom
-            gsap.fromTo("#contact-us-email-link",
-                { opacity: 0, y: 20 },
-                { opacity: 1, y: 0, duration: 0.6, ease: "power2.out", delay: 1.7 }
-            );
-
-            // Email link slides from bottom
-            gsap.fromTo("#contact-us-email-link-2",
-                { opacity: 0, y: 20 },
-                { opacity: 1, y: 0, duration: 0.6, ease: "power2.out", delay: 1.75 }
-            );
-
-            // Consultation button scales up from center
-            gsap.fromTo("#contact-us-consultation",
-                { opacity: 0, scale: 0.5 },
-                { opacity: 1, scale: 1, duration: 0.7, ease: "back.out(1.7)", delay: 1.85 }
-            );
-
-            // QR code slides from left
-            gsap.fromTo("#contact-us-qr-code",
-                { opacity: 0, x: -30 },
-                { opacity: 1, x: 0, duration: 0.6, ease: "power2.out", delay: 2.0 }
-            );
-
-            // Explore text fades from bottom
-            gsap.fromTo("#contact-us-explore",
-                { opacity: 0, y: 20 },
-                { opacity: 1, y: 0, duration: 0.6, ease: "power2.out", delay: 2.1 }
-            );
-
-            // Website link fades from bottom
-            gsap.fromTo("#contact-us-website",
-                { opacity: 0, y: 20 },
-                { opacity: 1, y: 0, duration: 0.6, ease: "power2.out", delay: 2.2 }
-            );
-        }
-        // Biriyani Rectangle page 2 Animation code end 
-
-
-
-        // ================table of content animation code start ===============
-
-
-
-        function TableOfContentAnimation() {
-            // ===== RESET =====
-            const tocElements = [
-                '.toc-iml-packaging',
-                '.toc-product-range',
-                '.toc-auto-scroll',
-                '.toc-round-container',
-                '.toc-round-bucket',
-                '.toc-sweet-box',
-                '.toc-biriyani-rect',
-                '.toc-square-bucket',
-                '.toc-icecream-oval',
-                '.toc-icecream-round',
-                '.toc-beverage-cup',
-                '.toc-bottom-food'
-            ];
-
-            gsap.set(tocElements, { opacity: 0, x: 0, y: 0 });
-
-            // ===== ANIMATIONS =====
-
-            // Header texts drop from top
-            gsap.fromTo('.toc-iml-packaging',
-                { opacity: 0, y: -50 },
-                { opacity: 1, y: 0, duration: 0.7, ease: "power3.out", delay: 0.1 }
-            );
-
-            gsap.fromTo('.toc-product-range',
-                { opacity: 0, y: -30 },
-                { opacity: 1, y: 0, duration: 0.7, ease: "power3.out", delay: 0.3 }
-            );
-
-            gsap.fromTo('.toc-auto-scroll',
-                { opacity: 0, x: 50 },
-                { opacity: 1, x: 0, duration: 0.7, ease: "power3.out", delay: 0.4 }
-            );
-
-            // Bottom food image slides from right
-            gsap.fromTo('.toc-bottom-food',
-                { opacity: 0, x: 80 },
-                { opacity: 1, x: 0, duration: 0.8, ease: "power3.out", delay: 0.3 }
-            );
-
-            // List items reveal one by one from left
-            const listItems = [
-                '.toc-round-container',
-                '.toc-round-bucket',
-                '.toc-sweet-box',
-                '.toc-biriyani-rect',
-                '.toc-square-bucket',
-                '.toc-icecream-oval',
-                '.toc-icecream-round',
-                '.toc-beverage-cup',
-            ];
-
-            listItems.forEach((className, index) => {
-                gsap.fromTo(className,
-                    { opacity: 0, x: -60 },
-                    {
-                        opacity: 1,
-                        x: 0,
-                        duration: 0.5,
-                        delay: 0.5 + (index * 0.12),
-                        ease: "power2.out"
-                    }
-                );
-            });
-        }
-        // ================table of content animation code end ===============
-
+     
+     
+    
 
 
     </script>
@@ -4952,6 +4146,19 @@
         // Flipbook turning event handler
         $('#flipbook').bind('turning', function (event, page, view) {
             const isMobile = window.innerWidth <= 768;
+            const totalPages = $('#flipbook').turn('pages');
+            const viewer = $('#viewer');
+
+            if (page === 1) {
+                viewer.addClass('first-page');
+            } else {
+                viewer.removeClass('first-page');
+            }
+            if (page === totalPages) {
+                viewer.addClass('last-page');
+            } else {
+                viewer.removeClass('last-page');
+            }
 
             resetPageImages(); // Clear animations before page turns
             stopAllSwitcherTimers(); // Pause automatic transitions when page turns
@@ -4967,56 +4174,74 @@
 
         // Also trigger on 'turned' for when page flip completes
         $('#flipbook').bind('turned', function (event, page, view) {
+            const totalPages = $('#flipbook').turn('pages');
+            const viewer = $('#viewer');
+
+            if (page === 1) {
+                viewer.addClass('first-page');
+            } else {
+                viewer.removeClass('first-page');
+            }
+            if (page === totalPages) {
+                viewer.addClass('last-page');
+            } else {
+                viewer.removeClass('last-page');
+            }
+
             // ============== Page 1 - Home ==============
             if (page === 1) {
                 animatePage1();
             }
-            startAllSwitcherTimers();
+
+            if (page === 2) {
+                Page2LeftAnimation();
+                Page2RightAnimation();
+                Page2UpAnimation();
+            }
+            
             if (page === 3) {
-                TableOfContentAnimation();
+             
             }
             if (page === 5) {
-                RoundBucketAnimation();
+             
             }
 
             if (page === 8) {
-                setTimeout(function () { sbReset(); }, 200);
+               
             }
             if (page === 9) {
-                setTimeout(function () { sbteReset(); }, 200);
+                
             }
-        });
+            }
+        );
 
         // Initial animation when flipbook loads on page 1
         $(document).ready(function () {
             // Check if starting on page 1
             setTimeout(function () {
                 const currentPage = $('#flipbook').turn('page');
+                const totalPages = $('#flipbook').turn('pages');
+                const viewer = $('#viewer');
+
                 if (currentPage === 1) {
+                    viewer.addClass('first-page');
                     animatePage1();
+                } else {
+                    viewer.removeClass('first-page');
+                }
+                if (currentPage === totalPages) {
+                    viewer.addClass('last-page');
+                } else {
+                    viewer.removeClass('last-page');
                 }
             }, 500);
         });
 
 
 
-        // contact us page Location navigation  
+      
 
-        // document.querySelector(".locationBtn").addEventListener("click", () => {
-        //       // Replace with your actual Google Maps link
-        //       window.open("https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3919.050478731572!2d78.72142939999999!3d10.807445900000001!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a52650c018a8c55%3A0x8004fa28a01c43f9!2sEco%20Energy%20Trichy!5e0!3m2!1sen!2sin!4v1774417781763!5m2!1sen!2sin", "_blank");
-        //     });
-
-        document.querySelector(".locationBtn").addEventListener("click", () => {
-            window.open("https://www.google.com/maps?q=Eco+Energy+Trichy", "_blank");
-        });
-
-        document.querySelector(".locationBtn-2").addEventListener("click", () => {
-            window.open(
-                "https://www.google.com/maps?q=D22,+SIDCO+Industrial+Estate,+Thuvakudi,+Tiruchirappalli+620015",
-                "_blank"
-            );
-        });
+      
 
     </script>
 

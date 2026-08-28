@@ -8,6 +8,16 @@ function openMenu() {
     navOverlay.classList.add('show');
     navToggle.setAttribute('aria-expanded', 'true');
 
+    // Toggle body class to lower z-index of navigation arrows
+    document.body.classList.add('toc-active');
+
+    // Hide brand logo when menu is open to prevent overlapping
+    const logo = document.querySelector('.top-left-brand');
+    if (logo) {
+        logo.style.opacity = '0';
+        logo.style.pointerEvents = 'none';
+    }
+
     // Hide thumbnails behind TOC
     const thumbs = document.querySelector('.thumbnail-preview-container');
     if (thumbs) thumbs.style.zIndex = '0';
@@ -19,6 +29,16 @@ function closeMenu() {
     navOverlay.classList.remove('show');
     navToggle.setAttribute('aria-expanded', 'false');
 
+    // Restore body class to restore z-index of navigation arrows
+    document.body.classList.remove('toc-active');
+
+    // Restore brand logo
+    const logo = document.querySelector('.top-left-brand');
+    if (logo) {
+        logo.style.opacity = '1';
+        logo.style.pointerEvents = 'auto';
+    }
+
     // Restore thumbnails
     const thumbs = document.querySelector('.thumbnail-preview-container');
     if (thumbs) thumbs.style.zIndex = '999999';
@@ -29,6 +49,14 @@ navToggle.addEventListener('click', (e) => {
     if (tocNav.classList.contains('show')) closeMenu();
     else openMenu();
 });
+
+const closeTocBtn = document.getElementById('closeTocBtn');
+if (closeTocBtn) {
+    closeTocBtn.addEventListener('click', function(e) {
+        e.stopPropagation();
+        closeMenu();
+    });
+}
 
 // Click outside to close
 document.addEventListener('click', (e) => {
@@ -62,10 +90,19 @@ document.addEventListener('keydown', (e) => {
 });
 
 function updateActiveThumbnail(currentPage) {
-    document.querySelectorAll('.tb-link').forEach(item => {
-        const itemPage = parseInt(item.dataset.page);
-        item.classList.toggle('active', itemPage === currentPage);
-    });
+    if (window.$ && $('#flipbook').turn) {
+        const currentView = $('#flipbook').turn('view', currentPage);
+        document.querySelectorAll('.tb-link').forEach(item => {
+            const itemPage = parseInt(item.dataset.page);
+            const isActive = currentView.indexOf(itemPage) !== -1 || itemPage === currentPage;
+            item.classList.toggle('active', isActive);
+        });
+    } else {
+        document.querySelectorAll('.tb-link').forEach(item => {
+            const itemPage = parseInt(item.dataset.page);
+            item.classList.toggle('active', itemPage === currentPage);
+        });
+    }
 }
 
 // Unified handler (works for click + touch + pointer)
@@ -144,7 +181,14 @@ navToggle1.addEventListener('click', function () {
     else openMenu1();
 });
 navOverlay1.addEventListener('click', closeMenu1);
-document.querySelectorAll('.toc-list1 a').forEach(link => {
+const closeTocBtn1 = document.getElementById('closeTocBtn1');
+if (closeTocBtn1) {
+    closeTocBtn1.addEventListener('click', function(e) {
+        e.stopPropagation();
+        closeMenu1();
+    });
+}
+document.querySelectorAll('#tocNav1 .toc-list a').forEach(link => {
     link.addEventListener('click', closeMenu1);
 });
 // Keyboard: ESC to close
@@ -569,7 +613,7 @@ const closeSearch = () => {
     searchModal.classList.remove('show');
     searchModal.classList.add('hidden');
     searchInput.value = '';
-    searchResults.innerHTML = '<p class="text-gray-500 text-center">Type to search pages...</p>';
+    searchResults.innerHTML = '';
 };
 
 // ✅ OPEN SEARCH MODAL
@@ -626,7 +670,7 @@ function runSearch() {
     const query = searchInput.value.toLowerCase().trim();
 
     if (!query) {
-        searchResults.innerHTML = '<p class="text-gray-500 text-center">Type to search pages...</p>';
+        searchResults.innerHTML = '';
         return;
     }
 
@@ -1605,6 +1649,164 @@ $(document).ready(function () {
         this.value = this.value.replace(/[^0-9]/g, '');
     });
 
+});
+
+// ========== THUMBNAIL DRAWER SYSTEM (DESKTOP ONLY) ==========
+document.addEventListener("DOMContentLoaded", function () {
+    const thumbToggleBtn = document.getElementById('desktopThumbToggle');
+    const thumbDrawer = document.getElementById('thumbnailDrawer');
+    const closeThumbBtn = document.getElementById('closeThumbBtn');
+    const thumbGrid = document.getElementById('thumbnailGrid');
+
+    if (!thumbGrid || !thumbDrawer) return;
+
+    // Generate thumbnails dynamically for 42 pages
+    // Page 1 (Single)
+    createThumbItem(1, 'page 1', '../global assets/Images/Thumbnail-Images/page-1.webp');
+
+    // Pages 2-3, 4-5, ..., 40-41 (Double pages)
+    for (let p = 2; p <= 40; p += 2) {
+        let imgSrc = '../global assets/Images/Thumbnail-Images/page-4-5.webp'; // Default placeholder image
+        if (p === 2) {
+            imgSrc = '../global assets/Images/Thumbnail-Images/page-2-3.webp';
+        } else if (p === 4) {
+            imgSrc = '../global assets/Images/Thumbnail-Images/page-4-5.webp';
+        }
+        createThumbItem(p, `page ${p}-${p+1}`, imgSrc);
+    }
+
+    // Page 42 (Single)
+    createThumbItem(42, 'page 42', '../global assets/Images/Thumbnail-Images/page-42.webp');
+
+    function createThumbItem(pageNumber, label, imageSrc) {
+        const item = document.createElement('div');
+        item.className = 'thumb-grid-item';
+        if (pageNumber === 1 || pageNumber === 42) {
+            item.classList.add('portrait-card');
+        }
+        item.setAttribute('data-page', pageNumber);
+
+        const img = document.createElement('img');
+        img.className = 'thumb-grid-img';
+        img.src = imageSrc;
+        img.alt = label;
+        // Fallback placeholder if image fails to load
+        img.onerror = function() {
+            this.src = 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="130" viewBox="0 0 100 130"><rect width="100%" height="100%" fill="%23f3f4f6"/><text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" font-family="Segoe UI, Arial" font-size="9" font-weight="600" fill="%23E67429">Page ' + pageNumber + '</text></svg>';
+        };
+
+        const labelDiv = document.createElement('div');
+        labelDiv.className = 'thumb-grid-label';
+        labelDiv.textContent = label;
+
+        item.appendChild(img);
+        item.appendChild(labelDiv);
+
+        // Click event to flip book
+        item.addEventListener('click', function () {
+            if (window.jQuery && $('#flipbook').turn) {
+                $('#flipbook').turn('page', pageNumber);
+            }
+            closeThumbDrawer();
+        });
+
+        thumbGrid.appendChild(item);
+    }
+
+    // Toggle Thumbnail Drawer
+    if (thumbToggleBtn) {
+        thumbToggleBtn.addEventListener('click', function (e) {
+            e.stopPropagation();
+            if (thumbDrawer.classList.contains('show')) {
+                closeThumbDrawer();
+            } else {
+                openThumbDrawer();
+            }
+        });
+    }
+
+    if (closeThumbBtn) {
+        closeThumbBtn.addEventListener('click', function (e) {
+            e.stopPropagation();
+            closeThumbDrawer();
+        });
+    }
+
+    function openThumbDrawer() {
+        // Close TOC if open
+        if (typeof closeMenu === 'function') closeMenu();
+        
+        thumbDrawer.classList.add('show');
+        document.body.classList.add('toc-active'); // Reuses backdrop logic to push arrows back
+        const overlay = document.getElementById('navOverlay');
+        if (overlay) overlay.classList.add('show');
+
+        // Highlight active page item in grid
+        updateActiveThumbnailItem();
+    }
+
+    function closeThumbDrawer() {
+        thumbDrawer.classList.remove('show');
+        // Only remove overlay if TOC is not showing
+        const tocNav = document.getElementById('tocNav');
+        if (!tocNav || !tocNav.classList.contains('show')) {
+            document.body.classList.remove('toc-active');
+            const overlay = document.getElementById('navOverlay');
+            if (overlay) overlay.classList.remove('show');
+        }
+    }
+
+    // Close when clicking overlay
+    const overlay = document.getElementById('navOverlay');
+    if (overlay) {
+        overlay.addEventListener('click', function() {
+            closeThumbDrawer();
+        });
+    }
+
+    // Close when clicking outside of the drawer
+    document.addEventListener('click', function(e) {
+        const isDrawerVisible = thumbDrawer.classList.contains('show');
+        const isClickInsideDrawer = thumbDrawer.contains(e.target);
+        const isClickOnToggle = thumbToggleBtn.contains(e.target);
+        if (isDrawerVisible && !isClickInsideDrawer && !isClickOnToggle) {
+            closeThumbDrawer();
+        }
+    });
+
+    // Close when pressing Escape key
+    document.addEventListener('keydown', function (e) {
+        if (e.key === "Escape" && thumbDrawer.classList.contains('show')) {
+            closeThumbDrawer();
+        }
+    });
+
+    // Update active item inside grid based on flipbook page
+    function updateActiveThumbnailItem() {
+        if (!window.jQuery || !$('#flipbook').turn) return;
+        const currentPage = $('#flipbook').turn('page');
+        
+        document.querySelectorAll('.thumb-grid-item').forEach(item => {
+            const pageVal = parseInt(item.getAttribute('data-page'));
+            // If current page matches target page or target page + 1 (for double spreads)
+            if (pageVal === currentPage || (pageVal > 1 && pageVal + 1 === currentPage)) {
+                item.classList.add('active');
+                // Scroll item into view smoothly
+                item.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            } else {
+                item.classList.remove('active');
+            }
+        });
+    }
+
+    // Listen to flipbook turning events to update active grid item
+    if (window.jQuery) {
+        $('#flipbook').on('turned', function () {
+            if (thumbDrawer.classList.contains('show')) {
+                updateActiveThumbnailItem();
+            }
+        });
+    }
 });
 
 
