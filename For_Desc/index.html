@@ -371,97 +371,7 @@
             }
         </style>
 
-        <script>
-            // Ripple Effect on Mouse Click
-            (function () {
-                // const canvas = document.getElementById('rippleCanvas');
-                // const ctx = canvas.getContext('2d');
 
-                // canvas.width = window.innerWidth;
-                // canvas.height = window.innerHeight;
-
-                // window.addEventListener('resize', () => {
-                //     canvas.width = window.innerWidth;
-                //     canvas.height = window.innerHeight;
-                // });
-
-                // let ripples = [];
-
-                // class Ripple {
-                //     constructor(x, y) {
-                //         this.x = x;
-                //         this.y = y;
-                //         this.radius = 0;
-                //         this.maxRadius = 200;
-                //         this.speed = 3;
-                //         this.alpha = 1;
-                //     }
-
-                //     draw() {
-                //         ctx.beginPath();
-                //         ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-                //         ctx.strokeStyle = `rgba(74, 222, 128, ${this.alpha})`;
-                //         ctx.lineWidth = 3;
-                //         ctx.stroke();
-
-                //         // Inner ripple
-                //         if (this.radius > 20) {
-                //             ctx.beginPath();
-                //             ctx.arc(this.x, this.y, this.radius - 20, 0, Math.PI * 2);
-                //             ctx.strokeStyle = `rgba(20, 184, 166, ${this.alpha * 0.5})`;
-                //             ctx.lineWidth = 2;
-                //             ctx.stroke();
-                //         }
-                //     }
-
-                //     update() {
-                //         this.radius += this.speed;
-                //         this.alpha = 1 - (this.radius / this.maxRadius);
-
-                //         if (this.radius > this.maxRadius) {
-                //             return false; // Mark for removal
-                //         }
-                //         return true;
-                //     }
-                // }
-
-                // // Create ripple on click
-                // canvas.addEventListener('click', (e) => {
-                //     ripples.push(new Ripple(e.clientX, e.clientY));
-                // });
-
-                // // Create ripple on mouse move (optional - makes it more interactive)
-                // let lastMove = Date.now();
-                // canvas.addEventListener('mousemove', (e) => {
-                //     if (Date.now() - lastMove > 200) { // Throttle to every 200ms
-                //         ripples.push(new Ripple(e.clientX, e.clientY));
-                //         lastMove = Date.now();
-                //     }
-                // });
-
-                // function animate() {
-                //     ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-                //     // Background
-                //     let gradient = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
-                //     gradient.addColorStop(0, '#0f766e');
-                //     gradient.addColorStop(0.5, '#134e4a');
-                //     gradient.addColorStop(1, '#0f172a');
-                //     ctx.fillStyle = gradient;
-                //     ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-                //     // Update ripples
-                //     ripples = ripples.filter(ripple => {
-                //         ripple.draw();
-                //         return ripple.update();
-                //     });
-
-                //     requestAnimationFrame(animate);
-                // }
-
-                // animate();
-            })();
-        </script>
         <!-- *****************************mobile nav start*********************************************  -->
 
         <!-- ==================== MOBILE TOP NAVIGATION ==================== -->
@@ -1312,17 +1222,17 @@
                         <img src="../global assets/Images/about-us/about-us-text.svg" alt="website-link"
                             class="absolute w-[20%] top-[1.25%] right-[3.5%]" />
                         <img src="../global assets/Images/about-us/content.svg" alt="model-no-text"
-                            class="absolute w-[75%] top-[10%] left-[12.5%] page-2-left" />
+                            class="absolute w-[75%] top-[10%] left-[12.5%] page-2-up" />
                         <img src="../global assets/Images/about-us/white-bg.webp" alt="heartbeat-line"
                             class="absolute w-[90%] top-[34%] right-[5%]" />
                         <img src="../global assets/Images/about-us/our-vision.svg" alt="vision"
-                            class="absolute w-[28%] top-[38%] left-[8%] page-2-up" />
+                            class="absolute w-[28%] top-[38%] left-[8%] page-2-left" />
                         <img src="../global assets/Images/about-us/our-mission.svg" alt="mission"
-                            class="absolute w-[28%] top-[38%] left-[36%] page-2-left" />
+                            class="absolute w-[28%] top-[38%] left-[36%] page-2-down" />
                         <img src="../global assets/Images/about-us/our-values.svg" alt="mission"
                             class="absolute w-[28%] top-[38%] left-[64%] page-2-right" />
                         <img src="../global assets/Images/about-us/bottom-icons.svg" alt="bottom-icons"
-                            class="absolute w-[80%] top-[65%] left-[10%]" />
+                            class="absolute w-[80%] top-[65%] left-[10%] popup_images2" />
                         <img src="../global assets/Images/about-us/bottom-image.webp" alt="bottom-icons"
                             class="absolute w-[100%] h-[40%] bottom-[0%] left-[0%]" />
                     </div>
@@ -3208,11 +3118,7 @@
         $('#flipbook').bind('turning', function (event, page, view) {
             resetPageImages(); // Clear or reset before the page turns
         });
-
-
-
-
-        $('#flipbook').bind('turning', function (event, page, view) {
+        $('#flipbook').bind('turning', function (event, page, view) {
 
             const isMobile = window.innerWidth <= 768;
 
@@ -3227,10 +3133,11 @@
 
             // ============== Page 2-3 - About Us & Table of Contents ==============
             if (page === 2 || page === 3) {
-                // Page2LeftAnimation();
-                // Page2RightAnimation();
-                // Page2UpAnimation();
-                // Page2DownAnimation();
+                Page2LeftAnimation();
+                Page2RightAnimation();
+                Page2UpAnimation();
+                Page2DownAnimation();
+                Page2Animation();
                 }
 
             // ============== Page 4-5 - Round Containers ==============
@@ -3301,22 +3208,136 @@
 
             }
 
+            // ============== Dynamic Image Animation for All Other Pages ==============
+            animateViewImages(view);
+
             // Update page counter
             updateActiveThumbnail(page);
         });
 
+        function shouldAnimateImage($img) {
+            const src = $img.attr('src') || '';
+            const alt = $img.attr('alt') || '';
+            const className = $img.attr('class') || '';
+            
+            // Filter out shadows
+            if (className.includes('gutter-shadow') || className.includes('shadow-')) return false;
+            // Filter out background images
+            if (alt.includes('background') || src.includes('background') || src.includes('bottom-image') || src.includes('white-bg')) return false;
+            // Filter out logo
+            if (alt.includes('logo') || src.includes('logo')) return false;
+            // Filter out website link
+            if (alt.includes('website-link') || src.includes('website-link')) return false;
+            // Filter out specific page 2 classes to avoid double animation/handling
+            if (className.includes('page-2-left') || className.includes('page-2-right') || 
+                className.includes('page-2-up') || className.includes('page-2-down') || 
+                className.includes('popup_images2')) {
+                return false;
+            }
+            return true;
+        }
+
+        function getImageAnimationType($img) {
+            const src = $img.attr('src') || '';
+            const className = $img.attr('class') || '';
+            
+            if (src.includes('position')) {
+                return 'popup';
+            }
+            if (src.includes('specifications')) {
+                return 'left-to-right';
+            }
+            if (src.includes('configurations')) {
+                return 'left-to-right';
+            }
+            if (src.includes('text')) {
+                return 'up-to-down';
+            }
+            if (src.includes('-image') || src.endsWith('.webp') || src.endsWith('.png') || className.includes('shadow-md')) {
+                return 'down-to-up';
+            }
+            
+            return 'popup';
+        }
+
         function resetPageImages() {
-            // const allAnimatedImages = document.querySelectorAll("[data-image-animation], [data-3d-image-animation]");
-            const allAnimatedImages = document.querySelectorAll(".page-2-left, .page-2-right, .page-2-up");
-            allAnimatedImages.forEach((img) => {
-                gsap.set(img, {
-                    opacity: 0,
-                    x: 0,
-                    y: 0,
-                    scale: 1
-                });
+            // Reset existing specific elements
+            gsap.set('.page-2-left, .page-2-right, .page-2-up, .page-2-down, .popup_images2', {
+                opacity: 0,
+                x: 0,
+                y: 0,
+                scale: 1
             });
-            gsap.set('.page-2-left, .page-2-right, .page-2-up', { opacity: 0 });
+            gsap.set('.services_grid_main img, .slide_up_image, .fade_in_images, .popup', { opacity: 0 });
+            
+            // Reset all other page content images based on their animation type
+            $('.page img').each(function() {
+                const $img = $(this);
+                if (shouldAnimateImage($img)) {
+                    const animType = getImageAnimationType($img);
+                    if (animType === 'popup') {
+                        gsap.set($img, { opacity: 0, scale: 0.5, x: 0, y: 0 });
+                    } else if (animType === 'left-to-right') {
+                        gsap.set($img, { opacity: 0, x: -80, y: 0, scale: 1 });
+                    } else if (animType === 'up-to-down') {
+                        gsap.set($img, { opacity: 0, x: 0, y: -80, scale: 1 });
+                    } else if (animType === 'down-to-up') {
+                        gsap.set($img, { opacity: 0, x: 0, y: 80, scale: 1 });
+                    }
+                }
+            });
+        }
+
+        function animateViewImages(view) {
+            if (!view) return;
+            
+            view.forEach(p => {
+                const $pageEl = $(`.page-${p}`);
+                if ($pageEl.length === 0) return;
+                
+                const groups = {
+                    'popup': [],
+                    'left-to-right': [],
+                    'up-to-down': [],
+                    'down-to-up': []
+                };
+                
+                $pageEl.find('img').each(function() {
+                    const $img = $(this);
+                    if (shouldAnimateImage($img)) {
+                        const animType = getImageAnimationType($img);
+                        groups[animType].push(this);
+                    }
+                });
+                
+                if (groups['up-to-down'].length > 0) {
+                    gsap.fromTo(groups['up-to-down'],
+                        { opacity: 0, y: -80 },
+                        { opacity: 1, y: 0, duration: 1.2, stagger: 0.15, ease: "power3.out" }
+                    );
+                }
+                
+                if (groups['down-to-up'].length > 0) {
+                    gsap.fromTo(groups['down-to-up'],
+                        { opacity: 0, y: 80 },
+                        { opacity: 1, y: 0, duration: 1.2, stagger: 0.15, ease: "power3.out" }
+                    );
+                }
+                
+                if (groups['left-to-right'].length > 0) {
+                    gsap.fromTo(groups['left-to-right'],
+                        { opacity: 0, x: -80 },
+                        { opacity: 1, x: 0, duration: 1.2, stagger: 0.15, ease: "power3.out" }
+                    );
+                }
+                
+                if (groups['popup'].length > 0) {
+                    gsap.fromTo(groups['popup'],
+                        { opacity: 0, scale: 0.5 },
+                        { opacity: 1, scale: 1, duration: 1.2, stagger: 0.15, ease: "power3.out" }
+                    );
+                }
+            });
         }
 
         function Page2LeftAnimation() {
@@ -3390,7 +3411,7 @@
             );
 
         }
-        function page2Animation() {
+        function Page2Animation() {
 
             gsap.fromTo('.popup_images2',
                 { opacity: 0, scale: 0.5 },
@@ -3475,9 +3496,6 @@
                     ease: "power3.out"
                 }
             );
-        }
-        function resetPageImages() {
-            gsap.set('.services_grid_main img, .slide_up_image, .fade_in_images, .popup', { opacity: 0 });
         }
 
 
@@ -4071,132 +4089,22 @@
             pageElements.page1.greenerTomorrowText = document.getElementById('greener-tomorrow-text');
         });
 
-        // Reset all page animations
-        function resetPageImages() {
-            // Reset Page 1 animations
-            const p1 = pageElements.page1;
-
-            if (p1.containerImage) {
-                p1.containerImage.classList.remove('container-rotate', 'container-rotate-slow');
-            }
-
-            if (p1.imlDesignText) {
-                p1.imlDesignText.classList.remove('reveal-top-bottom', 'slide-reveal-down');
-                p1.imlDesignText.classList.add('anim-hidden');
-            }
-
-            if (p1.smartPackingText) {
-                p1.smartPackingText.classList.remove('text-reveal-1', 'text-slide-1');
-                p1.smartPackingText.classList.add('anim-hidden');
-            }
-
-            if (p1.innovateTodayText) {
-                p1.innovateTodayText.classList.remove('text-reveal-2', 'text-slide-2');
-                p1.innovateTodayText.classList.add('anim-hidden');
-            }
-
-            if (p1.foodSafetyText) {
-                p1.foodSafetyText.classList.remove('text-reveal-3', 'text-slide-3');
-                p1.foodSafetyText.classList.add('anim-hidden');
-            }
-
-            if (p1.greenerTomorrowText) {
-                p1.greenerTomorrowText.classList.remove('text-reveal-4', 'text-slide-4');
-                p1.greenerTomorrowText.classList.add('anim-hidden');
-            }
-        }
-
-        // Animate Page 1 - Home
-        function animatePage1() {
-            const p1 = pageElements.page1;
-
-            // 1. Container Image - Start rotating (infinite loop)
-            if (p1.containerImage) {
-                p1.containerImage.classList.add('container-rotate-slow'); // Use 'container-rotate' for faster
-            }
-
-            // 2. IML Design Text - Reveal top to bottom
-            if (p1.imlDesignText) {
-                p1.imlDesignText.classList.remove('anim-hidden');
-                p1.imlDesignText.classList.add('reveal-top-bottom');
-            }
-
-            // 3. Bottom Texts - Reveal one by one with delays
-            if (p1.smartPackingText) {
-                p1.smartPackingText.classList.remove('anim-hidden');
-                p1.smartPackingText.classList.add('text-reveal-1');
-            }
-
-            if (p1.innovateTodayText) {
-                p1.innovateTodayText.classList.remove('anim-hidden');
-                p1.innovateTodayText.classList.add('text-reveal-2');
-            }
-
-            if (p1.foodSafetyText) {
-                p1.foodSafetyText.classList.remove('anim-hidden');
-                p1.foodSafetyText.classList.add('text-reveal-3');
-            }
-
-            if (p1.greenerTomorrowText) {
-                p1.greenerTomorrowText.classList.remove('anim-hidden');
-                p1.greenerTomorrowText.classList.add('text-reveal-4');
-            }
-        }
-
-        // Flipbook turning event handler
-        $('#flipbook').bind('turning', function (event, page, view) {
-            const isMobile = window.innerWidth <= 768;
-            const totalPages = $('#flipbook').turn('pages');
-            const viewer = $('#viewer');
-
-            if (page === 1) {
-                viewer.addClass('first-page');
-            } else {
-                viewer.removeClass('first-page');
-            }
-            if (page === totalPages) {
-                viewer.addClass('last-page');
-            } else {
-                viewer.removeClass('last-page');
-            }
-
-            resetPageImages(); // Clear animations before page turns
-            stopAllSwitcherTimers(); // Pause automatic transitions when page turns
-
-            // ============== Page 1 - Home ==============
-            if (page === 1) {
-                // Small delay to ensure page is visible
-                setTimeout(function () {
-                    animatePage1();
-                }, 100);
-            }
-        });
-
+  
         // Also trigger on 'turned' for when page flip completes
         $('#flipbook').bind('turned', function (event, page, view) {
             const totalPages = $('#flipbook').turn('pages');
             const viewer = $('#viewer');
 
-            if (page === 1) {
-                viewer.addClass('first-page');
-            } else {
-                viewer.removeClass('first-page');
-            }
-            if (page === totalPages) {
-                viewer.addClass('last-page');
-            } else {
-                viewer.removeClass('last-page');
-            }
-
+         
             // ============== Page 1 - Home ==============
             if (page === 1) {
-                animatePage1();
+           
             }
 
-            if (page === 2) {
-                Page2LeftAnimation();
-                Page2RightAnimation();
-                Page2UpAnimation();
+            if (page === 2)   {
+                // Page2LeftAnimation();
+                // Page2RightAnimation();
+                // Page2UpAnimation();
             }
             
             if (page === 3) {
@@ -4214,34 +4122,6 @@
             }
             }
         );
-
-        // Initial animation when flipbook loads on page 1
-        $(document).ready(function () {
-            // Check if starting on page 1
-            setTimeout(function () {
-                const currentPage = $('#flipbook').turn('page');
-                const totalPages = $('#flipbook').turn('pages');
-                const viewer = $('#viewer');
-
-                if (currentPage === 1) {
-                    viewer.addClass('first-page');
-                    animatePage1();
-                } else {
-                    viewer.removeClass('first-page');
-                }
-                if (currentPage === totalPages) {
-                    viewer.addClass('last-page');
-                } else {
-                    viewer.removeClass('last-page');
-                }
-            }, 500);
-        });
-
-
-
-      
-
-      
 
     </script>
 

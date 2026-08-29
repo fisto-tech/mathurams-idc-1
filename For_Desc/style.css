@@ -3121,21 +3121,6 @@ body.toc-active .ui-arrow-previous-page {
   }
 }
 
-/* Force Crisp Image & Page Rendering (Prevents Browser 3D Scaling Blur) */
-#flipbook,
-#flipbook .page,
-#flipbook .page img,
-#viewer img {
-  -webkit-backface-visibility: hidden !important;
-  backface-visibility: hidden !important;
-  -webkit-transform: translate3d(0, 0, 0) !important;
-  transform: translate3d(0, 0, 0) !important;
-  will-change: transform !important;
-  image-rendering: -webkit-optimize-contrast !important; /* Safari crispness */
-  image-rendering: auto !important;
-  -webkit-font-smoothing: antialiased !important;
-  -moz-osx-font-smoothing: grayscale !important;
-}
 
 /* ==========================================================================
    Responsive Spine Crease Shadow Control (SVG overlay method)
