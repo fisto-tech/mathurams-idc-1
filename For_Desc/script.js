@@ -114,19 +114,21 @@ function handleThumbnailActivate(e) {
     const pageNumber = parseInt(link.dataset.page);
     const audioPath = link.dataset.audioPath;
 
-    // Navigate flipbook
-    if (window.$ && $('#flipbook').turn) {
-        $('#flipbook').turn('page', pageNumber);
-    }
-
-    // Update active thumbnail
-    updateActiveThumbnail(pageNumber);
-
     // Play audio
     if (audioPath) {
         const audio = new Audio(audioPath);
         audio.play().catch(err => console.log('Audio play failed:', err));
     }
+
+    // Navigate flipbook with a small delay
+    if (window.$ && $('#flipbook').turn) {
+        setTimeout(() => {
+            $('#flipbook').turn('page', pageNumber);
+        }, 200);
+    }
+
+    // Update active thumbnail
+    updateActiveThumbnail(pageNumber);
 
     closeMenu();
 }
@@ -596,16 +598,48 @@ const closeSearchModal = document.getElementById('closeSearchModal');
 
 // Define your pages with search keywords
 const pages = [
-    { page: 1, title: "Home page", keywords: ["cover", "front", "home", "title", "", "1", ""] },
-    { page: 2, title: "Introduction", keywords: ["intro", "introduction", "about us", "2"] },
-    { page: 3, title: "Chapter 1", keywords: ["3", "table of content"] },
-    { page: 4, title: "Chapter 2", keywords: ["4", "5", "", ""] },
-    { page: 6, title: "Chapter 3", keywords: ["6", "7", ""] },
-    { page: 8, title: "Introduction", keywords: ["8", "9", "", ""] },
-    { page: 10, title: "Chapter 1", keywords: ["10", "11", "", ""] },
-    { page: 12, title: "Chapter 2", keywords: ["12", "13", "", ""] },
-    { page: 14, title: "Chapter 2", keywords: ["conclusion", "end", "14", "contact us"] },
-
+    { page: 1, title: "Home page", keywords: ["cover", "front", "home", "title", "1", "mathurams", "engineering", "idc"] },
+    { page: 2, title: "About Us", keywords: ["intro", "introduction", "about us", "2", "values", "mission", "vision", "profile"] },
+    { page: 3, title: "Table of Contents", keywords: ["3", "table of contents", "toc", "index", "chapters", "products", "categories"] },
+    { page: 4, title: "3D Experience", keywords: ["4", "3d", "experience", "interactive", "virtual", "models", "icu cot", "fowler cot", "examination", "hi-lo", "labour", "semi fowler", "attender", "bedside locker", "overbed"] },
+    { page: 5, title: "Semi Fowler Cot", keywords: ["5", "semi fowler cot", "ward furniture", "bed", "MF-35"] },
+    { page: 6, title: "Fowler Cot", keywords: ["6", "fowler cot", "ward furniture", "bed", "MF-39"] },
+    { page: 7, title: "Plain Cot", keywords: ["7", "plain cot", "ward furniture", "bed", "MF-62", "MF-61"] },
+    { page: 8, title: "Attender Cot", keywords: ["8", "attender cot", "attender bed", "ward furniture", "MF-19", "MF-20", "MF-22"] },
+    { page: 9, title: "Bed Side Locker", keywords: ["9", "bed side locker", "bedside cabinet", "locker", "cabinet", "ward furniture", "MF-01", "MF-02"] },
+    { page: 10, title: "Over Bed Table", keywords: ["10", "over bed table", "cardiac table", "ward furniture", "MF-08", "MF-09"] },
+    { page: 11, title: "ICU Cot 5 Functions", keywords: ["11", "icu cot", "5 functions", "critical care", "electric", "motor", "remote", "bed", "MF-31", "MF-32"] },
+    { page: 12, title: "ICU Cot 3 Functions", keywords: ["12", "icu cot", "3 functions", "critical care", "manual", "crank", "bed", "MF-33", "MF-34"] },
+    { page: 13, title: "Labour Cot", keywords: ["13", "labour cot", "maternity", "delivery bed", "MF-71", "MF-72"] },
+    { page: 14, title: "Baby Cradle & Pediatric Cot", keywords: ["14", "baby cradle", "cradle", "pediatric cot", "child bed", "maternity", "MF-36", "MF-90", "MF-37", "MF-38"] },
+    { page: 15, title: "Trolley Cum Cot", keywords: ["15", "trolley cum cot", "emergency", "patient transfer", "trolley", "MF-38"] },
+    { page: 16, title: "Transfer Trolley Plain", keywords: ["16", "transfer trolley plain", "stretcher", "emergency", "patient transfer", "trolley", "MF-67"] },
+    { page: 17, title: "Hi-Lo Stretcher", keywords: ["17", "hi-lo stretcher", "emergency", "patient transfer", "stretcher", "trolley", "MF-68"] },
+    { page: 18, title: "Stretcher Trolley", keywords: ["18", "stretcher trolley", "emergency", "patient transfer", "stretcher", "trolley", "MF-44"] },
+    { page: 19, title: "Wheel Chair", keywords: ["19", "wheel chair", "foldable wheel chair", "emergency", "patient transfer", "MF-52", "MF-49"] },
+    { page: 20, title: "Patient Shifter & Foldable Wheel Chair", keywords: ["20", "patient shifter", "aluminum shifter", "wheel chair", "foldable", "emergency", "patient transfer", "MF-115", "MF-49"] },
+    { page: 21, title: "Instrument & Dressing Trolley", keywords: ["21", "instrument trolley", "dressing trolley", "medical trolleys", "trolley", "ss", "MF-10", "MF-57"] },
+    { page: 22, title: "Mayo's & Dressing Trolley", keywords: ["22", "mayo's trolley", "dressing trolley", "medical trolleys", "trolley", "MF-46", "MF-57"] },
+    { page: 23, title: "Crash Cart", keywords: ["23", "crash cart", "emergency cart", "medical trolleys", "trolley", "MF-84", "MF-86"] },
+    { page: 24, title: "Drug & Laparoscopy Trolley", keywords: ["24", "drug trolley", "laparoscopy trolley", "medical trolleys", "trolley", "MF-47", "MF-111"] },
+    { page: 25, title: "Endoscopy & ECG Trolley", keywords: ["25", "endoscopy trolley", "ecg trolley", "medical trolleys", "trolley", "MF-113", "MF-58"] },
+    { page: 26, title: "Nebulizer & Linen Trolley", keywords: ["26", "nebulizer trolley", "linen trolley", "laundry trolley", "medical trolleys", "trolley", "MF-88", "MF-91", "MF-92"] },
+    { page: 27, title: "Waste Bin & Cylinder Trolley", keywords: ["27", "waste bin trolley", "biomedical waste", "cylinder trolley", "oxygen cylinder", "medical trolleys", "trolley", "MF-107", "MF-77", "MF-75", "MF-78"] },
+    { page: 28, title: "Deluxe Examination Couch", keywords: ["28", "deluxe examination couch", "examination", "couch", "table", "MF-65"] },
+    { page: 29, title: "Examination Table", keywords: ["29", "examination table", "examination", "table", "MF-65"] },
+    { page: 30, title: "Gynec Examination Couch", keywords: ["30", "gynec examination couch", "gynecology", "examination", "couch", "table", "MF-93"] },
+    { page: 31, title: "Scan Table & Revolving Stool", keywords: ["31", "scan table", "scan couch", "revolving stool", "stool", "examination", "table", "MF-96", "MF-13", "MF-14", "MF-15"] },
+    { page: 32, title: "Blood Collection Table & X-Ray Lobby", keywords: ["32", "blood collection table", "x-ray lobby", "examination", "table", "MF-101", "MF-119"] },
+    { page: 33, title: "IV Stand", keywords: ["33", "iv stand", "infusion stand", "drip stand", "stainless steel furniture", "ward accessories", "MF-05"] },
+    { page: 34, title: "Saline Stands & Foot Step", keywords: ["34", "saline stand", "foot step", "double step", "stainless steel furniture", "ward accessories", "MF-06", "MF-16", "MF-17"] },
+    { page: 35, title: "Scrub Station & Kick Bucket", keywords: ["35", "scrub station", "kick bucket", "basin stand", "stainless steel furniture", "ward accessories", "MF-105", "MF-24", "MF-25"] },
+    { page: 36, title: "Viewing Box & Shadowless Lamp", keywords: ["36", "viewing box", "x-ray viewer", "shadowless lamp", "ot light", "stainless steel furniture", "ward accessories", "MF-118", "MF-112"] },
+    { page: 37, title: "Sofa Cum Bed & Visitor Chair", keywords: ["37", "sofa cum bed", "visitor chair", "general furniture", "furniture", "MF-121", "MF-122", "MF-123"] },
+    { page: 38, title: "General Furniture Stretcher & Bed", keywords: ["38", "general furniture", "stretcher", "bed", "furniture", "MF-124", "MF-125"] },
+    { page: 39, title: "Waiting & Doctor Chair", keywords: ["39", "waiting chair", "doctor chair", "general furniture", "furniture", "MF-126", "MF-127"] },
+    { page: 40, title: "Dustbin & Trolley", keywords: ["40", "dustbin", "waste bin", "general furniture", "trolley", "MF-128", "MF-129"] },
+    { page: 41, title: "Accessories", keywords: ["41", "accessories", "saline stands", "cushions", "mattress", "hooks", "parts"] },
+    { page: 42, title: "Contact Us", keywords: ["42", "contact us", "address", "phone", "email", "location", "maps", "website", "mathurams"] }
 ];
 
 // ✅ CLOSE SEARCH FUNCTION

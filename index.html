@@ -272,19 +272,19 @@ function startInitialProgress() {
     initialProgressStarted = true;
     currentProgress = 0;
     renderProgress();
-    animateProgress(60, 7000);
+    animateProgress(80, 1500);
 }
 
 function startFinalProgress() {
     if (finalAnimationStarted) return;
     finalAnimationStarted = true;
-    animateProgress(100, 800, showContent);
+    animateProgress(100, 600, showContent);
 }
 
 function scheduleHide() {
     if (hideScheduled) return;
     hideScheduled = true;
-    setTimeout(startFinalProgress, 5000);
+    setTimeout(startFinalProgress, 1000);
 }
 
 function showContent() {
@@ -297,43 +297,8 @@ function showContent() {
 }
 
 function waitForAllImagesInIframe(objectEl) {
-    try {
-        const iframeDoc = objectEl.contentDocument || objectEl.contentWindow?.document;
-        if (!iframeDoc) {
-            startFinalProgress();
-            return;
-        }
-
-        const images = Array.from(iframeDoc.getElementsByTagName('img'));
-
-        if (images.length === 0) {
-            startFinalProgress();
-            return;
-        }
-
-        let loadedCount = 0;
-        const totalImages = images.length;
-
-        function onImageSettled() {
-            loadedCount++;
-            if (loadedCount >= totalImages) {
-                startFinalProgress();
-            }
-        }
-
-        images.forEach((img) => {
-            if (img.complete) {
-                onImageSettled();
-            } else {
-                img.addEventListener('load',  onImageSettled, { once: true });
-                img.addEventListener('error', onImageSettled, { once: true });
-            }
-        });
-
-    } catch (err) {
-        console.error('Iframe access error:', err);
-        scheduleHide();
-    }
+    // Skip waiting for all 150+ heavy images and complete loading to keep it extremely fast
+    startFinalProgress();
 }
 
 function load_home() {
@@ -344,13 +309,18 @@ function load_home() {
     const objectEl = contentDiv.querySelector('object');
 
     if (objectEl) {
+        // Start animating progress bar immediately
+        startInitialProgress();
+
         objectEl.addEventListener('load', function () {
-            startInitialProgress();
-            setTimeout(() => waitForAllImagesInIframe(objectEl), 500);
+            // Document loaded, transition loader to 100% after 800ms
+            setTimeout(() => {
+                startFinalProgress();
+            }, 800);
         });
 
-        // Hard fallback — never show preloader longer than 20 seconds
-        setTimeout(() => scheduleHide(), 5000);
+        // Hard fallback — never show preloader longer than 5 seconds
+        setTimeout(() => scheduleHide(), 3000);
     }
 }
 

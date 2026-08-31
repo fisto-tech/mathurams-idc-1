@@ -26,8 +26,8 @@ function initGenericSwitcher(pageElement, buttons) {
     let currentIdx = 0;
     let timer = null;
 
-    const selectModel = (index, isManual = false) => {
-        if (index === currentIdx && !isManual) return;
+    const selectModel = (index, isManual = false, force = false) => {
+        if (index === currentIdx && !isManual && !force) return;
         
         const btn = buttons[index];
         if (!btn) return;
@@ -61,7 +61,7 @@ function initGenericSwitcher(pageElement, buttons) {
             els.forEach(el => el.classList.remove('cot-fade-out'));
         }, 300);
 
-        if (isManual) {
+        if (isManual || force) {
             startTimer(); // reset rotation schedule
         }
     };
@@ -69,9 +69,17 @@ function initGenericSwitcher(pageElement, buttons) {
     const startTimer = () => {
         stopTimer();
         timer = setInterval(() => {
-            if (isPageVisible(pageElement)) {
-                const nextIdx = (currentIdx + 1) % buttons.length;
-                selectModel(nextIdx, false);
+            if (window.$ && $('#flipbook').length) {
+                const currentView = $('#flipbook').turn('view');
+                const wrapper = pageElement.closest('.page-wrapper');
+                const pageIndex = wrapper ? parseInt(wrapper.getAttribute('page')) : -1;
+                
+                if (currentView.includes(pageIndex)) {
+                    const nextIdx = (currentIdx + 1) % buttons.length;
+                    selectModel(nextIdx, false);
+                } else {
+                    stopTimer();
+                }
             }
         }, 4000);
     };
@@ -96,9 +104,13 @@ function initGenericSwitcher(pageElement, buttons) {
 
     const switcherInstance = {
         pageElement,
+        isActive: false,
         startTimer,
         stopTimer,
-        selectModel
+        selectModel,
+        reset: () => {
+            selectModel(0, false, true);
+        }
     };
     activeSwitchers.push(switcherInstance);
 
@@ -129,12 +141,64 @@ $(document).ready(function () {
         });
     };
 
+    const triggerPageSwitchers = () => {
+        if (!window.$ || !$('#flipbook').length) return;
+        const currentView = $('#flipbook').turn('view');
+        
+        // Clean up switchers referencing detached DOM elements
+        const activeSwitchersClean = [];
+        activeSwitchers.forEach(s => {
+            if (document.body.contains(s.pageElement)) {
+                activeSwitchersClean.push(s);
+            } else {
+                s.stopTimer();
+            }
+        });
+        activeSwitchers.length = 0;
+        activeSwitchers.push(...activeSwitchersClean);
+
+        activeSwitchers.forEach(switcher => {
+            const wrapper = switcher.pageElement.closest('.page-wrapper');
+            const pageIndex = wrapper ? parseInt(wrapper.getAttribute('page')) : -1;
+            
+            if (currentView.includes(pageIndex)) {
+                if (!switcher.isActive) {
+                    switcher.isActive = true;
+                    switcher.reset();
+                }
+            } else {
+                switcher.isActive = false;
+                switcher.stopTimer();
+            }
+        });
+    };
+
     discoverAndInit();
+    setTimeout(triggerPageSwitchers, 600);
 
     // Re-check when Turn.js dynamically creates/reveals pages
     if (window.$ && $('#flipbook').length) {
-        $('#flipbook').on('turned', function () {
+        // Sync first-page / last-page classes immediately when turning starts
+        $('#flipbook').on('turning', function (event, page) {
+            const viewer = document.getElementById('viewer');
+            if (viewer) {
+                const totalPages = $('#flipbook').turn('pages');
+                if (page === 1) {
+                    viewer.classList.add('first-page');
+                    viewer.classList.remove('last-page');
+                } else if (page === totalPages) {
+                    viewer.classList.add('last-page');
+                    viewer.classList.remove('first-page');
+                } else {
+                    viewer.classList.remove('first-page');
+                    viewer.classList.remove('last-page');
+                }
+            }
+        });
+
+        $('#flipbook').on('turned', function (event, page) {
             discoverAndInit();
+            triggerPageSwitchers();
         });
     }
 });
@@ -177,6 +241,8 @@ $(document).ready(function () {
             });
         }
     };
+
+
 
     // Bind to turn.js turned event
     if (window.$ && $('#flipbook').length) {

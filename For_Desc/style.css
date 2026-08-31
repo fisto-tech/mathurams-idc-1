@@ -3566,3 +3566,24 @@ img[src*="website-link.svg"] {
   z-index: 9999 !important;
   cursor: pointer !important;
 }
+
+/* Page Number Styles */
+.page-number-indicator {
+  position: absolute !important;
+  bottom: 8px !important;
+  font-family: 'Montserrat', 'Inter', sans-serif !important;
+  font-size: 12px !important;
+  font-weight: 500 !important;
+  color: #e7e7e7 !important; /* Orange color */
+  z-index: 100 !important;
+  pointer-events: none !important;
+  user-select: none !important;
+}
+
+.page-number-indicator.right-corner {
+  left: 24px !important;
+}
+
+.page-number-indicator.left-corner {
+  left: 24px !important;
+}
