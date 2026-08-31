@@ -653,7 +653,7 @@ function focusSection(section) {
         match = true;
       }
     } else if (section === 'wheel') {
-      if (name.includes('wheel') || name.includes('castor') || name.includes('caster') || name === 'bush_1') {
+      if (name.includes('wheel') || name.includes('castor') || name.includes('caster') || name === 'bush' || name === 'bush_1' || name === 'bush_2') {
         match = true;
       }
     } else if (section === 'operation') {
@@ -966,8 +966,8 @@ function applyCurrentConfig() {
       if (wheel === 'without' && !isIcu && !isCouch) visible = false;
     }
 
-    // Fowler Cot bush_1 visibility logic based on wheel type selection
-    if (name === 'bush_1' && productName === 'Fowler Cot') {
+    // Fowler Cot bush, bush_1 & bush_2 visibility logic based on wheel type selection
+    if ((name === 'bush' || name === 'bush_1' || name === 'bush_2') && productName === 'Fowler Cot') {
       if (wheel === 'wheel') {
         visible = false;
       } else {

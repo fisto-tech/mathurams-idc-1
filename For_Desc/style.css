@@ -2788,35 +2788,43 @@
   .toc-floating1 .toc-title {
     font-size: 18px !important;
   }
+
   .toc-floating1 .toc-header-underline {
     width: 40px !important;
     height: 3px !important;
     margin-bottom: 16px !important;
     margin-left: 0 !important;
   }
+
   .toc-floating1 .toc-list {
     padding-left: 28px !important;
     max-height: 55vh !important;
   }
+
   .toc-floating1 .toc-list::before {
     left: 10px !important;
   }
+
   .toc-floating1 .toc-list li {
     margin-bottom: 14px !important;
   }
+
   .toc-floating1 .toc-list a {
     font-size: 14px !important;
   }
+
   .toc-floating1 .mobile-toc-number {
     width: 24px !important;
     height: 24px !important;
     font-size: 11px !important;
     margin-right: 14px !important;
   }
+
   .toc-floating1 #closeTocBtn1 {
     width: 24px !important;
     height: 24px !important;
   }
+
   .toc-floating1 #closeTocBtn1 svg {
     width: 16px !important;
     height: 16px !important;
@@ -2850,33 +2858,194 @@
 
   #shareModal {
     width: 90vw !important;
-    max-width: 90vw !important;
-    left: 5% !important;
-    transform: translateY(-50%) !important;
+    max-width: 380px !important;
+    left: 50% !important;
+    top: 50% !important;
+    transform: translate(-50%, -50%) !important;
     height: auto !important;
+    border-radius: 16px !important;
+  }
+
+  #shareModal .px-\[1\.5vw\] {
+    padding-left: 20px !important;
+    padding-right: 20px !important;
+  }
+
+  #shareModal .py-\[1\.2vw\] {
+    padding-top: 14px !important;
+    padding-bottom: 14px !important;
+  }
+
+  #shareModal h2 {
+    font-size: 18px !important;
+    font-weight: 700 !important;
+  }
+
+  #shareModal #closeBtn {
+    width: 32px !important;
+    height: 32px !important;
+    border-radius: 50% !important;
+    background: #ffffff !important;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1) !important;
+  }
+
+  #shareModal #closeBtn svg {
+    width: 12px !important;
+    height: 12px !important;
+    stroke: #242424 !important;
+  }
+
+  #shareModal .p-\[1\.5vw\] {
+    padding: 20px !important;
+  }
+
+  #shareModal .space-y-\[1\.2vw\] {
+    margin-top: 0 !important;
+  }
+
+  #shareModal .space-y-\[1\.2vw\]>*+* {
+    margin-top: 16px !important;
+  }
+
+  #shareModal .text-\[0\.65vw\] {
+    font-size: 11px !important;
+    font-weight: 600 !important;
+    letter-spacing: 0.5px !important;
+    color: #4b5563 !important;
   }
 
   #shareInput {
-    height: 36px !important;
+    height: 40px !important;
     font-size: 13px !important;
+    padding-left: 12px !important;
+    padding-right: 12px !important;
+    border-radius: 8px !important;
+    border-color: #d1d5db !important;
   }
 
   #copyBtn {
-    height: 36px !important;
+    height: 40px !important;
     font-size: 13px !important;
+    padding-left: 16px !important;
+    padding-right: 16px !important;
+    border-radius: 8px !important;
+  }
+
+  #shareModal .my-\[1vw\] {
+    margin-top: 20px !important;
+    margin-bottom: 20px !important;
+  }
+
+  #shareModal .mx-\[0\.8vw\] {
+    font-size: 11px !important;
+    font-weight: 600 !important;
+    letter-spacing: 0.5px !important;
   }
 
   #shareModal .grid {
-    grid-template-cols: repeat(2, minmax(0, 1fr)) !important;
-    gap: 8px !important;
+    grid-template-cols: repeat(4, minmax(0, 1fr)) !important;
+    gap: 10px !important;
   }
 
   #shareModal .grid button {
-    height: 48px !important;
+    height: auto !important;
+    padding: 12px 6px !important;
+    border-radius: 12px !important;
+    border: 1px solid #e5e7eb !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    background: #ffffff !important;
+  }
+
+  #shareModal .grid button i {
+    font-size: 24px !important;
+    margin-bottom: 6px !important;
   }
 
   #shareModal .grid span {
-    font-size: 10px !important;
+    font-size: 11px !important;
+    font-weight: 500 !important;
+    color: #4b5563 !important;
+  }
+
+  /* Next and Previous Arrow Position Fix on Mobile/Tablet */
+  @media screen and (min-width: 768px) and (max-width: 1024px) {
+
+    .ui-arrow-control,
+    .next-arrow,
+    .prev-arrow {
+      top: 50% !important;
+      bottom: auto !important;
+      transform: translateY(-50%) !important;
+      z-index: 1000 !important;
+      transition: none !important;
+      animation: none !important;
+      scale: 1 !important;
+    }
+
+    .ui-arrow-control:hover,
+    .next-arrow:hover,
+    .prev-arrow:hover {
+      transform: translateY(-50%) !important;
+      scale: 1 !important;
+    }
+
+    .prev-arrow {
+      left: 30px !important;
+      right: auto !important;
+    }
+
+    .next-arrow {
+      right: 30px !important;
+      left: auto !important;
+    }
+  }
+
+  /* Android/Standard Mobile (Default fallback for max-width: 767px) */
+  @media screen and (max-width: 767px) {
+
+    .ui-arrow-control,
+    .next-arrow,
+    .prev-arrow {
+      top: auto !important;
+      bottom: 24px !important;
+      transform: none !important;
+      z-index: 1000 !important;
+      transition: none !important;
+      animation: none !important;
+      scale: 1 !important;
+    }
+
+    .ui-arrow-control:hover,
+    .next-arrow:hover,
+    .prev-arrow:hover {
+      transform: none !important;
+      scale: 1 !important;
+    }
+
+    .prev-arrow {
+      left: calc(50% - 250px) !important;
+      right: auto !important;
+    }
+
+    .next-arrow {
+      left: calc(50% + 65px) !important;
+      right: auto !important;
+    }
+  }
+
+  /* iPhone / iOS Safe Area Bottom Bar overrides */
+  @supports (padding-bottom: env(safe-area-inset-bottom)) {
+    @media screen and (max-width: 767px) {
+
+      .ui-arrow-control,
+      .next-arrow,
+      .prev-arrow {
+        bottom: calc(24px + env(safe-area-inset-bottom)) !important;
+      }
+    }
   }
 
   /* Mobile Top Navigation Styling */
@@ -2898,6 +3067,8 @@
   .mobile-page-display {
     color: rgba(255, 255, 255, 0.8) !important;
     font-family: 'Inter', sans-serif !important;
+    background: #1a1a1a !important;
+    border: 1.5px solid #E67429 !important;
   }
 
   .mobile-page-current {
@@ -2914,15 +3085,27 @@
     color: #fff !important;
   }
 
+  .mobile-dropdown-icon {
+    background: #E67429 !important;
+  }
+
   .mobile-dropdown-item {
     color: rgba(255, 255, 255, 0.9) !important;
     border-bottom: 1px solid rgba(255, 255, 255, 0.05) !important;
     padding: 12px 16px !important;
   }
 
+  .mobile-dropdown-label {
+    color: rgba(255, 255, 255, 0.9) !important;
+  }
+
   .mobile-dropdown-item:hover,
   .mobile-dropdown-item:active {
     background: rgba(230, 116, 41, 0.1) !important;
+    color: #E67429 !important;
+  }
+
+  .mobile-dropdown-item:hover .mobile-dropdown-label {
     color: #E67429 !important;
   }
 
@@ -2948,7 +3131,7 @@
   }
 
   .mobile-dropdown-arrow {
-    stroke: rgba(255, 255, 255, 0.4) !important;
+    stroke: rgba(255, 255, 255, 0.6) !important;
   }
 
   .mobile-dropdown-item:hover .mobile-dropdown-arrow {
@@ -2956,21 +3139,24 @@
   }
 }
 
-/* First & Last Page Single-View Position Overrides (Desktop only) */
-@media screen and (min-width: 1025px) {
-  #viewer.first-page~.ui-arrow-previous-page {
-    display: none !important;
-    pointer-events: none !important;
-  }
+/* First & Last Page Arrow Hiding (Global - Mobile, Tablet & Desktop) */
+#viewer.first-page~.ui-arrow-previous-page,
+#viewer.first-page~.prev-arrow {
+  display: none !important;
+  pointer-events: none !important;
+}
 
+#viewer.last-page~.ui-arrow-next-page,
+#viewer.last-page~.next-arrow {
+  display: none !important;
+  pointer-events: none !important;
+}
+
+/* Desktop-only First & Last Page Positioning Overrides */
+@media screen and (min-width: 1025px) {
   #viewer.first-page~.ui-arrow-next-page {
     right: 28% !important;
     left: auto !important;
-  }
-
-  #viewer.last-page~.ui-arrow-next-page {
-    display: none !important;
-    pointer-events: none !important;
   }
 
   #viewer.last-page~.ui-arrow-previous-page {
@@ -3127,26 +3313,256 @@ body.toc-active .ui-arrow-previous-page {
    ========================================================================== */
 /* Desktop double page layout: left side (even) shadow on right edge, right side (odd) shadow on left edge */
 @media screen and (min-width: 1025px) {
-  .page.even .gutter-shadow.shadow-left {
+  .even .gutter-shadow.shadow-left {
     display: block !important;
   }
-  .page.even .gutter-shadow.shadow-right {
+
+  .even .gutter-shadow.shadow-right {
     display: none !important;
   }
-  .page.odd .gutter-shadow.shadow-left {
+
+  .odd .gutter-shadow.shadow-left {
     display: none !important;
   }
-  .page.odd .gutter-shadow.shadow-right {
+
+  .odd .gutter-shadow.shadow-right {
     display: block !important;
   }
 }
 
 /* Mobile & Tablet single page layout: crease shadow displays on left side ONLY */
 @media screen and (max-width: 1024px) {
-  .page .gutter-shadow.shadow-left {
+  .gutter-shadow.shadow-left {
     display: none !important;
   }
-  .page .gutter-shadow.shadow-right {
+
+  .gutter-shadow.shadow-right {
     display: block !important;
   }
+}
+
+
+/* ==========================================================================
+   MOBILE TABLE OF CONTENTS STYLING (MATCHING DESKTOP SCREEN)
+   ========================================================================== */
+@media screen and (max-width: 1024px) {
+
+  /* Center mobile TOC panel like a premium card */
+  .mobile-toc-panel {
+    position: fixed !important;
+    top: 70px !important;
+    left: 20px !important;
+    transform: scale(0.9) !important;
+    transform-origin: top left !important;
+    width: 90% !important;
+    max-width: 340px !important;
+    height: auto !important;
+    max-height: calc(100vh - 100px) !important;
+    background: #ffffff !important;
+    border-radius: 16px !important;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2) !important;
+    z-index: 999999999 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
+    border: 1px solid rgba(0, 0, 0, 0.08) !important;
+  }
+
+  .mobile-toc-panel.active {
+    transform: scale(1) !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+  }
+
+  /* Header style matching desktop */
+  .mobile-toc-header {
+    display: flex !important;
+    align-items: flex-start !important;
+    justify-content: space-between !important;
+    padding: 24px 24px 8px 24px !important;
+    background: #ffffff !important;
+    color: #1a1a1a !important;
+    position: relative !important;
+    border-bottom: none !important;
+  }
+
+  .mobile-toc-header h3 {
+    margin: 0 !important;
+    font-size: 18px !important;
+    font-weight: 700 !important;
+    font-family: 'Montserrat', 'Inter', sans-serif !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.5px !important;
+    color: #1a1a1a !important;
+  }
+
+  /* Orange underline indicator */
+  .mobile-toc-header::after {
+    content: '' !important;
+    position: absolute !important;
+    bottom: -2px !important;
+    left: 24px !important;
+    width: 45px !important;
+    height: 3px !important;
+    background-color: #E67429 !important;
+    border-radius: 2px !important;
+  }
+
+  /* Close button matching desktop style */
+  .mobile-toc-close {
+    width: 24px !important;
+    height: 24px !important;
+    border: none !important;
+    background: transparent !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    cursor: pointer !important;
+    color: #9ca3af !important;
+    transition: color 0.2s ease !important;
+    border-radius: 0 !important;
+  }
+
+  .mobile-toc-close:hover {
+    color: #4b5563 !important;
+    background: transparent !important;
+  }
+
+  .mobile-toc-close svg {
+    width: 16px !important;
+    height: 16px !important;
+    stroke-width: 2.5 !important;
+  }
+
+  /* List container styling */
+  .mobile-toc-list {
+    position: relative !important;
+    list-style: none !important;
+    margin: 0 !important;
+    padding: 24px 24px 24px 24px !important;
+    flex: 1 !important;
+    overflow-y: auto !important;
+  }
+
+  /* Vertical Connector Line (Timeline style) */
+  .mobile-toc-list::before {
+    content: '' !important;
+    position: absolute !important;
+    left: 36px !important;
+    /* Centered behind the 24px badge */
+    top: 36px !important;
+    bottom: 36px !important;
+    width: 1px !important;
+    background-color: #E67429 !important;
+    opacity: 0.25 !important;
+    z-index: 1 !important;
+  }
+
+  /* List item styling */
+  .mobile-toc-item {
+    display: flex !important;
+    align-items: center !important;
+    padding: 10px 0 !important;
+    margin-bottom: 14px !important;
+    cursor: pointer !important;
+    transition: all 0.2s ease !important;
+    gap: 16px !important;
+    background: transparent !important;
+    border-left: none !important;
+    position: relative !important;
+    z-index: 2 !important;
+  }
+
+  .mobile-toc-item:last-child {
+    margin-bottom: 0 !important;
+  }
+
+  /* Active/Hover states */
+  .mobile-toc-item:hover .mobile-toc-title {
+    color: #E67429 !important;
+  }
+
+  .mobile-toc-item.active .mobile-toc-title {
+    color: #1a1a1a !important;
+    font-weight: 700 !important;
+  }
+
+  /* Number Badges */
+  .mobile-toc-number {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 24px !important;
+    height: 24px !important;
+    border-radius: 50% !important;
+    border: 1.5px solid #E67429 !important;
+    background: #ffffff !important;
+    color: #E67429 !important;
+    font-size: 11px !important;
+    font-weight: 700 !important;
+    margin-right: 0 !important;
+    flex-shrink: 0 !important;
+    transition: all 0.2s ease !important;
+  }
+
+  .mobile-toc-item:hover .mobile-toc-number,
+  .mobile-toc-item.active .mobile-toc-number {
+    background: #E67429 !important;
+    color: #ffffff !important;
+    box-shadow: 0 0 8px rgba(230, 116, 41, 0.3) !important;
+  }
+
+  /* Titles */
+  .mobile-toc-title {
+    font-family: 'Inter', sans-serif !important;
+    font-size: 14px !important;
+    font-weight: 600 !important;
+    color: #333333 !important;
+    text-transform: uppercase !important;
+    transition: color 0.2s ease !important;
+  }
+
+  /* Orange Scrollbar styling */
+  .mobile-toc-list::-webkit-scrollbar {
+    width: 5px !important;
+  }
+
+  .mobile-toc-list::-webkit-scrollbar-track {
+    background: #f1f1f1 !important;
+    border-radius: 10px !important;
+  }
+
+  .mobile-toc-list::-webkit-scrollbar-thumb {
+    background: #E67429 !important;
+    border-radius: 10px !important;
+  }
+}
+
+/* 3D Experience Cards Entrance Popup Animation */
+@keyframes cardPop {
+  0% {
+    opacity: 0;
+    transform: scale(0.6);
+  }
+
+  60% {
+    transform: scale(1.04);
+  }
+
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.threed-card-animate {
+  animation: cardPop 0.55s cubic-bezier(0.34, 1.56, 0.64, 1) forwards !important;
+}
+
+/* Increase Z-Index & Cursor Pointer for Website Link Images */
+img[src*="website-link.svg"] {
+  z-index: 9999 !important;
+  cursor: pointer !important;
 }

@@ -292,7 +292,7 @@ const copyBtn = document.getElementById('copyBtn');
 const copiedMsg = document.getElementById('copiedMsg');
 
 // Set link
-shareInput.value = "https://adecoenergy.in/pages/catalogue";
+shareInput.value = "";
 
 // Open modal
 shareBtn.addEventListener('click', () => {
@@ -357,7 +357,7 @@ const mobileCopyLinkBtn = document.getElementById('copyBtnMobile');
 const mobileCopiedToast = document.getElementById('copiedMsgMobile');
 
 // Set link
-mobileShareLinkInput.value = "https://adecoenergy.in/pages/catalogue";
+mobileShareLinkInput.value = "";
 
 
 // Open modal - use desktop share modal for mobile too
@@ -596,14 +596,14 @@ const closeSearchModal = document.getElementById('closeSearchModal');
 
 // Define your pages with search keywords
 const pages = [
-    { page: 1, title: "Home page", keywords: ["cover", "front", "home", "title", "Eco-Energy", "1", ""] },
+    { page: 1, title: "Home page", keywords: ["cover", "front", "home", "title", "", "1", ""] },
     { page: 2, title: "Introduction", keywords: ["intro", "introduction", "about us", "2"] },
     { page: 3, title: "Chapter 1", keywords: ["3", "table of content"] },
-    { page: 4, title: "Chapter 2", keywords: ["4", "5", "round containers", "round bucket"] },
-    { page: 6, title: "Chapter 3", keywords: ["6", "7", "IML Biryani Rectangle"] },
-    { page: 8, title: "Introduction", keywords: ["8", "9", "sweet box", "tamper Evident"] },
-    { page: 10, title: "Chapter 1", keywords: ["10", "11", "Square bucket", "beverage cup"] },
-    { page: 12, title: "Chapter 2", keywords: ["12", "13", "Ice cream round", "Ice cream Oval"] },
+    { page: 4, title: "Chapter 2", keywords: ["4", "5", "", ""] },
+    { page: 6, title: "Chapter 3", keywords: ["6", "7", ""] },
+    { page: 8, title: "Introduction", keywords: ["8", "9", "", ""] },
+    { page: 10, title: "Chapter 1", keywords: ["10", "11", "", ""] },
+    { page: 12, title: "Chapter 2", keywords: ["12", "13", "", ""] },
     { page: 14, title: "Chapter 2", keywords: ["conclusion", "end", "14", "contact us"] },
 
 ];
@@ -761,8 +761,8 @@ function startDownload() {
 
     // 3. Trigger PDF download
     const link = document.createElement("a");
-    link.href = "../global assets/Eco_Energy_IDC.pdf";   // <<-- put your PDF file path
-    link.download = "Eco_Energy_IDC.pdf";                 // <<-- filename user will download
+    link.href = "../global assets/Mathurams_IDC.pdf";   // <<-- put your PDF file path
+    link.download = "Mathurams_IDC.pdf";                 // <<-- filename user will download
     document.body.appendChild(link);
     link.click();
     link.remove();

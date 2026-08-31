@@ -138,3 +138,53 @@ $(document).ready(function () {
         });
     }
 });
+
+// ============================================
+// 3D EXPERIENCE STAGGER POPUP ANIMATION
+// ============================================
+$(document).ready(function () {
+    const triggerCardAnimation = () => {
+        if (!window.$ || !$('#flipbook').length) return;
+        const currentView = $('#flipbook').turn('view');
+        
+        // If page 4 is visible in the current view
+        if (currentView.includes(4)) {
+            // Find all 3D experience links in page 4
+            const page4El = document.querySelector('.page-wrapper[page="4"]') || document.querySelector('.page:nth-child(4)');
+            if (page4El) {
+                const cards = page4El.querySelectorAll('a[href*="lightBox/index.html"]');
+                cards.forEach((card, index) => {
+                    // Set initial state
+                    card.style.opacity = '0';
+                    card.style.transform = 'scale(0.6)';
+                    card.classList.remove('threed-card-animate');
+                    
+                    // Trigger stagger entrance
+                    setTimeout(() => {
+                        card.classList.add('threed-card-animate');
+                        card.style.opacity = '';
+                        card.style.transform = '';
+                    }, index * 80);
+                });
+            }
+        } else {
+            // Revert state when moving away from page 4
+            const cards = document.querySelectorAll('a[href*="lightBox/index.html"]');
+            cards.forEach(card => {
+                card.classList.remove('threed-card-animate');
+                card.style.opacity = '';
+                card.style.transform = '';
+            });
+        }
+    };
+
+    // Bind to turn.js turned event
+    if (window.$ && $('#flipbook').length) {
+        $('#flipbook').on('turned', function () {
+            triggerCardAnimation();
+        });
+        
+        // Run once on load in case we start on page 4
+        setTimeout(triggerCardAnimation, 500);
+    }
+});
