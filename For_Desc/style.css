@@ -2970,8 +2970,8 @@
     color: #4b5563 !important;
   }
 
-  /* Next and Previous Arrow Position Fix on Mobile/Tablet */
-  @media screen and (min-width: 768px) and (max-width: 1024px) {
+  /* Dedicated Media Query for 601px x 838px & Tablet Screens (Vertically Centered Arrows at Left & Right Corners) */
+  @media screen and (min-width: 550px) and (max-width: 1024px) {
 
     .ui-arrow-control,
     .next-arrow,
@@ -2993,18 +2993,18 @@
     }
 
     .prev-arrow {
-      left: 30px !important;
+      left: 20px !important;
       right: auto !important;
     }
 
     .next-arrow {
-      right: 30px !important;
+      right: 20px !important;
       left: auto !important;
     }
   }
 
-  /* Android/Standard Mobile (Default fallback for max-width: 767px) */
-  @media screen and (max-width: 767px) {
+  /* Phone Mobile (Default fallback for max-width: 549px) */
+  @media screen and (max-width: 549px) {
 
     .ui-arrow-control,
     .next-arrow,
@@ -3038,7 +3038,7 @@
 
   /* iPhone / iOS Safe Area Bottom Bar overrides */
   @supports (padding-bottom: env(safe-area-inset-bottom)) {
-    @media screen and (max-width: 767px) {
+    @media screen and (max-width: 549px) {
 
       .ui-arrow-control,
       .next-arrow,
@@ -3574,7 +3574,8 @@ img[src*="website-link.svg"] {
   font-family: 'Montserrat', 'Inter', sans-serif !important;
   font-size: 12px !important;
   font-weight: 500 !important;
-  color: #e7e7e7 !important; /* Orange color */
+  color: #e7e7e7 !important;
+  /* Orange color */
   z-index: 100 !important;
   pointer-events: none !important;
   user-select: none !important;

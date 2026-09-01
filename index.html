@@ -28,6 +28,14 @@
         #content {
             width: 100%;
             margin: 0 auto;
+            visibility: hidden;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        #content.visible {
+            visibility: visible;
+            opacity: 1;
         }
 
         #content object {
@@ -220,131 +228,122 @@
     <div id="content"></div>
 
     <script>
-     const preloader  = document.getElementById("preloader");
-const contentDiv = document.getElementById("content");
-const percentText = document.getElementById("loader-percent");
-const progressLine = document.querySelector(".progress-line");
+        const preloader = document.getElementById("preloader");
+        const contentDiv = document.getElementById("content");
+        const percentText = document.getElementById("loader-percent");
+        const progressLine = document.querySelector(".progress-line");
 
-let hideScheduled = false;
-let initialProgressStarted = false;
-let finalAnimationStarted = false;
-let contentShown = false;
-let currentProgress = 0;
-let progressFrame = null;
+        let currentProgress = 0;
+        let progressFrame = null;
+        let contentShown = false;
+        let isFinished = false;
 
-function renderProgress() {
-    if (percentText) percentText.textContent = `${currentProgress}`;
-    if (progressLine) progressLine.style.setProperty("--progress", `${currentProgress}%`);
-}
-
-function animateProgress(target, duration, callback) {
-    if (progressFrame) {
-        cancelAnimationFrame(progressFrame);
-        progressFrame = null;
-    }
-
-    const start = currentProgress;
-    const delta = target - start;
-    const startTime = performance.now();
-
-    function step(now) {
-        const elapsed = Math.min(duration, now - startTime);
-        const t = elapsed / duration;
-        const eased = Math.pow(t, 0.7);
-        currentProgress = Math.round(start + delta * eased);
-        renderProgress();
-
-        if (elapsed < duration) {
-            progressFrame = requestAnimationFrame(step);
-        } else {
-            progressFrame = null;
-            currentProgress = target;
-            renderProgress();
-            if (callback) callback();
+        function renderProgress() {
+            const displayVal = Number.isFinite(Number(currentProgress)) ? Math.min(100, Math.max(0, Math.round(currentProgress))) : 0;
+            if (percentText) percentText.textContent = `${displayVal}`;
+            if (progressLine) progressLine.style.setProperty("--progress", `${displayVal}%`);
         }
-    }
 
-    progressFrame = requestAnimationFrame(step);
-}
+        function setTargetProgress(target, duration = 300, callback) {
+            target = Number.isFinite(Number(target)) ? Math.min(100, Math.max(0, Math.round(target))) : 0;
+            if (!Number.isFinite(Number(currentProgress))) currentProgress = 0;
+            if (isFinished && target < 100) return;
+            if (progressFrame) {
+                cancelAnimationFrame(progressFrame);
+                progressFrame = null;
+            }
 
-function startInitialProgress() {
-    if (initialProgressStarted) return;
-    initialProgressStarted = true;
-    currentProgress = 0;
-    renderProgress();
-    animateProgress(80, 1500);
-}
+            const start = currentProgress;
+            const delta = target - start;
+            if (delta <= 0) {
+                currentProgress = target;
+                renderProgress();
+                if (callback) callback();
+                return;
+            }
 
-function startFinalProgress() {
-    if (finalAnimationStarted) return;
-    finalAnimationStarted = true;
-    animateProgress(100, 600, showContent);
-}
+            const startTime = performance.now();
 
-function scheduleHide() {
-    if (hideScheduled) return;
-    hideScheduled = true;
-    setTimeout(startFinalProgress, 1000);
-}
+            function step(now) {
+                const elapsed = Math.min(duration, now - startTime);
+                const t = elapsed / duration;
+                const eased = Math.pow(t, 0.7);
+                currentProgress = Math.round(start + delta * eased);
+                if (!Number.isFinite(currentProgress)) currentProgress = target;
+                renderProgress();
 
-function showContent() {
-    if (contentShown) return;
-    contentShown = true;
-    preloader.classList.add("fade-out");
-    setTimeout(() => {
-        preloader.style.display = "none";
-    }, 800);
-}
+                if (elapsed < duration) {
+                    progressFrame = requestAnimationFrame(step);
+                } else {
+                    progressFrame = null;
+                    currentProgress = target;
+                    renderProgress();
+                    if (callback) callback();
+                }
+            }
 
-function waitForAllImagesInIframe(objectEl) {
-    // Skip waiting for all 150+ heavy images and complete loading to keep it extremely fast
-    startFinalProgress();
-}
+            progressFrame = requestAnimationFrame(step);
+        }
 
-function load_home() {
-    var folderPath = 'For_Desc/index.html';
-    contentDiv.innerHTML = '<object type="text/html" data="' + folderPath +
-        '" style="width:100%; height:600px;"></object>';
-
-    const objectEl = contentDiv.querySelector('object');
-
-    if (objectEl) {
-        // Start animating progress bar immediately
-        startInitialProgress();
-
-        objectEl.addEventListener('load', function () {
-            // Document loaded, transition loader to 100% after 800ms
+        function showContent() {
+            if (contentShown) return;
+            contentShown = true;
+            contentDiv.classList.add("visible");
+            preloader.classList.add("fade-out");
             setTimeout(() => {
-                startFinalProgress();
+                preloader.style.display = "none";
             }, 800);
+        }
+
+        function finishLoading() {
+            if (isFinished) return;
+            isFinished = true;
+            setTargetProgress(100, 400, () => {
+                setTimeout(showContent, 200);
+            });
+        }
+
+        function load_home() {
+            var folderPath = 'For_Desc/index.html';
+            contentDiv.innerHTML = '<object type="text/html" data="' + folderPath +
+                '" style="width:100%; height:100vh; border:none;"></object>';
+
+            // Safety fallback timer (60 seconds) in case network drops or external dependencies fail to respond
+            setTimeout(() => {
+                if (!isFinished) {
+                    finishLoading();
+                }
+            }, 60000);
+        }
+
+        // ===== MERGED MESSAGE LISTENER (asset progress + contentReady + fullscreen) =====
+        window.addEventListener("message", function (event) {
+            if (!event.data || !event.data.action) return;
+
+            if (event.data.action === "loadProgress") {
+                const rawPercent = Number(event.data.percent);
+                if (Number.isFinite(rawPercent)) {
+                    const percent = Math.min(99, Math.max(currentProgress, Math.round(rawPercent)));
+                    setTargetProgress(percent, 250);
+                }
+            }
+
+            // Signal from inner flipbook: ALL assets loaded
+            if (event.data.action === "contentReady") {
+                finishLoading();
+            }
+
+            // Fullscreen toggle from inner flipbook
+            if (event.data.action === "toggleFullscreen") {
+                if (!document.fullscreenElement) {
+                    contentDiv.requestFullscreen?.() || contentDiv.webkitRequestFullscreen?.();
+                } else {
+                    document.exitFullscreen?.();
+                }
+            }
         });
 
-        // Hard fallback — never show preloader longer than 5 seconds
-        setTimeout(() => scheduleHide(), 3000);
-    }
-}
-
-// ===== MERGED MESSAGE LISTENER (both contentReady + fullscreen) =====
-const embedded = document.getElementById("content");
-window.addEventListener("message", function (event) {
-    if (!event.data || !event.data.action) return;
-
-    // Signal from inner flipbook: all images loaded
-    if (event.data.action === "contentReady") {
-        scheduleHide();
-    }
-
-    // Fullscreen toggle from inner flipbook
-    if (event.data.action === "toggleFullscreen") {
-        if (!document.fullscreenElement) {
-            embedded.requestFullscreen?.() || embedded.webkitRequestFullscreen?.();
-        } else {
-            document.exitFullscreen?.();
-        }
-    }
-});
-
-window.onload = load_home;
+        window.onload = load_home;
 
 document.addEventListener('keydown', function(e) {
     if (e.key === 'ArrowRight' || e.key === 'ArrowLeft' ||

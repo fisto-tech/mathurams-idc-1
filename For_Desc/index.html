@@ -1172,11 +1172,43 @@
 
                 <div id="flipbook" class="ui-flipbook">
 
-                    <!-- ******************************* Front Page 25 Start ***************************** -->
+                    <!-- ******************************* Front Page 4 Start ***************************** -->
+                    <!-- <div class="page">
+                        <img src="../global assets/Images/commonThings/left-page-shadow.svg" alt="left-page-shadow" class="gutter-shadow hidden shadow-left absolute h-[100%] top-[0%] right-[-1%] z-[4]" />
+                        <img src="../global assets/Images/commonThings/right-page-shadow.svg" alt="right-page-shadow" class="gutter-shadow shadow-right absolute h-[100%] top-[0%] left-[-1%] z-[4]" />
+                        <img src="../global assets/Images/commonThings/logo.svg" alt="logo"
+                            class="absolute w-[30%] top-[2%] left-[2%] z-[3]" />
+                        <img src="../global assets/Images/commonThings/background-image.webp" alt="background-image"
+                            class="absolute w-[100%] top-[0%] left-[0%]" />
+                        <img src="../global assets/Images/products/ward-furniture/ward-furniture-top-text.svg"
+                            alt="ward-furniture-top-text" class="absolute w-[65%] top-[2%] right-[0%]" />
+                        
+                        <img src="../global assets/Images/commonThings/model-no-text.svg" alt="model-no-text"
+                            class="absolute w-[12%] top-[11%] left-[5%]" />
+                        <img src="../global assets/Images/products/ward-furniture/semi-fowler-cot/MF-35.svg" alt="MF-35"
+                            class="absolute w-[11%] top-[10.5%] left-[18%]" />
+                        
+                        <img src="../global assets/Images/products/ward-furniture/semi-fowler-cot/semi-fowler-cot-text.svg"
+                            alt="fowler-cot-text" class="absolute w-[85%] top-[15%] left-[5%]" />
+                        <img src="../global assets/Images/products/ward-furniture/semi-fowler-cot/semi-fowler-cot-image.webp"
+                            alt="fowler-cot-image" class="absolute w-[75%] top-[18%] left-[14%]" />
+                        <img src="../global assets/Images/products/ward-furniture/semi-fowler-cot/position-1.svg"
+                            alt="position-1" class="absolute w-[12%] top-[56%] left-[5%]" />
+                        <img src="../global assets/Images/products/ward-furniture/semi-fowler-cot/specifications.svg"
+                            alt="specifications" class="absolute w-[42%] top-[66%] left-[7%] z-[3]" />
+                        <img src="../global assets/Images/products/ward-furniture/semi-fowler-cot/configurations.svg"
+                            alt="configurations" class="absolute w-[42%] top-[66%] right-[7%]" />
+
+                        <img src="../global assets/Images/commonThings/bottom-background.webp" alt="background"
+                            class="absolute w-[100%] bottom-0 left-0" />
+                        <img src="../global assets/Images/commonThings/website-link.svg" alt="website-link"
+                            class="absolute w-[25%] bottom-[1.25%] right-[5%]" />
+                    
+                        <div class="page-number-indicator right-corner">05</div>
+</div> -->
 
 
-
-                    <!-- ******************************* Front Page 25 end ***************************** -->
+                    <!-- ******************************* Front Page 4 end ***************************** -->
 
 
                     <!-- *******************************  Page 1 Start *************************** -->
@@ -1345,6 +1377,7 @@
                             class="absolute w-[100%] top-[0%] left-[0%]" />
                         <img src="../global assets/Images/products/ward-furniture/ward-furniture-top-text.svg"
                             alt="ward-furniture-top-text" class="absolute w-[65%] top-[2%] right-[0%]" />
+                        
                         <img src="../global assets/Images/commonThings/model-no-text.svg" alt="model-no-text"
                             class="absolute w-[12%] top-[11%] left-[5%]" />
                         <img src="../global assets/Images/products/ward-furniture/semi-fowler-cot/MF-35.svg" alt="MF-39"
@@ -1354,11 +1387,11 @@
                         <img src="../global assets/Images/products/ward-furniture/semi-fowler-cot/semi-fowler-cot-image.webp"
                             alt="fowler-cot-image" class="absolute w-[85%] top-[18%] left-[3%]" />
                         <img src="../global assets/Images/products/ward-furniture/semi-fowler-cot/position-1.svg"
-                            alt="position-1" class="absolute w-[15%] top-[59%] left-[5%]" />
+                            alt="position-1" class="absolute w-[12%] top-[59%] left-[5%]" />
                         <img src="../global assets/Images/products/ward-furniture/semi-fowler-cot/specifications.svg"
-                            alt="specifications" class="absolute w-[45%] top-[70%] left-[2.5%] z-[3]" />
+                            alt="specifications" class="absolute w-[42%] top-[66%] left-[7%] z-[3]" />
                         <img src="../global assets/Images/products/ward-furniture/semi-fowler-cot/configurations.svg"
-                            alt="configurations" class="absolute w-[45%] top-[70%] right-[2.5%]" />
+                            alt="configurations" class="absolute w-[42%] top-[66%] right-[7%]" />
 
                         <img src="../global assets/Images/commonThings/bottom-background.webp" alt="background"
                             class="absolute w-[100%] bottom-0 left-0" />
@@ -3100,7 +3133,7 @@
             }
         </style>
     
-                        <div class="page-number-indicator left-corner">42</div>
+                     
 </div>
 
 
@@ -4345,41 +4378,85 @@
 
 
     <script>
-        // Signal parent when flipbook fully initializes
-        $(document).ready(function () {
-            setTimeout(function () {
-                // Pre-load ALL page images eagerly before signaling ready
-                const allPageImages = document.querySelectorAll('.page img');
-                let pending = allPageImages.length;
+        // Track and report asset loading progress to parent frame so preloader runs until ALL assets are loaded
+        (function () {
+            function initAssetTracker() {
+                let assetsLoaded = 0;
+                let isSignaled = false;
 
-                if (pending === 0) {
-                    window.parent.postMessage({ action: 'contentReady' }, '*');
+                function sendSignal() {
+                    if (isSignaled) return;
+                    isSignaled = true;
+                    try {
+                        window.parent.postMessage({ action: 'loadProgress', percent: 100 }, '*');
+                        window.parent.postMessage({ action: 'contentReady' }, '*');
+                    } catch (e) {}
+                }
+
+                // Collect all image elements in document
+                const allImages = Array.from(document.querySelectorAll('img'));
+                const svgContainers = Array.from(document.querySelectorAll('.svg-container[data-src]'));
+
+                // Total count of assets to track
+                let totalAssets = allImages.length + svgContainers.length;
+
+                if (totalAssets === 0) {
+                    sendSignal();
                     return;
                 }
 
-                allPageImages.forEach(img => {
+                function onItemLoaded() {
+                    assetsLoaded++;
+                    const safeTotal = totalAssets > 0 ? totalAssets : 1;
+                    const percent = Math.min(100, Math.max(0, Math.floor((assetsLoaded / safeTotal) * 100)));
+                    if (!Number.isFinite(percent)) return;
+                    try {
+                        window.parent.postMessage({ action: 'loadProgress', percent: percent }, '*');
+                    } catch (e) {}
+
+                    if (assetsLoaded >= totalAssets) {
+                        sendSignal();
+                    }
+                }
+
+                // Process images
+                allImages.forEach(img => {
                     if (img.complete) {
-                        pending--;
-                        if (pending <= 0) {
-                            window.parent.postMessage({ action: 'contentReady' }, '*');
-                        }
+                        onItemLoaded();
                     } else {
-                        img.addEventListener('load', () => {
-                            pending--;
-                            if (pending <= 0) {
-                                window.parent.postMessage({ action: 'contentReady' }, '*');
-                            }
-                        }, { once: true });
-                        img.addEventListener('error', () => {
-                            pending--;
-                            if (pending <= 0) {
-                                window.parent.postMessage({ action: 'contentReady' }, '*');
-                            }
-                        }, { once: true });
+                        img.addEventListener('load', onItemLoaded, { once: true });
+                        img.addEventListener('error', onItemLoaded, { once: true });
                     }
                 });
-            }, 300);
-        });
+
+                // Process SVG containers
+                svgContainers.forEach(container => {
+                    if (container.dataset.loaded || container.children.length > 0) {
+                        onItemLoaded();
+                    } else {
+                        const checkInterval = setInterval(() => {
+                            if (container.dataset.loaded || container.children.length > 0) {
+                                clearInterval(checkInterval);
+                                onItemLoaded();
+                            }
+                        }, 50);
+                        // Timeout fallback per container (2 seconds max) so a failed SVG fetch doesn't stall progress
+                        setTimeout(() => {
+                            clearInterval(checkInterval);
+                            if (!container.dataset.loaded && container.children.length === 0) {
+                                onItemLoaded();
+                            }
+                        }, 2000);
+                    }
+                });
+            }
+
+            if (document.readyState === 'complete' || document.readyState === 'interactive') {
+                setTimeout(initAssetTracker, 50);
+            } else {
+                document.addEventListener('DOMContentLoaded', () => setTimeout(initAssetTracker, 50));
+            }
+        })();
     </script>
 </body>
 
