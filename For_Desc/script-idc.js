@@ -46,8 +46,11 @@ function initGenericSwitcher(pageElement, buttons) {
         const textEl = pageElement.querySelector('.cot-text, #cot-text');
         const imgEl = pageElement.querySelector('.cot-image, #cot-image');
         const specEl = pageElement.querySelector('.cot-spec, #cot-spec');
+        const configEl = pageElement.querySelector('.cot-config, #cot-config');
+        const pos1El = pageElement.querySelector('.cot-pos1, #cot-pos1');
+        const pos2El = pageElement.querySelector('.cot-pos2, #cot-pos2');
 
-        const els = [textEl, imgEl, specEl].filter(Boolean);
+        const els = [textEl, imgEl, specEl, configEl, pos1El, pos2El].filter(Boolean);
 
         // Apply fade-out animation
         els.forEach(el => el.classList.add('cot-fade-out'));
@@ -57,6 +60,25 @@ function initGenericSwitcher(pageElement, buttons) {
             if (textEl && btn.dataset.text) textEl.src = btn.dataset.text;
             if (imgEl && btn.dataset.image) imgEl.src = btn.dataset.image;
             if (specEl && btn.dataset.spec) specEl.src = btn.dataset.spec;
+            if (configEl && btn.dataset.config) configEl.src = btn.dataset.config;
+
+            if (pos1El) {
+                if (btn.dataset.pos1) {
+                    pos1El.src = btn.dataset.pos1;
+                    pos1El.classList.remove('hidden');
+                } else {
+                    pos1El.classList.add('hidden');
+                }
+            }
+
+            if (pos2El) {
+                if (btn.dataset.pos2) {
+                    pos2El.src = btn.dataset.pos2;
+                    pos2El.classList.remove('hidden');
+                } else {
+                    pos2El.classList.add('hidden');
+                }
+            }
 
             els.forEach(el => el.classList.remove('cot-fade-out'));
         }, 300);
