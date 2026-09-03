@@ -49,8 +49,9 @@ function initGenericSwitcher(pageElement, buttons) {
         const configEl = pageElement.querySelector('.cot-config, #cot-config');
         const pos1El = pageElement.querySelector('.cot-pos1, #cot-pos1');
         const pos2El = pageElement.querySelector('.cot-pos2, #cot-pos2');
+        const pos3El = pageElement.querySelector('.cot-pos3, #cot-pos3');
 
-        const els = [textEl, imgEl, specEl, configEl, pos1El, pos2El].filter(Boolean);
+        const els = [textEl, imgEl, specEl, configEl, pos1El, pos2El, pos3El].filter(Boolean);
 
         // Apply fade-out animation
         els.forEach(el => el.classList.add('cot-fade-out'));
@@ -77,6 +78,15 @@ function initGenericSwitcher(pageElement, buttons) {
                     pos2El.classList.remove('hidden');
                 } else {
                     pos2El.classList.add('hidden');
+                }
+            }
+
+            if (pos3El) {
+                if (btn.dataset.pos3) {
+                    pos3El.src = btn.dataset.pos3;
+                    pos3El.classList.remove('hidden');
+                } else {
+                    pos3El.classList.add('hidden');
                 }
             }
 
