@@ -17,8 +17,7 @@ let userColorsChanged = {
   mattress: false,
   absPanel: false,
   absRail: false,
-  cabinet: false,
-  drawer: false
+  storage: false
 };
 let currentModelName = '';
 let currentModelUrl  = '';
@@ -122,8 +121,7 @@ function loadModel(fileOrUrl, fileName) {
     mattress: false,
     absPanel: false,
     absRail: false,
-    cabinet: false,
-    drawer: false
+    storage: false
   };
 
   // Set initial camera configuration based on model name
@@ -308,16 +306,14 @@ modelViewer.addEventListener('load', () => {
   const sectionMattress = document.getElementById('config-section-mattress');
   const sectionWheel = document.getElementById('config-section-wheel');
   const sectionOperation = document.getElementById('config-section-operation');
-  const couchCabinetSection = document.getElementById('couch-cabinet-color-section');
-  const couchDrawerSection = document.getElementById('couch-drawer-color-section');
+  const couchStorageSection = document.getElementById('couch-storage-color-section');
 
   if (sectionHeadFoot) sectionHeadFoot.style.display = 'none';
   if (sectionSideRails) sectionSideRails.style.display = 'none';
   if (sectionMattress) sectionMattress.style.display = 'none';
   if (sectionWheel) sectionWheel.style.display = 'none';
   if (sectionOperation) sectionOperation.style.display = 'none';
-  if (couchCabinetSection) couchCabinetSection.style.display = 'none';
-  if (couchDrawerSection) couchDrawerSection.style.display = 'none';
+  if (couchStorageSection) couchStorageSection.style.display = 'none';
 
   const toggleCardVisibility = (section, allowedValues) => {
     document.querySelectorAll(`.config-card[data-section="${section}"]`).forEach(card => {
@@ -349,8 +345,7 @@ modelViewer.addEventListener('load', () => {
       if (mattressRadioGroup) mattressRadioGroup.style.display = 'none';
       if (mattressTitle) mattressTitle.style.display = 'none';
     }
-    if (couchCabinetSection) couchCabinetSection.style.display = 'flex';
-    if (couchDrawerSection) couchDrawerSection.style.display = 'flex';
+    if (couchStorageSection) couchStorageSection.style.display = 'flex';
   } else if (isHiLo) {
     if (sectionSideRails) sectionSideRails.style.display = 'flex';
     if (sectionMattress) {
@@ -542,25 +537,11 @@ function toggleMesh(key, visible) {
   entry.meshes.forEach(mesh => {
     if (mesh.material) {
       const mats = Array.isArray(mesh.material) ? mesh.material : [mesh.material];
-      let anyMatVisible = false;
-      
       mats.forEach(m => {
-        const matName = (m.name || '').trim();
-        // If this mesh is grouped by material name, only toggle the matching material
-        if (matName === entry.name) {
-          m.visible = visible;
-        }
-        if (m.visible) {
-          anyMatVisible = true;
-        }
-        m.wireframe = m.visible ? wireframeMode : false;
+        m.visible = visible;
+        m.wireframe = visible ? wireframeMode : false;
       });
-
-      if (Array.isArray(mesh.material)) {
-        mesh.visible = anyMatVisible;
-      } else {
-        mesh.visible = visible;
-      }
+      mesh.visible = visible;
     } else {
       mesh.visible = visible;
     }
@@ -671,12 +652,8 @@ function focusSection(section) {
       if (name.includes('mattress') || name.includes('mattres') || name.includes('zipper') || name.includes('zip') || name.includes('cube.020') || name.includes('plain')) {
         match = true;
       }
-    } else if (section === 'cabinet') {
-      if (name === 'cabinent_1' || name === 'mini_cabinent' || name === 'cabinent') {
-        match = true;
-      }
-    } else if (section === 'drawer') {
-      if (name.includes('drawer') || name.includes('cupboard')) {
+    } else if (section === 'cabinet' || section === 'drawer' || section === 'storage') {
+      if (name.includes('drawer') || name.includes('cupboard') || name === 'cabinent_1' || name === 'mini_cabinent' || name === 'cabinent') {
         match = true;
       }
     }
@@ -904,10 +881,8 @@ function applyCurrentConfig() {
   }
 
   const isCouch = currentModelName.toLowerCase().includes('couch') || currentModelName.toLowerCase().includes('examination') || productName === 'Deluxe Examination Couch';
-  const couchCabinetSection = document.getElementById('couch-cabinet-color-section');
-  const couchDrawerSection = document.getElementById('couch-drawer-color-section');
-  if (couchCabinetSection) couchCabinetSection.style.display = isCouch ? 'flex' : 'none';
-  if (couchDrawerSection) couchDrawerSection.style.display = isCouch ? 'flex' : 'none';
+  const couchStorageSection = document.getElementById('couch-storage-color-section');
+  if (couchStorageSection) couchStorageSection.style.display = isCouch ? 'flex' : 'none';
 
   Object.keys(meshMap).forEach(key => {
     const entry = meshMap[key];
@@ -915,47 +890,64 @@ function applyCurrentConfig() {
     let visible = true;
 
     // Head / Foot panels matching
-    if (name.includes('head') || name.includes('foot') || name.includes('board') || name.includes('panel') || name.includes('end')) {
+    const isHeadFootMesh = name.includes('head') || name.includes('foot') || name.includes('board') || name.includes('panel') || name.includes('end');
+    if (isHeadFootMesh) {
+      const isAbs2 = name.includes('abs2') || name.includes('abs-2') || name.includes('abs_2') || name.includes('abs 2');
+      const isAbs1 = name.includes('abs1') || (name.includes('abs') && !isAbs2);
+      const isSsPanel = (name.includes('ss') || name.includes('s3')) && !name.includes('abs');
+      const isMsPanel = (name.includes('ms') || name.includes('m1')) && !name.includes('abs');
+
       if (headfoot === 'ms') {
-        if (name.includes('s3') || name.includes('ss') || name.includes('abs')) visible = false;
+        if (isSsPanel || isAbs1 || isAbs2) visible = false;
+        if (isMsPanel) visible = true;
       } else if (headfoot === 'ss') {
-        if (name.includes('m1') || name.includes('ms') || name.includes('abs')) visible = false;
+        if (isMsPanel || isAbs1 || isAbs2) visible = false;
+        if (isSsPanel) visible = true;
       } else if (headfoot === 'abs' || headfoot === 'abs1') {
-        if (name.includes('m1') || name.includes('ms') || name.includes('s3') || name.includes('ss')) visible = false;
-        const isAbs2 = name.includes('abs2') || name.includes('abs-2') || name.includes('abs_2') || name.includes('abs 2');
-        if (name.includes('abs') && isAbs2) visible = false;
+        if (isMsPanel || isSsPanel || isAbs2) visible = false;
+        if (isAbs1) visible = true;
       } else if (headfoot === 'abs2') {
-        if (name.includes('m1') || name.includes('ms') || name.includes('s3') || name.includes('ss')) visible = false;
-        const isAbs2 = name.includes('abs2') || name.includes('abs-2') || name.includes('abs_2') || name.includes('abs 2');
-        if (name.includes('abs') && !isAbs2) visible = false;
+        if (isMsPanel || isSsPanel || isAbs1) visible = false;
+        if (isAbs2) visible = true;
       }
     }
 
     // Side Rails matching
-    const isRailMesh = name.includes('rail') || name.includes('side') || name.includes('collapsible') || name.includes('colapsable') || name.includes('ac-') || name.includes('ac_') || name.includes('pipe');
+    const isRailMesh = name.includes('rail') || name.includes('side') || name.includes('collapsible') || name.includes('colapsable') || name.includes('ac-') || name.includes('ac_') || name.includes('pipe') || name.includes('siderailing');
     if (isRailMesh) {
-      const isAlum = (name.includes('aluminium') || name.includes('ac-') || name.includes('ac_') || name.includes('ac siderailings')) && !name.includes('002');
-      const isSsCollapsible = name.includes('ss_collaps') || name.includes('sscollaps') || name.includes('002');
-      
+      const isAbsRail = name.includes('abs');
+      const isAlum = (name.includes('aluminium') || name.includes('ac_') || name.includes('ac-') || name.startsWith('ac ') || name === 'ac_siderailings');
+      const isSsCollapsible = (name.includes('ss_collaps') || name.includes('sscollaps') || name.includes('ss_collapsible')) && !isAbsRail;
+      const isSsPlain = (name.includes('ss') || name.includes('s3')) && !isAbsRail && !isSsCollapsible && !isAlum;
+      const isMsRail = (name.includes('ms') || name.includes('m1')) && !isAbsRail && !isAlum && !isSsCollapsible;
+
       if (siderails === 'ms') {
-        if (name.includes('ss') || name.includes('abs') || isAlum || isSsCollapsible) visible = false;
+        if (isSsPlain || isAbsRail || isAlum || isSsCollapsible) visible = false;
+        if (isMsRail) visible = true;
       } else if (siderails === 'ssplain') {
-        if (name.includes('ms') || name.includes('abs') || isAlum || isSsCollapsible) visible = false;
+        if (isMsRail || isAbsRail || isAlum || isSsCollapsible) visible = false;
+        if (isSsPlain) visible = true;
       } else if (siderails === 'abs') {
-        if (name.includes('ms') || name.includes('ss') || isAlum || isSsCollapsible) visible = false;
+        if (isMsRail || isSsPlain || isAlum || isSsCollapsible) visible = false;
+        if (isAbsRail) visible = true;
       } else if (siderails === 'aluminium') {
-        if (name.includes('ms') || name.includes('abs') || name.includes('ss') || !isAlum || isSsCollapsible) visible = false;
+        if (isMsRail || isSsPlain || isAbsRail || isSsCollapsible) visible = false;
+        if (isAlum) visible = true;
       } else if (siderails === 'sscollapsible') {
-        if (name.includes('ms') || name.includes('abs') || isAlum || !isSsCollapsible) visible = false;
+        if (isMsRail || isSsPlain || isAbsRail || isAlum) visible = false;
+        if (isSsCollapsible) visible = true;
       }
     }
 
     // Mattress matching
-    if (name.includes('mattress') || name.includes('mattres') || name.includes('zipper') || name.includes('zip') || name.includes('cube.020') || name.includes('plain')) {
+    const isMattressMesh = name.includes('mattress') || name.includes('mattres') || name.includes('zipper') || name.includes('zip') || name.includes('cube.020') || name.includes('plain') || name.includes('base-cot-zipper') || name.includes('base_cot_zipper') || name.includes('basecotzipper');
+    if (isMattressMesh) {
       if (mattress === 'zip') {
         if (name.includes('plain')) visible = false;
+        if (name.includes('zip') || name.includes('zipper') || name.includes('cube.020') || name.includes('base-cot-zipper') || name.includes('base_cot_zipper')) visible = true;
       } else if (mattress === 'plain') {
-        if (name.includes('zip') || name.includes('zipper') || name.includes('cube.020')) visible = false;
+        if (name.includes('zip') || name.includes('zipper') || name.includes('cube.020') || name.includes('base-cot-zipper') || name.includes('base_cot_zipper') || name.includes('basecotzipper')) visible = false;
+        if (name.includes('plain')) visible = true;
       }
     }
 
@@ -967,7 +959,8 @@ function applyCurrentConfig() {
     }
 
     // Fowler Cot bush, bush_1 & bush_2 visibility logic based on wheel type selection
-    if ((name === 'bush' || name === 'bush_1' || name === 'bush_2') && productName === 'Fowler Cot') {
+    const isFowlerCotModel = productName === 'Fowler Cot' || (currentModelName && currentModelName.toLowerCase().includes('fowler') && !currentModelName.toLowerCase().includes('semi'));
+    if ((name === 'bush' || name === 'bush_1' || name === 'bush_2' || name.includes('bush')) && isFowlerCotModel) {
       if (wheel === 'wheel') {
         visible = false;
       } else {
@@ -981,6 +974,24 @@ function applyCurrentConfig() {
         visible = false;
       } else {
         visible = true;
+      }
+    }
+
+    // Deluxe Examination Couch storage (cupboard, drawers & footer) textured vs color mesh toggle logic
+    if (isCouch) {
+      const entryMatNames = entry.meshes ? entry.meshes.map(m => Array.isArray(m.material) ? m.material.map(mat => mat.name || '').join(' ') : (m.material?.name || '')).join(' ').toLowerCase() : '';
+      const combined = (name + ' ' + entryMatNames).toLowerCase();
+
+      const isColorStorage = combined.includes('cupboard_color') || combined.includes('drawer_color') || combined.includes('drawers_color') || combined.includes('footer_2');
+      const isTexturedStorage = combined.includes('drawer_texture') || combined.includes('drawers_texture') || combined.includes('cupboard_texture') || combined.includes('footer_3') || combined.includes('cupboard') || (combined.includes('drawer') && !combined.includes('color') && !combined.includes('mini'));
+      const isMiniDrawer = combined.includes('mini_drawer') || combined.includes('mini-drawer') || combined.includes('mini_cabinent') || combined.includes('mini_cabinet');
+      
+      if (isColorStorage) {
+        visible = userColorsChanged.storage;
+      } else if (isTexturedStorage) {
+        visible = !userColorsChanged.storage;
+      } else if (isMiniDrawer) {
+        visible = true; // Always visible as part of cabinet
       }
     }
 
@@ -1011,24 +1022,145 @@ function applyCurrentConfig() {
     }
   }
   if (isCouch) {
-    const activeCouchCabinetColor = document.querySelector('.color-swatch.couch-cabinet-color.active')?.dataset.color;
-    if (activeCouchCabinetColor && userColorsChanged.cabinet) {
-      applyCouchCabinetColor(activeCouchCabinetColor);
+    const activeCouchStorageColor = document.querySelector('.color-swatch.couch-storage-color.active')?.dataset.color;
+    if (activeCouchStorageColor && userColorsChanged.storage) {
+      applyCouchStorageColor(activeCouchStorageColor);
     }
-    const activeCouchDrawerColor = document.querySelector('.color-swatch.couch-drawer-color.active')?.dataset.color;
-    if (activeCouchDrawerColor && userColorsChanged.drawer) {
-      applyCouchDrawerColor(activeCouchDrawerColor);
-    }
+    applyIvoryToCouchFrameAndCabinet();
   }
 
-  // Direct basecot001 parent group culling for Labor Cot
+  // Direct scene traversal for parent groups and mesh nodes
   const symbols = Object.getOwnPropertySymbols(modelViewer);
   const sceneSymbol = symbols.find((s) => s.description === 'scene');
   const internalScene = modelViewer[sceneSymbol];
   if (internalScene) {
     internalScene.traverse(child => {
-      if ((child.name || '').toLowerCase().includes('basecot001') && productName === 'Labor Cot') {
+      const nodeName = (child.name || '').toLowerCase();
+      
+      // Direct basecot001 parent group culling for Labor Cot
+      if (nodeName.includes('basecot001') && productName === 'Labor Cot') {
         child.visible = (wheel !== 'wheel');
+      }
+
+      // Parent group & node traversal for Head & Foot end panels
+      const isHeadFootNode = nodeName.includes('head') || nodeName.includes('foot') || nodeName.includes('board') || nodeName.includes('panel') || nodeName.includes('end');
+      if (isHeadFootNode) {
+        const isAbs2Node = nodeName.includes('abs2') || nodeName.includes('abs-2') || nodeName.includes('abs_2') || nodeName.includes('abs 2');
+        const isAbs1Node = nodeName.includes('abs1') || (nodeName.includes('abs') && !isAbs2Node);
+        const isSsPanelNode = (nodeName.includes('ss') || nodeName.includes('s3')) && !nodeName.includes('abs');
+        const isMsPanelNode = (nodeName.includes('ms') || nodeName.includes('m1')) && !nodeName.includes('abs');
+
+        if (headfoot === 'ms') {
+          if (isSsPanelNode || isAbs1Node || isAbs2Node) child.visible = false;
+          if (isMsPanelNode) child.visible = true;
+        } else if (headfoot === 'ss') {
+          if (isMsPanelNode || isAbs1Node || isAbs2Node) child.visible = false;
+          if (isSsPanelNode) child.visible = true;
+        } else if (headfoot === 'abs' || headfoot === 'abs1') {
+          if (isMsPanelNode || isSsPanelNode || isAbs2Node) child.visible = false;
+          if (isAbs1Node) child.visible = true;
+        } else if (headfoot === 'abs2') {
+          if (isMsPanelNode || isSsPanelNode || isAbs1Node) child.visible = false;
+          if (isAbs2Node) child.visible = true;
+        }
+      }
+
+      // Parent group & node traversal for Side Rails
+      const isRailNode = nodeName.includes('rail') || nodeName.includes('side') || nodeName.includes('siderailing') || nodeName.includes('collapsible') || nodeName.includes('colapsable') || nodeName.includes('ac-') || nodeName.includes('ac_');
+      if (isRailNode) {
+        const isAbsRailNode = nodeName.includes('abs');
+        const isAlumNode = (nodeName.includes('aluminium') || nodeName.includes('ac_') || nodeName.includes('ac-') || nodeName.startsWith('ac ') || nodeName === 'ac_siderailings');
+        const isSsCollapsNode = (nodeName.includes('ss_collaps') || nodeName.includes('sscollaps') || nodeName.includes('ss_collapsible')) && !isAbsRailNode;
+        const isSsPlainNode = (nodeName.includes('ss') || nodeName.includes('s3')) && !isAbsRailNode && !isSsCollapsNode && !isAlumNode;
+        const isMsRailNode = (nodeName.includes('ms') || nodeName.includes('m1')) && !isAbsRailNode && !isAlumNode && !isSsCollapsNode;
+
+        if (siderails === 'ms') {
+          if (isSsPlainNode || isAbsRailNode || isAlumNode || isSsCollapsNode) child.visible = false;
+          if (isMsRailNode) child.visible = true;
+        } else if (siderails === 'ssplain') {
+          if (isMsRailNode || isAbsRailNode || isAlumNode || isSsCollapsNode) child.visible = false;
+          if (isSsPlainNode) child.visible = true;
+        } else if (siderails === 'abs') {
+          if (isMsRailNode || isSsPlainNode || isAlumNode || isSsCollapsNode) child.visible = false;
+          if (isAbsRailNode) child.visible = true;
+        } else if (siderails === 'aluminium') {
+          if (isMsRailNode || isSsPlainNode || isAbsRailNode || isSsCollapsNode) child.visible = false;
+          if (isAlumNode) child.visible = true;
+        } else if (siderails === 'sscollapsible') {
+          if (isMsRailNode || isSsPlainNode || isAbsRailNode || isAlumNode) child.visible = false;
+          if (isSsCollapsNode) child.visible = true;
+        }
+      }
+
+      // Parent group & node traversal for Mattress (zipper vs plain, including base-cot-zipper)
+      const matNodeName = (child.material ? (Array.isArray(child.material) ? child.material.map(m => m.name || '').join(' ') : (child.material.name || '')) : '').toLowerCase();
+      const combinedMatNode = (nodeName + ' ' + matNodeName).toLowerCase();
+      const isMattressNode = combinedMatNode.includes('mattress') || combinedMatNode.includes('mattres') || combinedMatNode.includes('zipper') || combinedMatNode.includes('zip') || combinedMatNode.includes('cube.020') || combinedMatNode.includes('plain') || combinedMatNode.includes('base-cot-zipper') || combinedMatNode.includes('base_cot_zipper') || combinedMatNode.includes('basecotzipper');
+      if (isMattressNode) {
+        const isZipNode = combinedMatNode.includes('zip') || combinedMatNode.includes('zipper') || combinedMatNode.includes('cube.020') || combinedMatNode.includes('base-cot-zipper') || combinedMatNode.includes('base_cot_zipper') || combinedMatNode.includes('basecotzipper');
+        const isPlainNode = combinedMatNode.includes('plain');
+
+        if (mattress === 'plain') {
+          if (isZipNode) {
+            child.visible = false;
+            if (child.material) {
+              if (Array.isArray(child.material)) child.material.forEach(m => m.visible = false);
+              else child.material.visible = false;
+            }
+          }
+          if (isPlainNode) {
+            child.visible = true;
+            if (child.material) {
+              if (Array.isArray(child.material)) child.material.forEach(m => m.visible = true);
+              else child.material.visible = true;
+            }
+          }
+        } else if (mattress === 'zip') {
+          if (isPlainNode) {
+            child.visible = false;
+            if (child.material) {
+              if (Array.isArray(child.material)) child.material.forEach(m => m.visible = false);
+              else child.material.visible = false;
+            }
+          }
+          if (isZipNode) {
+            child.visible = true;
+            if (child.material) {
+              if (Array.isArray(child.material)) child.material.forEach(m => m.visible = true);
+              else child.material.visible = true;
+            }
+          }
+        }
+      }
+
+      // Deluxe Examination Couch storage (cupboard, drawers & footer) parent group / mesh traversal
+      if (isCouch) {
+        const matName = (child.material ? (Array.isArray(child.material) ? child.material.map(m => m.name || '').join(' ') : (child.material.name || '')) : '').toLowerCase();
+        const combinedNode = (nodeName + ' ' + matName).toLowerCase();
+
+        const isColorNode = combinedNode.includes('cupboard_color') || combinedNode.includes('drawer_color') || combinedNode.includes('drawers_color') || combinedNode.includes('footer_2');
+        const isTexturedNode = combinedNode.includes('drawer_texture') || combinedNode.includes('drawers_texture') || combinedNode.includes('cupboard_texture') || combinedNode.includes('footer_3') || combinedNode.includes('cupboard') || (combinedNode.includes('drawer') && !combinedNode.includes('color') && !combinedNode.includes('mini'));
+        const isMiniNode = combinedNode.includes('mini_drawer') || combinedNode.includes('mini-drawer') || combinedNode.includes('mini_cabinent') || combinedNode.includes('mini_cabinet');
+
+        if (isColorNode) {
+          child.visible = userColorsChanged.storage;
+          if (child.material) {
+            if (Array.isArray(child.material)) child.material.forEach(m => m.visible = userColorsChanged.storage);
+            else child.material.visible = userColorsChanged.storage;
+          }
+        } else if (isTexturedNode) {
+          child.visible = !userColorsChanged.storage;
+          if (child.material) {
+            if (Array.isArray(child.material)) child.material.forEach(m => m.visible = !userColorsChanged.storage);
+            else child.material.visible = !userColorsChanged.storage;
+          }
+        } else if (isMiniNode || combinedNode.includes('footer_1') || combinedNode.includes('footer')) {
+          child.visible = true;
+          if (child.material) {
+            if (Array.isArray(child.material)) child.material.forEach(m => m.visible = true);
+            else child.material.visible = true;
+          }
+        }
       }
     });
   }
@@ -1064,10 +1196,26 @@ function applyMattressColor(hexColorStr) {
   Object.keys(meshMap).forEach(key => {
     const entry = meshMap[key];
     const name = entry.name.toLowerCase();
-    if (entry.visible && (name.includes('mattress') || name.includes('mattres') || name.includes('zipper') || name.includes('zip') || name.includes('cube.020'))) {
+    const isMattress = name.includes('mattress') || name.includes('mattres') || name.includes('zipper') || name.includes('zip') || name.includes('cube.020') || name.includes('plain') || name.includes('base-cot-zipper') || name.includes('base_cot_zipper') || name.includes('basecotzipper');
+    if (entry.visible && isMattress) {
       entry.meshes.forEach(mesh => setColorOnMesh(mesh, hex, null, true));
     }
   });
+
+  const symbols = Object.getOwnPropertySymbols(modelViewer);
+  const sceneSymbol = symbols.find((s) => s.description === 'scene');
+  const internalScene = modelViewer[sceneSymbol];
+  if (internalScene) {
+    internalScene.traverse(child => {
+      const nodeName = (child.name || '').toLowerCase();
+      const matName = (child.material ? (Array.isArray(child.material) ? child.material.map(m => m.name || '').join(' ') : (child.material.name || '')) : '').toLowerCase();
+      const combined = (nodeName + ' ' + matName).toLowerCase();
+      const isMattress = combined.includes('mattress') || combined.includes('mattres') || combined.includes('zipper') || combined.includes('zip') || combined.includes('cube.020') || combined.includes('plain') || combined.includes('base-cot-zipper') || combined.includes('base_cot_zipper') || combined.includes('basecotzipper');
+      if (child.visible && isMattress && child.isMesh) {
+        setColorOnMesh(child, hex, null, true);
+      }
+    });
+  }
 }
 
 // ABS Panel color
@@ -1078,15 +1226,15 @@ function applyAbsPanelColor(hexColorStr) {
     const entry = meshMap[key];
     const name = entry.name.toLowerCase();
     
-    const isAbsPanel = (name.includes('abs') && (name.includes('head') || name.includes('foot') || name.includes('board') || name.includes('panel') || name.includes('end')));
+    const isAbsPanel = name.includes('abs') && (name.includes('head') || name.includes('foot') || name.includes('board') || name.includes('panel') || name.includes('end'));
     
-    if (entry.visible && isAbsPanel) {
+    if (isAbsPanel) {
       entry.meshes.forEach(mesh => {
         if (!mesh.material) return;
         const materials = Array.isArray(mesh.material) ? mesh.material : [mesh.material];
         materials.forEach(mat => {
-          const matName = mat.name.toLowerCase();
-          if (matName.includes('clr') || matName.includes('color') || matName.includes('blue') || matName.includes('red') || matName.includes('sticker')) {
+          const matName = (mat.name || '').toLowerCase();
+          if (matName.includes('clr') || matName.includes('color') || matName.includes('blue') || matName.includes('red') || matName.includes('sticker') || matName.includes('head') || matName.includes('foot') || matName.includes('panel') || matName.includes('board') || matName.includes('abs')) {
             const cloned = mat.clone();
             if (cloned.color) {
               cloned.color.setHex(hex);
@@ -1116,15 +1264,15 @@ function applyAbsRailColor(hexColorStr) {
     const entry = meshMap[key];
     const name = entry.name.toLowerCase();
     
-    const isAbsRail = (name.includes('abs') && (name.includes('rail') || name.includes('side')));
+    const isAbsRail = name.includes('abs') && (name.includes('rail') || name.includes('side') || name.includes('siderailing'));
     
-    if (entry.visible && isAbsRail) {
+    if (isAbsRail) {
       entry.meshes.forEach(mesh => {
         if (!mesh.material) return;
         const materials = Array.isArray(mesh.material) ? mesh.material : [mesh.material];
         materials.forEach(mat => {
-          const matName = mat.name.toLowerCase();
-          if (matName.includes('clr') || matName.includes('color') || matName.includes('blue') || matName.includes('red') || matName.includes('sticker') || matName.includes('siderailings-2')) {
+          const matName = (mat.name || '').toLowerCase();
+          if (matName.includes('clr') || matName.includes('color') || matName.includes('blue') || matName.includes('red') || matName.includes('sticker') || matName.includes('siderail') || matName.includes('clrsider') || matName.includes('abs')) {
             const cloned = mat.clone();
             if (cloned.color) {
               cloned.color.setHex(hex);
@@ -1146,35 +1294,61 @@ function applyAbsRailColor(hexColorStr) {
   });
 }
 
-function applyCouchCabinetColor(hexColorStr) {
+function applyCouchStorageColor(hexColorStr) {
   const hex = parseInt(hexColorStr.replace('#', ''), 16);
 
   Object.keys(meshMap).forEach(key => {
     const entry = meshMap[key];
     const name = entry.name.toLowerCase();
     
-    const isCabinet = name === 'cabinent_1' || name === 'mini_cabinent' || name === 'cabinent';
-    
-    if (isCabinet) {    
-      entry.meshes.forEach(mesh => setColorOnMesh(mesh, hex, null, true));
-    }   
-  });
-}
-
-function applyCouchDrawerColor(hexColorStr) {
-  const hex = parseInt(hexColorStr.replace('#', ''), 16);
-
-  Object.keys(meshMap).forEach(key => {
-    const entry = meshMap[key];
-    const name = entry.name.toLowerCase();
-    
-    const isDrawer = name.includes('drawer') || name.includes('cupboard');
-    const isMiniDrawer = name.includes('mini_drawer') || name.includes('mini-drawer');
-    
-    if (isDrawer && !isMiniDrawer) {
+    const isColorStorage = name.includes('cupboard_color') || name.includes('drawer_color') || name.includes('drawers_color') || name === 'footer_2' || name.includes('footer_2');
+    if (isColorStorage) {
       entry.meshes.forEach(mesh => setColorOnMesh(mesh, hex, null, true));
     }
   });
+
+  const symbols = Object.getOwnPropertySymbols(modelViewer);
+  const sceneSymbol = symbols.find((s) => s.description === 'scene');
+  const internalScene = modelViewer[sceneSymbol];
+  if (internalScene) {
+    internalScene.traverse(child => {
+      const nodeName = (child.name || '').toLowerCase();
+      const isColorNode = nodeName.includes('cupboard_color') || nodeName.includes('drawer_color') || nodeName.includes('drawers_color') || nodeName === 'footer_2' || nodeName.includes('footer_2');
+      if (isColorNode && child.isMesh) {
+        setColorOnMesh(child, hex, null, true);
+      }
+    });
+  }
+}
+
+function applyIvoryToCouchFrameAndCabinet() {
+  const hex = 0xFFFFF0; // Ivory color hex
+
+  Object.keys(meshMap).forEach(key => {
+    const entry = meshMap[key];
+    const name = entry.name.toLowerCase();
+    
+    const isMattress = name.includes('mattress') || name.includes('mattres') || name.includes('zipper') || name.includes('zip') || name.includes('cube.020') || name.includes('plain');
+    const isStorage = name === 'cupboard' || name === 'drawers' || name === 'drawer' || name === 'footer_3' || name.includes('drawer_texture') || name.includes('drawers_texture') || name.includes('cupboard_color') || name.includes('drawer_color') || name.includes('drawers_color') || name === 'footer_2' || name.includes('footer_2');
+    const isWheel = name.includes('wheel') || name.includes('castor') || name.includes('caster');
+    const isPushOrHandle = name.includes('push') || name.includes('handle');
+
+    if (entry.visible && !isMattress && !isStorage && !isWheel && !isPushOrHandle) {
+      entry.meshes.forEach(mesh => setColorOnMesh(mesh, hex, null, false));
+    }
+  });
+
+  const symbols = Object.getOwnPropertySymbols(modelViewer);
+  const sceneSymbol = symbols.find((s) => s.description === 'scene');
+  const internalScene = modelViewer[sceneSymbol];
+  if (internalScene) {
+    internalScene.traverse(child => {
+      const nodeName = (child.name || '').toLowerCase();
+      if ((nodeName === 'footer_1' || nodeName === 'mini_cabinent' || nodeName === 'mini_drawer' || nodeName.includes('cabinent')) && child.isMesh && !nodeName.includes('handle')) {
+        setColorOnMesh(child, hex, null, false);
+      }
+    });
+  }
 }
 
 function setColorOnMesh(mesh, hex, targetMaterialName, forceColor = false) {
@@ -1263,7 +1437,7 @@ document.querySelectorAll('input[type="radio"]').forEach(radio => {
   });
 });
 
-document.querySelectorAll('.color-swatch:not(.mattress-color):not(.couch-cabinet-color):not(.couch-drawer-color):not(.abs-panel-color):not(.abs-rail-color)').forEach(swatch => {
+document.querySelectorAll('.color-swatch:not(.mattress-color):not(.couch-storage-color):not(.abs-panel-color):not(.abs-rail-color)').forEach(swatch => {
   swatch.addEventListener('click', (e) => {
     if (swatch.id === 'custom-color-swatch') {
       const picker = document.getElementById('custom-color-picker');
@@ -1306,72 +1480,43 @@ document.querySelectorAll('.mattress-color').forEach(swatch => {
   });
 });
 
-// Couch Cabinet color swatches listeners
-document.querySelectorAll('.couch-cabinet-color').forEach(swatch => {
+// Couch Storage (Cupboard & Drawer) color swatches listeners
+document.querySelectorAll('.couch-storage-color').forEach(swatch => {
   swatch.addEventListener('click', (e) => {
-    if (swatch.id === 'couch-cabinet-custom-swatch') {
-      const picker = document.getElementById('couch-cabinet-custom-picker');
+    if (swatch.id === 'couch-storage-custom-swatch') {
+      const picker = document.getElementById('couch-storage-custom-picker');
       if (picker && e.target !== picker) {
         picker.click();
       }
       return;
     }
-    document.querySelectorAll('.couch-cabinet-color').forEach(s => s.classList.remove('active'));
+    document.querySelectorAll('.couch-storage-color').forEach(s => s.classList.remove('active'));
     swatch.classList.add('active');
-    userColorsChanged.cabinet = true;
-    applyCurrentConfig();
-  });
-});
 
-const couchCabinetCustomPicker = document.getElementById('couch-cabinet-custom-picker');
-const couchCabinetCustomSwatch = document.getElementById('couch-cabinet-custom-swatch');
-if (couchCabinetCustomPicker && couchCabinetCustomSwatch) {
-  const handleCouchCabinetCustomColor = (e) => {
-    const hexColor = e.target.value;
-    couchCabinetCustomSwatch.dataset.color = hexColor;
-    couchCabinetCustomSwatch.style.background = hexColor;
-    
-    document.querySelectorAll('.couch-cabinet-color').forEach(s => s.classList.remove('active'));
-    couchCabinetCustomSwatch.classList.add('active');
-    userColorsChanged.cabinet = true;
-    applyCurrentConfig();
-  };
-  couchCabinetCustomPicker.addEventListener('input', handleCouchCabinetCustomColor);
-  couchCabinetCustomPicker.addEventListener('change', handleCouchCabinetCustomColor);
-}
-
-// Couch Drawer color swatches listeners
-document.querySelectorAll('.couch-drawer-color').forEach(swatch => {
-  swatch.addEventListener('click', (e) => {
-    if (swatch.id === 'couch-drawer-custom-swatch') {
-      const picker = document.getElementById('couch-drawer-custom-picker');
-      if (picker && e.target !== picker) {
-        picker.click();
-      }
-      return;
+    if (swatch.dataset.default === 'true') {
+      userColorsChanged.storage = false;
+    } else {
+      userColorsChanged.storage = true;
     }
-    document.querySelectorAll('.couch-drawer-color').forEach(s => s.classList.remove('active'));
-    swatch.classList.add('active');
-    userColorsChanged.drawer = true;
     applyCurrentConfig();
   });
 });
 
-const couchDrawerCustomPicker = document.getElementById('couch-drawer-custom-picker');
-const couchDrawerCustomSwatch = document.getElementById('couch-drawer-custom-swatch');
-if (couchDrawerCustomPicker && couchDrawerCustomSwatch) {
-  const handleCouchDrawerCustomColor = (e) => {
+const couchStorageCustomPicker = document.getElementById('couch-storage-custom-picker');
+const couchStorageCustomSwatch = document.getElementById('couch-storage-custom-swatch');
+if (couchStorageCustomPicker && couchStorageCustomSwatch) {
+  const handleCouchStorageCustomColor = (e) => {
     const hexColor = e.target.value;
-    couchDrawerCustomSwatch.dataset.color = hexColor;
-    couchDrawerCustomSwatch.style.background = hexColor;
+    couchStorageCustomSwatch.dataset.color = hexColor;
+    couchStorageCustomSwatch.style.background = hexColor;
     
-    document.querySelectorAll('.couch-drawer-color').forEach(s => s.classList.remove('active'));
-    couchDrawerCustomSwatch.classList.add('active');
-    userColorsChanged.drawer = true;
+    document.querySelectorAll('.couch-storage-color').forEach(s => s.classList.remove('active'));
+    couchStorageCustomSwatch.classList.add('active');
+    userColorsChanged.storage = true;
     applyCurrentConfig();
   };
-  couchDrawerCustomPicker.addEventListener('input', handleCouchDrawerCustomColor);
-  couchDrawerCustomPicker.addEventListener('change', handleCouchDrawerCustomColor);
+  couchStorageCustomPicker.addEventListener('input', handleCouchStorageCustomColor);
+  couchStorageCustomPicker.addEventListener('change', handleCouchStorageCustomColor);
 }
 
 // ABS Panel color swatches listeners
@@ -1879,7 +2024,7 @@ function initNavigation() {
       modelPath = 'assets/models/customisation-models/deluxe-examination-couch/3d_model.glb';
       nameToSet = 'Deluxe Examination Couch';
     } else if (modelQuery.includes('semi-fowler') || modelQuery.includes('semi_fowler')) {
-      modelPath = 'assets/models/view-only-models/semi-fowler-cot.glb';
+      modelPath = 'assets/models/view-only-models/semi_fowler_cot.glb';
       nameToSet = 'Semi Fowler Cot';
     } else if (modelQuery.includes('fowler-cot') || modelQuery.includes('fowler')) {
       modelPath = 'assets/models/customisation-models/fowler-cot/3d_model.glb';
