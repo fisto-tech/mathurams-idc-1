@@ -2585,14 +2585,16 @@
   transform: translateX(-1px);
 }
 
-.ui-arrow-next-page {
-  right: 8% !important;
-  left: auto !important;
-}
+@media screen and (min-width: 769px) {
+  .ui-arrow-next-page {
+    right: 20px !important;
+    left: auto !important;
+  }
 
-.ui-arrow-previous-page {
-  left: 8% !important;
-  right: auto !important;
+  .ui-arrow-previous-page {
+    left: 20px !important;
+    right: auto !important;
+  }
 }
 
 /* Responsive Hide elements on Mobile if required */
@@ -3246,33 +3248,43 @@
 /* Desktop-only First & Last Page Positioning Overrides */
 @media screen and (min-width: 1025px) {
   #viewer.first-page~.ui-arrow-next-page {
-    right: 28% !important;
+    right: 20px !important;
     left: auto !important;
   }
 
   #viewer.last-page~.ui-arrow-previous-page {
-    left: 28% !important;
+    left: 20px !important;
     right: auto !important;
   }
 }
 
 /* ==========================================================================
-   FULLSCREEN MODE ONLY: Next & Previous Button Adjustments
+   FULLSCREEN MODE ONLY: Next & Previous Button Adjustments (Far Left & Far Right)
    ========================================================================== */
 
 :fullscreen .ui-arrow-control,
+:fullscreen .ui-arrow-previous-page,
+:fullscreen .ui-arrow-next-page,
 :fullscreen .prev-arrow,
 :fullscreen .next-arrow,
 :-webkit-full-screen .ui-arrow-control,
+:-webkit-full-screen .ui-arrow-previous-page,
+:-webkit-full-screen .ui-arrow-next-page,
 :-webkit-full-screen .prev-arrow,
 :-webkit-full-screen .next-arrow,
 :-moz-full-screen .ui-arrow-control,
+:-moz-full-screen .ui-arrow-previous-page,
+:-moz-full-screen .ui-arrow-next-page,
 :-moz-full-screen .prev-arrow,
 :-moz-full-screen .next-arrow,
 body.is-fullscreen .ui-arrow-control,
+body.is-fullscreen .ui-arrow-previous-page,
+body.is-fullscreen .ui-arrow-next-page,
 body.is-fullscreen .prev-arrow,
 body.is-fullscreen .next-arrow,
 html.is-fullscreen .ui-arrow-control,
+html.is-fullscreen .ui-arrow-previous-page,
+html.is-fullscreen .ui-arrow-next-page,
 html.is-fullscreen .prev-arrow,
 html.is-fullscreen .next-arrow {
   top: 50% !important;
@@ -3281,51 +3293,64 @@ html.is-fullscreen .next-arrow {
   z-index: 999999 !important;
 }
 
-:fullscreen .prev-arrow,
-:-webkit-full-screen .prev-arrow,
-:-moz-full-screen .prev-arrow,
-body.is-fullscreen .prev-arrow,
-html.is-fullscreen .prev-arrow {
-  left: 2vw !important;
-  right: auto !important;
-}
+@media screen and (min-width: 769px) {
+  :fullscreen .ui-arrow-previous-page,
+  :fullscreen .prev-arrow,
+  :-webkit-full-screen .ui-arrow-previous-page,
+  :-webkit-full-screen .prev-arrow,
+  :-moz-full-screen .ui-arrow-previous-page,
+  :-moz-full-screen .prev-arrow,
+  body.is-fullscreen .ui-arrow-previous-page,
+  body.is-fullscreen .prev-arrow,
+  body.is-fullscreen .ui-arrow-control.ui-arrow-previous-page,
+  body.is-fullscreen #viewer~.ui-arrow-previous-page,
+  body.is-fullscreen #viewer.first-page~.ui-arrow-previous-page,
+  body.is-fullscreen #viewer.last-page~.ui-arrow-previous-page,
+  html.is-fullscreen .ui-arrow-previous-page,
+  html.is-fullscreen .prev-arrow,
+  html.is-fullscreen .ui-arrow-control.ui-arrow-previous-page,
+  html.is-fullscreen #viewer~.ui-arrow-previous-page,
+  html.is-fullscreen #viewer.first-page~.ui-arrow-previous-page,
+  html.is-fullscreen #viewer.last-page~.ui-arrow-previous-page {
+    left: 20px !important;
+    right: auto !important;
+  
+  }
 
-:fullscreen .next-arrow,
-:-webkit-full-screen .next-arrow,
-:-moz-full-screen .next-arrow,
-body.is-fullscreen .next-arrow,
-html.is-fullscreen .next-arrow {
-  right: 2vw !important;
-  left: auto !important;
+  :fullscreen .ui-arrow-next-page,
+  :fullscreen .next-arrow,
+  :-webkit-full-screen .ui-arrow-next-page,
+  :-webkit-full-screen .next-arrow,
+  :-moz-full-screen .ui-arrow-next-page,
+  :-moz-full-screen .next-arrow,
+  body.is-fullscreen .ui-arrow-next-page,
+  body.is-fullscreen .next-arrow,
+  body.is-fullscreen .ui-arrow-control.ui-arrow-next-page,
+  body.is-fullscreen #viewer~.ui-arrow-next-page,
+  body.is-fullscreen #viewer.first-page~.ui-arrow-next-page,
+  body.is-fullscreen #viewer.last-page~.ui-arrow-next-page,
+  html.is-fullscreen .ui-arrow-next-page,
+  html.is-fullscreen .next-arrow,
+  html.is-fullscreen .ui-arrow-control.ui-arrow-next-page,
+  html.is-fullscreen #viewer~.ui-arrow-next-page,
+  html.is-fullscreen #viewer.first-page~.ui-arrow-next-page,
+  html.is-fullscreen #viewer.last-page~.ui-arrow-next-page {
+    right: 20px !important;
+    left: auto !important;
+  }
 }
 
 :fullscreen .prev-arrow:hover,
 :fullscreen .next-arrow:hover,
+:fullscreen .ui-arrow-previous-page:hover,
+:fullscreen .ui-arrow-next-page:hover,
 :-webkit-full-screen .prev-arrow:hover,
 :-webkit-full-screen .next-arrow:hover,
 body.is-fullscreen .prev-arrow:hover,
-body.is-fullscreen .next-arrow:hover {
+body.is-fullscreen .next-arrow:hover,
+body.is-fullscreen .ui-arrow-previous-page:hover,
+body.is-fullscreen .ui-arrow-next-page:hover {
   transform: translateY(-50%) scale(1.15) !important;
-}
-
-:fullscreen #viewer.first-page~.ui-arrow-next-page,
-:fullscreen #viewer.first-page~.next-arrow,
-:-webkit-full-screen #viewer.first-page~.ui-arrow-next-page,
-:-webkit-full-screen #viewer.first-page~.next-arrow,
-body.is-fullscreen #viewer.first-page~.ui-arrow-next-page,
-body.is-fullscreen #viewer.first-page~.next-arrow {
-  right: 26vw !important;
-  left: auto !important;
-}
-
-:fullscreen #viewer.last-page~.ui-arrow-previous-page,
-:fullscreen #viewer.last-page~.prev-arrow,
-:-webkit-full-screen #viewer.last-page~.ui-arrow-previous-page,
-:-webkit-full-screen #viewer.last-page~.prev-arrow,
-body.is-fullscreen #viewer.last-page~.ui-arrow-previous-page,
-body.is-fullscreen #viewer.last-page~.prev-arrow {
-  left: 26vw !important;
-  right: auto !important;
 }
 
 
@@ -3333,6 +3358,45 @@ body.is-fullscreen #viewer.last-page~.prev-arrow {
 #SearchModal svg,
 #SearchModal svg path {
   stroke: #ffffff !important;
+}
+
+/* ==========================================================================
+   3D EXPERIENCE PAGE (PAGE 4/5) CARDS: POPUP REVEAL & LOOPING SCALE
+   ========================================================================== */
+.exp-3d-card {
+  opacity: 0;
+  transition: transform 1.2s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.6s ease !important;
+  transform-origin: center center;
+}
+
+.exp-3d-card:hover {
+  transform: scale(1.14) translateY(-5px) !important;
+  z-index: 99 !important;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.35) !important;
+}
+
+@keyframes expCardPopReveal {
+  0% {
+    opacity: 0;
+    transform: scale(0.2) translateY(20px);
+  }
+  70% {
+    opacity: 1;
+    transform: scale(1.06) translateY(-3px);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+.exp-3d-card.pop-active {
+  animation: expCardPopReveal 0.8s cubic-bezier(0.25, 1, 0.5, 1) forwards !important;
+}
+
+.exp-3d-card.card-pulse-active {
+  transform: scale(1.10) translateY(-5px) !important;
+  z-index: 50 !important;
 }
 
 /* Move flipbook navigation arrows behind overlay when TOC is active */
@@ -3825,3 +3889,5 @@ img[alt*="MF-"]:not(.cot-btn *):not(.cot-btn) {
 .active-cot-btn {
   animation: activeCotBtnZoomLoop 1.8s ease-in-out infinite !important;
 }
+
+

@@ -1925,6 +1925,115 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 });
 
+// ==================== 3D EXPERIENCE PAGE ANIMATION CONTROLLER ====================
+function init3dExperienceAnimations() {
+    const container = document.querySelector('.exp-3d-container');
+    const cards = Array.from(document.querySelectorAll('.exp-3d-card'));
+    if (!cards.length) return;
+
+    let isSequenceRunning = false;
+    let revealTimeout = null;
+    let pulseInterval = null;
+    let currentPulseIndex = 0;
+
+    function start3dSequence() {
+        if (isSequenceRunning) return;
+        isSequenceRunning = true;
+        clearTimers();
+
+        // Reset state
+        cards.forEach(card => {
+            card.classList.remove('pop-active', 'card-pulse-active');
+            card.style.opacity = '0';
+        });
+
+        // 1. Staggered popup reveal (160ms delay per card)
+        cards.forEach((card, idx) => {
+            setTimeout(() => {
+                if (!isSequenceRunning) return;
+                card.classList.add('pop-active');
+            }, idx * 160);
+        });
+
+        // 2. One-by-one looping scale animation after reveal completes
+        revealTimeout = setTimeout(() => {
+            if (!isSequenceRunning) return;
+            cards.forEach(card => {
+                card.classList.remove('pop-active');
+                card.style.opacity = '1';
+            });
+
+            currentPulseIndex = 0;
+
+            function pulseStep() {
+                if (!isSequenceRunning) return;
+                cards.forEach(card => card.classList.remove('card-pulse-active'));
+                if (cards[currentPulseIndex]) {
+                    cards[currentPulseIndex].classList.add('card-pulse-active');
+                }
+                currentPulseIndex = (currentPulseIndex + 1) % cards.length;
+            }
+
+            pulseStep();
+            pulseInterval = setInterval(pulseStep, 1800);
+        }, 2300);
+    }
+
+    function clearTimers() {
+        if (revealTimeout) clearTimeout(revealTimeout);
+        if (pulseInterval) clearInterval(pulseInterval);
+    }
+
+    function stop3dSequence() {
+        isSequenceRunning = false;
+        clearTimers();
+        cards.forEach(card => {
+            card.classList.remove('pop-active', 'card-pulse-active');
+            card.style.opacity = '0';
+        });
+    }
+
+    function check3dPageVisibility() {
+        let isVisible = false;
+
+        if (typeof $ !== 'undefined' && $('#flipbook').length && $('#flipbook').turn) {
+            const currentView = $('#flipbook').turn('view');
+            const pageNum = $('#flipbook').turn('page');
+            if (pageNum === 4 || pageNum === 5 || (currentView && (currentView.includes(4) || currentView.includes(5)))) {
+                isVisible = true;
+            }
+        } else {
+            const parentPage = container ? container.closest('.page') : cards[0].closest('.page');
+            if (parentPage) {
+                const rect = parentPage.getBoundingClientRect();
+                isVisible = rect.width > 0 && rect.height > 0 && rect.top < window.innerHeight && rect.bottom > 0;
+            } else {
+                isVisible = true;
+            }
+        }
+
+        if (isVisible) {
+            start3dSequence();
+        } else {
+            stop3dSequence();
+        }
+    }
+
+    if (typeof $ !== 'undefined' && $('#flipbook').length) {
+        $('#flipbook').bind('turned turning', check3dPageVisibility);
+    }
+
+    // Trigger check on load
+    setTimeout(check3dPageVisibility, 300);
+    setTimeout(check3dPageVisibility, 800);
+}
+
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init3dExperienceAnimations);
+} else {
+    init3dExperienceAnimations();
+}
+
 
 
 
