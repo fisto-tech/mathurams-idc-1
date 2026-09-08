@@ -10,13 +10,13 @@ function isPageVisible(pageElement) {
     const rect = pageElement.getBoundingClientRect();
     const style = window.getComputedStyle(pageElement);
     const parentStyle = window.getComputedStyle(pageElement.parentElement || pageElement);
-    
-    return rect.width > 0 && 
-           rect.height > 0 && 
-           style.display !== 'none' && 
-           style.visibility !== 'hidden' && 
-           parentStyle.display !== 'none' &&
-           parentStyle.visibility !== 'hidden';
+
+    return rect.width > 0 &&
+        rect.height > 0 &&
+        style.display !== 'none' &&
+        style.visibility !== 'hidden' &&
+        parentStyle.display !== 'none' &&
+        parentStyle.visibility !== 'hidden';
 }
 
 /**
@@ -26,9 +26,20 @@ function initGenericSwitcher(pageElement, buttons) {
     let currentIdx = 0;
     let timer = null;
 
+    // Preload all model variant images for instant smooth transitions
+    buttons.forEach((btn) => {
+        ['image', 'text', 'spec', 'config', 'pos1', 'pos2', 'pos3'].forEach(key => {
+            const src = btn.dataset[key];
+            if (src) {
+                const img = new Image();
+                img.src = src;
+            }
+        });
+    });
+
     const selectModel = (index, isManual = false, force = false) => {
         if (index === currentIdx && !isManual && !force) return;
-        
+
         const btn = buttons[index];
         if (!btn) return;
         currentIdx = index;
@@ -53,11 +64,7 @@ function initGenericSwitcher(pageElement, buttons) {
 
         const els = [textEl, imgEl, specEl, configEl, pos1El, pos2El, pos3El].filter(Boolean);
 
-        // Apply fade-out animation
-        els.forEach(el => el.classList.add('cot-fade-out'));
-
-        // Swap sources and fade back in after transition delay
-        setTimeout(() => {
+        const swapSources = () => {
             if (textEl && btn.dataset.text) textEl.src = btn.dataset.text;
             if (imgEl && btn.dataset.image) imgEl.src = btn.dataset.image;
             if (specEl && btn.dataset.spec) specEl.src = btn.dataset.spec;
@@ -89,9 +96,32 @@ function initGenericSwitcher(pageElement, buttons) {
                     pos3El.classList.add('hidden');
                 }
             }
+        };
 
-            els.forEach(el => el.classList.remove('cot-fade-out'));
-        }, 300);
+        // Smooth GSAP animation if available, fallback to CSS smooth fade
+        if (window.gsap && els.length > 0) {
+            gsap.to(els, {
+                opacity: 0,
+                scale: 0.94,
+                duration: 0.2,
+                ease: "power2.in",
+                onComplete: () => {
+                    swapSources();
+                    gsap.to(els, {
+                        opacity: 1,
+                        scale: 1,
+                        duration: 0.35,
+                        ease: "power2.out"
+                    });
+                }
+            });
+        } else {
+            els.forEach(el => el.classList.add('cot-fade-out'));
+            setTimeout(() => {
+                swapSources();
+                els.forEach(el => el.classList.remove('cot-fade-out'));
+            }, 300);
+        }
 
         if (isManual || force) {
             startTimer(); // reset rotation schedule
@@ -105,7 +135,7 @@ function initGenericSwitcher(pageElement, buttons) {
                 const currentView = $('#flipbook').turn('view');
                 const wrapper = pageElement.closest('.page-wrapper');
                 const pageIndex = wrapper ? parseInt(wrapper.getAttribute('page')) : -1;
-                
+
                 if (currentView.includes(pageIndex)) {
                     const nextIdx = (currentIdx + 1) % buttons.length;
                     selectModel(nextIdx, false);
@@ -176,7 +206,7 @@ $(document).ready(function () {
     const triggerPageSwitchers = () => {
         if (!window.$ || !$('#flipbook').length) return;
         const currentView = $('#flipbook').turn('view');
-        
+
         // Clean up switchers referencing detached DOM elements
         const activeSwitchersClean = [];
         activeSwitchers.forEach(s => {
@@ -192,7 +222,7 @@ $(document).ready(function () {
         activeSwitchers.forEach(switcher => {
             const wrapper = switcher.pageElement.closest('.page-wrapper');
             const pageIndex = wrapper ? parseInt(wrapper.getAttribute('page')) : -1;
-            
+
             if (currentView.includes(pageIndex)) {
                 if (!switcher.isActive) {
                     switcher.isActive = true;
@@ -242,7 +272,7 @@ $(document).ready(function () {
     const triggerCardAnimation = () => {
         if (!window.$ || !$('#flipbook').length) return;
         const currentView = $('#flipbook').turn('view');
-        
+
         // If page 4 is visible in the current view
         if (currentView.includes(4)) {
             // Find all 3D experience links in page 4
@@ -254,7 +284,7 @@ $(document).ready(function () {
                     card.style.opacity = '0';
                     card.style.transform = 'scale(0.6)';
                     card.classList.remove('threed-card-animate');
-                    
+
                     // Trigger stagger entrance
                     setTimeout(() => {
                         card.classList.add('threed-card-animate');
@@ -281,7 +311,7 @@ $(document).ready(function () {
         $('#flipbook').on('turned', function () {
             triggerCardAnimation();
         });
-        
+
         // Run once on load in case we start on page 4
         setTimeout(triggerCardAnimation, 500);
     }

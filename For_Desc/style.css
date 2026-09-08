@@ -240,6 +240,97 @@
   transform: translateX(7px) scale(1.066);
 }
 
+/* --- Table of Content Image Links Hover Zoom Effect (Crisp & Sharp - No Blur) --- */
+.toc-image-link {
+  transition: transform 0.25s ease-out, z-index 0s !important;
+  transform-origin: center center;
+  filter: none !important;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+
+.toc-image-link:hover {
+  transform: scale(1.06) !important;
+  filter: none !important;
+  z-index: 10 !important;
+}
+
+.toc-image-link:active {
+  transform: scale(0.97) !important;
+}
+
+/* --- About Us Page (Page 2) & Infrastructure (Page 3) Hover Animations --- */
+.about-card-hover {
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), z-index 0s !important;
+  transform-origin: center center;
+  filter: none !important;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+
+.about-card-hover:hover {
+  transform: scale(1.08) translateY(-6px) !important;
+  z-index: 10 !important;
+}
+
+.about-card-hover:active {
+  transform: scale(0.97) translateY(-2px) !important;
+}
+
+.about-content-hover,
+.about-icons-hover {
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), z-index 0s !important;
+  transform-origin: center center;
+  filter: none !important;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+
+.about-content-hover:hover {
+  transform: scale(1.03) translateY(-3px) !important;
+  z-index: 10 !important;
+}
+
+.about-icons-hover:hover {
+  transform: scale(1.05) translateY(-4px) !important;
+  z-index: 10 !important;
+}
+
+/* Page 3 (Infrastructure Page) Hover Animations */
+.page-3-hover-title,
+.page-3-hover-content,
+.page-3-hover-icons,
+.page-3-hover-bottom {
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), z-index 0s !important;
+  transform-origin: center center;
+  filter: none !important;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+
+.page-3-hover-title:hover {
+  transform: scale(1.04) translateY(-3px) !important;
+  z-index: 10 !important;
+}
+
+.page-3-hover-content:hover {
+  transform: scale(1.04) translateY(-4px) !important;
+  z-index: 10 !important;
+}
+
+.page-3-hover-icons:hover {
+  transform: scale(1.06) translateY(-6px) !important;
+  z-index: 10 !important;
+}
+
+.page-3-hover-bottom:hover {
+  transform: scale(1.08) translateY(-4px) !important;
+  z-index: 10 !important;
+}
+
+
+
+
 /* .nav-overlay {
     position: fixed;
     z-index: 1000;
@@ -3165,6 +3256,79 @@
   }
 }
 
+/* ==========================================================================
+   FULLSCREEN MODE ONLY: Next & Previous Button Adjustments
+   ========================================================================== */
+
+:fullscreen .ui-arrow-control,
+:fullscreen .prev-arrow,
+:fullscreen .next-arrow,
+:-webkit-full-screen .ui-arrow-control,
+:-webkit-full-screen .prev-arrow,
+:-webkit-full-screen .next-arrow,
+:-moz-full-screen .ui-arrow-control,
+:-moz-full-screen .prev-arrow,
+:-moz-full-screen .next-arrow,
+body.is-fullscreen .ui-arrow-control,
+body.is-fullscreen .prev-arrow,
+body.is-fullscreen .next-arrow,
+html.is-fullscreen .ui-arrow-control,
+html.is-fullscreen .prev-arrow,
+html.is-fullscreen .next-arrow {
+  top: 50% !important;
+  bottom: auto !important;
+  transform: translateY(-50%) !important;
+  z-index: 999999 !important;
+}
+
+:fullscreen .prev-arrow,
+:-webkit-full-screen .prev-arrow,
+:-moz-full-screen .prev-arrow,
+body.is-fullscreen .prev-arrow,
+html.is-fullscreen .prev-arrow {
+  left: 2vw !important;
+  right: auto !important;
+}
+
+:fullscreen .next-arrow,
+:-webkit-full-screen .next-arrow,
+:-moz-full-screen .next-arrow,
+body.is-fullscreen .next-arrow,
+html.is-fullscreen .next-arrow {
+  right: 2vw !important;
+  left: auto !important;
+}
+
+:fullscreen .prev-arrow:hover,
+:fullscreen .next-arrow:hover,
+:-webkit-full-screen .prev-arrow:hover,
+:-webkit-full-screen .next-arrow:hover,
+body.is-fullscreen .prev-arrow:hover,
+body.is-fullscreen .next-arrow:hover {
+  transform: translateY(-50%) scale(1.15) !important;
+}
+
+:fullscreen #viewer.first-page~.ui-arrow-next-page,
+:fullscreen #viewer.first-page~.next-arrow,
+:-webkit-full-screen #viewer.first-page~.ui-arrow-next-page,
+:-webkit-full-screen #viewer.first-page~.next-arrow,
+body.is-fullscreen #viewer.first-page~.ui-arrow-next-page,
+body.is-fullscreen #viewer.first-page~.next-arrow {
+  right: 26vw !important;
+  left: auto !important;
+}
+
+:fullscreen #viewer.last-page~.ui-arrow-previous-page,
+:fullscreen #viewer.last-page~.prev-arrow,
+:-webkit-full-screen #viewer.last-page~.ui-arrow-previous-page,
+:-webkit-full-screen #viewer.last-page~.prev-arrow,
+body.is-fullscreen #viewer.last-page~.ui-arrow-previous-page,
+body.is-fullscreen #viewer.last-page~.prev-arrow {
+  left: 26vw !important;
+  right: auto !important;
+}
+
+
 /* Force search button arrow to remain white */
 #SearchModal svg,
 #SearchModal svg path {
@@ -3567,24 +3731,97 @@ img[src*="website-link.svg"] {
   cursor: pointer !important;
 }
 
-/* Page Number Styles */
+/* Page Number Styles - Fully Responsive across Desktop, Tablet & Mobile */
 .page-number-indicator {
   position: absolute !important;
   bottom: 8px !important;
   font-family: 'Montserrat', 'Inter', sans-serif !important;
-  font-size: 12px !important;
-  font-weight: 500 !important;
+  font-size: clamp(10px, 1.1vw, 12px) !important;
+  font-weight: 600 !important;
   color: #e7e7e7 !important;
-  /* Orange color */
   z-index: 100 !important;
   pointer-events: none !important;
   user-select: none !important;
+  line-height: 1 !important;
 }
 
-.page-number-indicator.right-corner {
-  left: 24px !important;
-}
-
+.page-number-indicator.right-corner,
 .page-number-indicator.left-corner {
   left: 24px !important;
+}
+
+/* Tablet Screens (max-width: 1024px) */
+@media screen and (max-width: 1024px) {
+  .page-number-indicator {
+    font-size: clamp(8px, 1.4vw, 10px) !important;
+    bottom: 10px !important;
+  }
+
+  .page-number-indicator.right-corner,
+  .page-number-indicator.left-corner {
+    left: 14px !important;
+  }
+}
+
+/* Mobile Screens (max-width: 768px) */
+@media screen and (max-width: 768px) {
+  .page-number-indicator {
+    font-size: clamp(6px, 1.8vw, 8px) !important;
+    bottom: 8px !important;
+  }
+
+  .page-number-indicator.right-corner,
+  .page-number-indicator.left-corner {
+    left: 9px !important;
+  }
+}
+
+/* Small Mobile Screens (max-width: 480px) */
+@media screen and (max-width: 480px) {
+  .page-number-indicator {
+    font-size: clamp(5px, 2.2vw, 7px) !important;
+    bottom: 5px !important;
+  }
+
+  .page-number-indicator.right-corner,
+  .page-number-indicator.left-corner {
+    left: 6px !important;
+  }
+}
+
+/* Looping Zoom Animation for Active Model Buttons & Standalone Single Model SVGs */
+@keyframes singleModelZoomLoop {
+
+  0%,
+  100% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.1);
+  }
+}
+
+@keyframes activeCotBtnZoomLoop {
+
+  0%,
+  100% {
+    transform: scale(1.1);
+  }
+
+  50% {
+    transform: scale(1.22);
+  }
+}
+
+/* Standalone single model badge SVGs (not part of multi-model switcher) */
+img[src*="MF-"]:not(.cot-btn *):not(.cot-btn),
+img[src*="/MF"]:not(.cot-btn *):not(.cot-btn),
+img[alt*="MF-"]:not(.cot-btn *):not(.cot-btn) {
+  animation: singleModelZoomLoop 1.8s ease-in-out infinite !important;
+}
+
+/* Active model switcher button ONLY */
+.active-cot-btn {
+  animation: activeCotBtnZoomLoop 1.8s ease-in-out infinite !important;
 }

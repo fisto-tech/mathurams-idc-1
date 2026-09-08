@@ -52,7 +52,7 @@ navToggle.addEventListener('click', (e) => {
 
 const closeTocBtn = document.getElementById('closeTocBtn');
 if (closeTocBtn) {
-    closeTocBtn.addEventListener('click', function(e) {
+    closeTocBtn.addEventListener('click', function (e) {
         e.stopPropagation();
         closeMenu();
     });
@@ -185,7 +185,7 @@ navToggle1.addEventListener('click', function () {
 navOverlay1.addEventListener('click', closeMenu1);
 const closeTocBtn1 = document.getElementById('closeTocBtn1');
 if (closeTocBtn1) {
-    closeTocBtn1.addEventListener('click', function(e) {
+    closeTocBtn1.addEventListener('click', function (e) {
         e.stopPropagation();
         closeMenu1();
     });
@@ -293,61 +293,91 @@ const shareInput = document.getElementById('shareInput');
 const copyBtn = document.getElementById('copyBtn');
 const copiedMsg = document.getElementById('copiedMsg');
 
-// Set link
-shareInput.value = "";
+const headerShareBn = document.getElementById('shareBn');
 
-// Open modal
-shareBtn.addEventListener('click', () => {
-    showShareMenu();
-});
+// Set link initially
+if (shareInput) shareInput.value = "";
 
-
-
-function showShareMenu() {
-    shareModal.classList.remove('hidden');
-    shareOverlay.classList.remove('hidden');
-    shareInput.select();
+// Helper to compute current page URL
+function getCurrentShareUrl() {
+    let baseUrl = window.location.href.split('#')[0];
+    // Strip /For_Desc/ path segment so the share link targets root index.html without page number
+    baseUrl = baseUrl.replace(/\/For_Desc\/?/i, '/');
+    return baseUrl;
 }
+
+// Open modal function - updates share input URL when opened
+function showShareMenu() {
+    const currentUrl = getCurrentShareUrl();
+    if (shareInput) shareInput.value = currentUrl;
+    if (mobileShareLinkInput) mobileShareLinkInput.value = currentUrl;
+
+    if (shareModal) shareModal.classList.remove('hidden');
+    if (shareOverlay) shareOverlay.classList.remove('hidden');
+    if (shareInput) {
+        shareInput.focus();
+        shareInput.select();
+    }
+}
+
+// Open modal listeners
+if (shareBtn) shareBtn.addEventListener('click', showShareMenu);
+if (headerShareBn) headerShareBn.addEventListener('click', showShareMenu);
 
 // Close modal
 const closeModal = () => {
-    shareModal.classList.add('hidden');
-    shareOverlay.classList.add('hidden');
+    if (shareModal) shareModal.classList.add('hidden');
+    if (shareOverlay) shareOverlay.classList.add('hidden');
 };
 
-closeBtn.addEventListener('click', closeModal);
-shareOverlay.addEventListener('click', closeModal);
+if (closeBtn) closeBtn.addEventListener('click', closeModal);
+if (shareOverlay) shareOverlay.addEventListener('click', closeModal);
 
 // Copy link
-copyBtn.addEventListener('click', () => {
-    navigator.clipboard.writeText(shareInput.value).then(() => {
-        copiedMsg.classList.remove('hidden');
-        setTimeout(() => copiedMsg.classList.add('hidden'), 1500);
+if (copyBtn) {
+    copyBtn.addEventListener('click', () => {
+        const urlToCopy = (shareInput && shareInput.value) ? shareInput.value : getCurrentShareUrl();
+        navigator.clipboard.writeText(urlToCopy).then(() => {
+            if (copiedMsg) {
+                copiedMsg.classList.remove('hidden');
+                setTimeout(() => copiedMsg.classList.add('hidden'), 1500);
+            }
+        });
     });
-});
+}
 
 // Social share functions
-document.getElementById('whatsappBtn').addEventListener('click', () => {
-    const url = encodeURIComponent(shareInput.value);
-    window.open(`https://wa.me/?text=${url}`, '_blank');
-});
+const whatsappBtn = document.getElementById('whatsappBtn');
+if (whatsappBtn) {
+    whatsappBtn.addEventListener('click', () => {
+        const url = encodeURIComponent((shareInput && shareInput.value) ? shareInput.value : getCurrentShareUrl());
+        window.open(`https://wa.me/?text=${url}`, '_blank');
+    });
+}
 
-document.getElementById('twitterBtn').addEventListener('click', () => {
-    const url = encodeURIComponent(shareInput.value);
-    window.open(`https://twitter.com/intent/tweet?url=${url}`, '_blank');
-});
+const twitterBtn = document.getElementById('twitterBtn');
+if (twitterBtn) {
+    twitterBtn.addEventListener('click', () => {
+        const url = encodeURIComponent((shareInput && shareInput.value) ? shareInput.value : getCurrentShareUrl());
+        window.open(`https://twitter.com/intent/tweet?url=${url}`, '_blank');
+    });
+}
 
-document.getElementById('facebookBtn').addEventListener('click', () => {
-    const url = encodeURIComponent(shareInput.value);
-    window.open(`https://www.facebook.com/sharer/sharer.php?u=${url}`, '_blank');
-});
+const facebookBtn = document.getElementById('facebookBtn');
+if (facebookBtn) {
+    facebookBtn.addEventListener('click', () => {
+        const url = encodeURIComponent((shareInput && shareInput.value) ? shareInput.value : getCurrentShareUrl());
+        window.open(`https://www.facebook.com/sharer/sharer.php?u=${url}`, '_blank');
+    });
+}
 
-// LinkedIn Share
-document.getElementById('linkedInBtn').addEventListener('click', () => {
-    const url = encodeURIComponent(shareInput.value);
-    window.open(`https://www.linkedin.com/sharing/share-offsite/?url=${url}`, '_blank');
-});
-
+const linkedInBtn = document.getElementById('linkedInBtn');
+if (linkedInBtn) {
+    linkedInBtn.addEventListener('click', () => {
+        const url = encodeURIComponent((shareInput && shareInput.value) ? shareInput.value : getCurrentShareUrl());
+        window.open(`https://www.linkedin.com/sharing/share-offsite/?url=${url}`, '_blank');
+    });
+}
 
 // mobile share
 const mobileShareModal = document.getElementById('shareModalMobile');
@@ -358,54 +388,71 @@ const mobileShareLinkInput = document.getElementById('shareInputMobile');
 const mobileCopyLinkBtn = document.getElementById('copyBtnMobile');
 const mobileCopiedToast = document.getElementById('copiedMsgMobile');
 
-// Set link
-mobileShareLinkInput.value = "";
-
+// Set link initially
+if (mobileShareLinkInput) mobileShareLinkInput.value = "";
 
 // Open modal - use desktop share modal for mobile too
-navMobileShareIcon.addEventListener('click', function () {
-    closeOverlay();
-    showShareMenu(); // reuse the desktop share function
-});
-// Close modal
-function closeMobileShareMenu() {
-    mobileShareModal.classList.add('hidden');
-    mobileShareOverlay.classList.add('hidden');
+if (navMobileShareIcon) {
+    navMobileShareIcon.addEventListener('click', function () {
+        if (typeof closeOverlay === 'function') closeOverlay();
+        showShareMenu(); // reuse the desktop share function
+    });
 }
 
-mobileShareCloseBtn.addEventListener('click', closeMobileShareMenu);
-mobileShareOverlay.addEventListener('click', closeMobileShareMenu);
+// Close modal
+function closeMobileShareMenu() {
+    if (mobileShareModal) mobileShareModal.classList.add('hidden');
+    if (mobileShareOverlay) mobileShareOverlay.classList.add('hidden');
+}
+
+if (mobileShareCloseBtn) mobileShareCloseBtn.addEventListener('click', closeMobileShareMenu);
+if (mobileShareOverlay) mobileShareOverlay.addEventListener('click', closeMobileShareMenu);
 
 // Copy link
-mobileCopyLinkBtn.addEventListener('click', () => {
-    navigator.clipboard.writeText(mobileShareLinkInput.value).then(() => {
-        mobileCopiedToast.classList.remove('hidden');
-        setTimeout(() => mobileCopiedToast.classList.add('hidden'), 1500);
+if (mobileCopyLinkBtn) {
+    mobileCopyLinkBtn.addEventListener('click', () => {
+        const urlToCopy = (mobileShareLinkInput && mobileShareLinkInput.value) ? mobileShareLinkInput.value : getCurrentShareUrl();
+        navigator.clipboard.writeText(urlToCopy).then(() => {
+            if (mobileCopiedToast) {
+                mobileCopiedToast.classList.remove('hidden');
+                setTimeout(() => mobileCopiedToast.classList.add('hidden'), 1500);
+            }
+        });
     });
-});
+}
 
 // Social shares
-document.getElementById('waShareMobile').addEventListener('click', () => {
-    const url = encodeURIComponent(mobileShareLinkInput.value);
-    window.open(`https://wa.me/?text=${url}`, '_blank');
-});
+const waShareMobile = document.getElementById('waShareMobile');
+if (waShareMobile) {
+    waShareMobile.addEventListener('click', () => {
+        const url = encodeURIComponent((mobileShareLinkInput && mobileShareLinkInput.value) ? mobileShareLinkInput.value : getCurrentShareUrl());
+        window.open(`https://wa.me/?text=${url}`, '_blank');
+    });
+}
 
-document.getElementById('twShareMobile').addEventListener('click', () => {
-    const url = encodeURIComponent(mobileShareLinkInput.value);
-    window.open(`https://twitter.com/intent/tweet?url=${url}`, '_blank');
-});
+const twShareMobile = document.getElementById('twShareMobile');
+if (twShareMobile) {
+    twShareMobile.addEventListener('click', () => {
+        const url = encodeURIComponent((mobileShareLinkInput && mobileShareLinkInput.value) ? mobileShareLinkInput.value : getCurrentShareUrl());
+        window.open(`https://twitter.com/intent/tweet?url=${url}`, '_blank');
+    });
+}
 
-document.getElementById('fbShareMobile').addEventListener('click', () => {
-    const url = encodeURIComponent(mobileShareLinkInput.value);
-    window.open(`https://www.facebook.com/sharer/sharer.php?u=${url}`, '_blank');
-});
+const fbShareMobile = document.getElementById('fbShareMobile');
+if (fbShareMobile) {
+    fbShareMobile.addEventListener('click', () => {
+        const url = encodeURIComponent((mobileShareLinkInput && mobileShareLinkInput.value) ? mobileShareLinkInput.value : getCurrentShareUrl());
+        window.open(`https://www.facebook.com/sharer/sharer.php?u=${url}`, '_blank');
+    });
+}
 
-document.getElementById('lnShareMobile').addEventListener('click', () => {
-    const url = encodeURIComponent(mobileShareLinkInput.value);
-    window.open(`https://www.linkedin.com/sharing/share-offsite/?url=${url}`, '_blank');
-});
-
-
+const lnShareMobile = document.getElementById('lnShareMobile');
+if (lnShareMobile) {
+    lnShareMobile.addEventListener('click', () => {
+        const url = encodeURIComponent((mobileShareLinkInput && mobileShareLinkInput.value) ? mobileShareLinkInput.value : getCurrentShareUrl());
+        window.open(`https://www.linkedin.com/sharing/share-offsite/?url=${url}`, '_blank');
+    });
+}
 
 // Close on Escape
 document.addEventListener('keydown', (e) => {
@@ -438,8 +485,27 @@ window.addEventListener('load', function () {
 
     let isPlaying = false;
 
-    // Initially show "OFF" icon (music not playing)
-    updateIcons(false);
+    // Default icon state ON (music enabled by default)
+    updateIcons(true);
+
+    // Function to start audio default play
+    function startDefaultMusic() {
+        if (!bgmAudio) return;
+        bgmAudio.volume = 0.50;
+        const playPromise = bgmAudio.play();
+        if (playPromise !== undefined) {
+            playPromise.then(() => {
+                isPlaying = true;
+                updateIcons(true);
+            }).catch((err) => {
+                console.log('Autoplay deferred until user interaction:', err);
+                // Keep icon in ON state so music starts on first interaction
+                updateIcons(true);
+            });
+        }
+    }
+
+    startDefaultMusic();
 
     function updateIcons(playing) {
         // Desktop icons
@@ -513,19 +579,24 @@ window.addEventListener('load', function () {
         }
     });
 
-    // Auto-play music on the first interaction anywhere on the document
+    // Auto-play music on first interaction anywhere on the document
     let hasInteracted = false;
     function playOnInteraction() {
         if (!hasInteracted && !isPlaying && bgmAudio) {
             hasInteracted = true;
-            bgmAudio.play().catch((e) => console.log('Autoplay interaction failed:', e));
+            bgmAudio.play().then(() => {
+                isPlaying = true;
+                updateIcons(true);
+            }).catch((e) => console.log('Autoplay interaction failed:', e));
         }
         document.removeEventListener('click', playOnInteraction);
         document.removeEventListener('touchstart', playOnInteraction);
+        document.removeEventListener('keydown', playOnInteraction);
     }
-    
+
     document.addEventListener('click', playOnInteraction);
     document.addEventListener('touchstart', playOnInteraction);
+    document.addEventListener('keydown', playOnInteraction);
 
     window.toggleBgmMusic = toggleMusic;
 });
@@ -708,29 +779,45 @@ function runSearch() {
         return;
     }
 
+    let currentPage = 1;
+    if (typeof $ !== 'undefined' && $('#flipbook').length && $('#flipbook').turn) {
+        currentPage = $('#flipbook').turn('page') || 1;
+    } else {
+        const hashMatch = window.location.hash.match(/page\/(\d+)/);
+        if (hashMatch) {
+            currentPage = parseInt(hashMatch[1], 10);
+        }
+    }
+
     const filtered = pages.filter(page =>
         page.title.toLowerCase().includes(query) ||
         page.keywords.some(kw => kw.toLowerCase().includes(query))
     );
 
     if (filtered.length === 0) {
-        searchResults.innerHTML = '<p class="text-gray-500 text-center">No results found</p>';
+        searchResults.innerHTML = '<p class="text-gray-500 text-center p-3">No results found</p>';
         return;
     }
 
-    searchResults.innerHTML = filtered.map(page => `
-        <div class="search-result-item p-3 hover:bg-gray-700 cursor-pointer border-b rounded" data-page="${page.page}">
-            <div class="text-white font-semibold text-[.9vw]">${page.title}</div>
-            <div class="text-gray-400 text-[.7vw]">Page ${page.page}</div>
-        </div>
-    `).join('');
+    searchResults.innerHTML = filtered.map(page => {
+        const isCurrent = (page.page === currentPage);
+        return `
+            <div class="search-result-item p-3 hover:bg-gray-700 cursor-pointer border-b rounded ${isCurrent ? 'bg-orange-600/20 border-l-4 border-l-orange-500' : ''}" data-page="${page.page}">
+                <div class="text-white font-semibold text-[.9vw] flex items-center justify-between">
+                    <span>${page.title}</span>
+                    ${isCurrent ? '<span class="text-[.65vw] bg-orange-500 text-white px-2 py-0.5 rounded-full uppercase font-bold">Current Page</span>' : ''}
+                </div>
+                <div class="text-gray-400 text-[.7vw]">Page ${page.page}</div>
+            </div>
+        `;
+    }).join('');
 
     // Add click events to results
     document.querySelectorAll('.search-result-item').forEach(item => {
         item.addEventListener('click', (e) => {
             e.stopPropagation();
-            const pageNum = parseInt(item.dataset.page);
-            if ($('#flipbook').turn) {
+            const pageNum = parseInt(item.dataset.page, 10);
+            if (typeof $ !== 'undefined' && $('#flipbook').length && $('#flipbook').turn) {
                 $('#flipbook').turn('page', pageNum);
             }
             closeSearch();
@@ -1156,7 +1243,7 @@ document.addEventListener("DOMContentLoaded", () => {
         // Update blocked elements visual state
         updateBlockedElementsState();
 
-      
+
 
         // Add this inside your applyZoom function (at the end, before the console.log)
 
@@ -1349,7 +1436,7 @@ document.addEventListener("DOMContentLoaded", () => {
             item.addEventListener('touchstart', blockThumbnail, true);
         });
 
-        
+
     }
 
     // ==================== ZOOM BUTTON HANDLERS ====================
@@ -1421,7 +1508,7 @@ document.addEventListener("DOMContentLoaded", () => {
         createZoomAlertElements();
         attachBlockHandlers();
         applyZoom(100);
-     
+
     }
 
     // Wait for DOM and flipbook
@@ -1698,24 +1785,19 @@ document.addEventListener("DOMContentLoaded", function () {
     // Page 1 (Single)
     createThumbItem(1, 'page 1', '../global assets/Images/Thumbnail-Images/page-1.webp');
 
-    // Pages 2-3, 4-5, ..., 40-41 (Double pages)
-    for (let p = 2; p <= 40; p += 2) {
-        let imgSrc = '../global assets/Images/Thumbnail-Images/page-4-5.webp'; // Default placeholder image
-        if (p === 2) {
-            imgSrc = '../global assets/Images/Thumbnail-Images/page-2-3.webp';
-        } else if (p === 4) {
-            imgSrc = '../global assets/Images/Thumbnail-Images/page-4-5.webp';
-        }
-        createThumbItem(p, `page ${p}-${p+1}`, imgSrc);
+    // Pages 2-3, 4-5, ..., 38-39 (Double pages)
+    for (let p = 2; p <= 38; p += 2) {
+        const imgSrc = `../global assets/Images/Thumbnail-Images/page-${p}-${p + 1}.webp`;
+        createThumbItem(p, `page ${p}-${p + 1}`, imgSrc);
     }
 
-    // Page 42 (Single)
-    createThumbItem(42, 'page 42', '../global assets/Images/Thumbnail-Images/page-42.webp');
+    // Page 40 (Single page cover - same portrait size as Page 1)
+    createThumbItem(40, 'page 40', '../global assets/Images/Thumbnail-Images/page-40.webp');
 
     function createThumbItem(pageNumber, label, imageSrc) {
         const item = document.createElement('div');
         item.className = 'thumb-grid-item';
-        if (pageNumber === 1 || pageNumber === 42) {
+        if (pageNumber === 1 || pageNumber === 40) {
             item.classList.add('portrait-card');
         }
         item.setAttribute('data-page', pageNumber);
@@ -1725,7 +1807,7 @@ document.addEventListener("DOMContentLoaded", function () {
         img.src = imageSrc;
         img.alt = label;
         // Fallback placeholder if image fails to load
-        img.onerror = function() {
+        img.onerror = function () {
             this.src = 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="130" viewBox="0 0 100 130"><rect width="100%" height="100%" fill="%23f3f4f6"/><text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" font-family="Segoe UI, Arial" font-size="9" font-weight="600" fill="%23E67429">Page ' + pageNumber + '</text></svg>';
         };
 
@@ -1769,7 +1851,7 @@ document.addEventListener("DOMContentLoaded", function () {
     function openThumbDrawer() {
         // Close TOC if open
         if (typeof closeMenu === 'function') closeMenu();
-        
+
         thumbDrawer.classList.add('show');
         document.body.classList.add('toc-active'); // Reuses backdrop logic to push arrows back
         const overlay = document.getElementById('navOverlay');
@@ -1793,13 +1875,13 @@ document.addEventListener("DOMContentLoaded", function () {
     // Close when clicking overlay
     const overlay = document.getElementById('navOverlay');
     if (overlay) {
-        overlay.addEventListener('click', function() {
+        overlay.addEventListener('click', function () {
             closeThumbDrawer();
         });
     }
 
     // Close when clicking outside of the drawer
-    document.addEventListener('click', function(e) {
+    document.addEventListener('click', function (e) {
         const isDrawerVisible = thumbDrawer.classList.contains('show');
         const isClickInsideDrawer = thumbDrawer.contains(e.target);
         const isClickOnToggle = thumbToggleBtn.contains(e.target);
@@ -1819,7 +1901,7 @@ document.addEventListener("DOMContentLoaded", function () {
     function updateActiveThumbnailItem() {
         if (!window.jQuery || !$('#flipbook').turn) return;
         const currentPage = $('#flipbook').turn('page');
-        
+
         document.querySelectorAll('.thumb-grid-item').forEach(item => {
             const pageVal = parseInt(item.getAttribute('data-page'));
             // If current page matches target page or target page + 1 (for double spreads)
