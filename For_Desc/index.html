@@ -350,7 +350,11 @@
     <!-- ***************************************************** DC started *************************************************-->
 
     <div class="catalog-app ">
-        <canvas id="rippleCanvas"></canvas>
+        <div id="bgLayerContainer">
+            <div id="bgLayer1" class="bg-layer active"></div>
+            <div id="bgLayer2" class="bg-layer"></div>
+        </div>
+        <canvas id="rippleCanvas" style="display:none;"></canvas>
 
 
 
@@ -1286,7 +1290,7 @@
                         <img src="../global assets/Images/about-us/bottom-icons.svg" alt="bottom-icons"
                             class="absolute w-[80%] top-[65%] left-[10%] popup_images2 cursor-pointer about-icons-hover" />
                         <img src="../global assets/Images/about-us/bottom-image.webp" alt="bottom-icons"
-                            class="absolute w-[100%] h-[40%] bottom-[0%] left-[0%]" />
+                            class="absolute w-[100%] h-[25%] bottom-[0%] left-[0%]" />
 
 
                     </div>
@@ -1355,7 +1359,7 @@
                             class="absolute w-[85%] top-[72%] left-[10%] cursor-pointer transition-transform duration-200 toc-image-link z-[3]"
                             data-page="38" />
                         <img src="../global assets/Images/table-of-content/bottom-image.webp" alt="bottom-icons"
-                            class="absolute w-[100%] h-[40%] bottom-[0%] left-[0%]" />
+                            class="absolute w-[100%] h-[24%] bottom-[0%] left-[0%]" />
 
 
                     </div>
@@ -1371,7 +1375,7 @@
                         <img src="../global assets/Images/3D-experience-center/3D-experience-center-top-text.svg"
                             alt="3D-experience-center-top-text" class="absolute w-[65%] top-[1.3%] right-[0%]" />
                         <img src="../global assets/Images/3D-experience-center/content.svg" alt="model-no-text"
-                            class="absolute w-[50%] top-[6%] left-[0%]" />
+                            class="absolute w-[40%] top-[6%] left-[0%]" />
 
                         <!-- Parent container for 9 3D experience cards -->
                         <div class="exp-3d-container absolute w-full h-full top-0 left-0 pointer-events-auto">
@@ -1454,7 +1458,7 @@
                         <img src="../global assets/Images/products/ward-furniture/semi-fowler-cot/MF-35.svg"
                             class=" absolute w-[9.5%] top-[11%] left-[18%] cursor-pointer ">
                         <img src="../global assets/Images/products/ward-furniture/semi-fowler-cot/semi-fowler-cot-text.svg"
-                            alt="fowler-cot-text" class="absolute w-[45%] top-[15%] left-[5%] cot-text cot-fade" />
+                            alt="fowler-cot-text" class="absolute w-[40%] top-[15%] left-[5%] cot-text cot-fade" />
                         <img src="../global assets/Images/products/ward-furniture/semi-fowler-cot/semi-fowler-cot-image.webp"
                             alt="fowler-cot-image" class="absolute w-[55%] top-[18%] right-[3%] cot-image cot-fade" />
                         <img src="../global assets/Images/products/ward-furniture/semi-fowler-cot/position-1.svg"
@@ -1492,7 +1496,7 @@
 
 
                         <img src="../global assets/Images/products/ward-furniture/fowler-cot/fowler-cot-text.svg"
-                            alt="fowler-cot-text" class="absolute w-[45%] top-[15%] left-[5%] cot-text cot-fade" />
+                            alt="fowler-cot-text" class="absolute w-[40%] top-[15%] left-[5%] cot-text cot-fade" />
                         <img src="../global assets/Images/products/ward-furniture/fowler-cot/fowler-cot-image.webp"
                             alt="fowler-cot-image" class="absolute w-[55%] top-[18%] right-[3%] cot-image cot-fade" />
                         <img src="../global assets/Images/products/ward-furniture/fowler-cot/position-1.svg"
@@ -1545,7 +1549,7 @@
 
                         <img id="cot-text"
                             src="../global assets/Images/products/ward-furniture/plain-cot/plain-type/plain-type-text.svg"
-                            alt="attender-cot-text" class="absolute w-[45%] top-[15%] left-[5%] cot-fade" />
+                            alt="attender-cot-text" class="absolute w-[38%] top-[15%] left-[5%] cot-fade" />
                         <img id="cot-image"
                             src="../global assets/Images/products/ward-furniture/plain-cot/plain-type/plain-type-image.webp"
                             alt="attender-cot-image" class="absolute w-[55%] top-[18%] right-[3%] cot-fade" />
@@ -1594,7 +1598,7 @@
                             class="svg-container absolute w-[9.5%] top-[11%] left-[40%] cursor-pointer cot-btn"></div>
                         <img id="cot-text"
                             src="../global assets/Images/products/ward-furniture/attender-cot/plain/plain-text.svg"
-                            alt="attender-cot-text" class="absolute w-[45%] top-[15%] left-[5%] cot-fade" />
+                            alt="attender-cot-text" class="absolute w-[38%] top-[15%] left-[5%] cot-fade" />
                         <img id="cot-image"
                             src="../global assets/Images/products/ward-furniture/attender-cot/plain/plain-image.webp"
                             alt="attender-cot-image" class="absolute w-[55%] top-[18%] right-[3%] cot-fade" />
@@ -1637,7 +1641,7 @@
                             class="svg-container absolute w-[9.5%] top-[11%] left-[29%] cursor-pointer cot-btn"></div>
                         <img id="cot-text"
                             src="../global assets/Images/products/ward-furniture/bedside-locker/deluxe/deluxe-text.svg"
-                            alt="attender-cot-text" class="absolute w-[65%] top-[15%] left-[5%] cot-fade" />
+                            alt="attender-cot-text" class="absolute w-[53%] top-[15%] left-[5%] cot-fade" />
                         <img id="cot-image"
                             src="../global assets/Images/products/ward-furniture/bedside-locker/deluxe/deluxe-image.webp"
                             alt="attender-cot-image" class="absolute w-[67%] top-[15%] right-[-5%] cot-fade" />
@@ -1685,7 +1689,7 @@
                             class="svg-container absolute w-[9.5%] top-[11%] left-[40%] cursor-pointer cot-btn"></div>
                         <img id="cot-text"
                             src="../global assets/Images/products/ward-furniture/over-bed-table/manual/manual-text.svg"
-                            alt="manual-text" class="absolute w-[65%] top-[15%] left-[5%] cot-fade" />
+                            alt="manual-text" class="absolute w-[53%] top-[15%] left-[5%] cot-fade" />
                         <img id="cot-image"
                             src="../global assets/Images/products/ward-furniture/over-bed-table/manual/manual-image.webp"
                             alt="manual-image" class="absolute w-[55%] top-[18%] right-[0%] cot-fade" />
@@ -1849,7 +1853,7 @@
                         <img src="../global assets/Images/products/labour-and-maternity/baby-cradle/MF-36.svg"
                             alt="MF-39" class="absolute w-[9.5%] top-[11%] left-[18%]" />
                         <img src="../global assets/Images/products/labour-and-maternity/baby-cradle/baby-cradle-text.svg"
-                            alt="fowler-cot-text" class="absolute w-[65%] top-[15%] left-[5%]" />
+                            alt="fowler-cot-text" class="absolute w-[53%] top-[15%] left-[5%]" />
                         <img src="../global assets/Images/products/labour-and-maternity/baby-cradle/baby-cradle-image.webp"
                             alt="fowler-cot-image" class="absolute w-[60%] top-[18%] left-[20%]" />
 
@@ -1862,7 +1866,7 @@
                         <img src="../global assets/Images/products/labour-and-maternity/pediatric-cot/MF-90.svg"
                             alt="MF-39" class="absolute w-[9.5%] top-[53%] left-[18%]" />
                         <img src="../global assets/Images/products/labour-and-maternity/pediatric-cot/pediatric-cot-text.svg"
-                            alt="fowler-cot-text" class="absolute w-[65%] top-[56%] left-[5%]" />
+                            alt="fowler-cot-text" class="absolute w-[53%] top-[56%] left-[5%]" />
                         <img src="../global assets/Images/products/labour-and-maternity/pediatric-cot/pediatric-cot-image.webp"
                             alt="fowler-cot-image" class="absolute w-[60%] top-[58%] left-[20%]" />
 
@@ -1895,7 +1899,7 @@
                         <img src="../global assets/Images/products/emergency-and-patient-transfer/casuality-cot-cum-trolley/MF-38.svg"
                             alt="MF-38" class="absolute w-[9.5%] top-[10.5%] left-[18%]" />
                         <img src="../global assets/Images/products/emergency-and-patient-transfer/casuality-cot-cum-trolley/casuality-cot-cum-trolley-text.svg"
-                            alt="casuality-cot-cum-trolley-text" class="absolute w-[54%] top-[14.5%] left-[5%]" />
+                            alt="casuality-cot-cum-trolley-text" class="absolute w-[51%] top-[14.5%] left-[5%]" />
                         <img src="../global assets/Images/products/emergency-and-patient-transfer/casuality-cot-cum-trolley/casuality-cot-cum-trolley-image.webp"
                             alt="casuality-cot-cum-trolley-image" class="absolute w-[55%] top-[8%] right-[3%]" />
                         <img src="../global assets/Images/products/emergency-and-patient-transfer/casuality-cot-cum-trolley/position-1.svg"
@@ -1946,7 +1950,7 @@
                         <img id="cot-text"
                             src="../global assets/Images/products/emergency-and-patient-transfer/transfer-trolley-plain/transfer-trolley-plain/transfer-trolley-plain-text.svg"
                             alt="transfer-trolley-plain-text"
-                            class="absolute w-[54%] top-[14.5%] left-[5%] cot-text cot-fade" />
+                            class="absolute w-[51%] top-[14.5%] left-[5%] cot-text cot-fade" />
                         <img id="cot-image"
                             src="../global assets/Images/products/emergency-and-patient-transfer/transfer-trolley-plain/transfer-trolley-plain/transfer-trolley-plain-image.webp"
                             alt="transfer-trolley-plain-image"
@@ -1987,7 +1991,7 @@
                         <img src="../global assets/Images/products/emergency-and-patient-transfer/hi-lo-stretcher/MF-48.svg"
                             alt="MF-68" class="absolute w-[9.5%] top-[11%] left-[18%]" />
                         <img src="../global assets/Images/products/emergency-and-patient-transfer/hi-lo-stretcher/hi-lo-stretcher-text.svg"
-                            alt="hi-lo-stretcher-text" class="absolute w-[54%] top-[14.5%] left-[5%]" />
+                            alt="hi-lo-stretcher-text" class="absolute w-[51%] top-[14.5%] left-[5%]" />
                         <img src="../global assets/Images/products/emergency-and-patient-transfer/hi-lo-stretcher/hi-lo-stretcher-image.webp"
                             alt="hi-lo-stretcher-image" class="absolute w-[55%] top-[8%] right-[3%]" />
                         <img src="../global assets/Images/products/emergency-and-patient-transfer/hi-lo-stretcher/position-1.svg"
@@ -2024,7 +2028,7 @@
                         <img src="../global assets/Images/products/emergency-and-patient-transfer/stretcher-trolley/MF-44.svg"
                             alt="MF-44" class="absolute w-[9.5%] top-[11%] left-[18%]" />
                         <img src="../global assets/Images/products/emergency-and-patient-transfer/stretcher-trolley/stretcher-trolley-text.svg"
-                            alt="stretcher-trolley-text" class="absolute w-[54%] top-[14.5%] left-[5%]" />
+                            alt="stretcher-trolley-text" class="absolute w-[51%] top-[14.5%] left-[5%]" />
                         <img src="../global assets/Images/products/emergency-and-patient-transfer/stretcher-trolley/stretcher-trolley-image.webp"
                             alt="stretcher-trolley-image" class="absolute w-[55%] top-[20%] right-[3%]" />
                         <img src="../global assets/Images/products/emergency-and-patient-transfer/stretcher-trolley/position-1.svg"
@@ -2088,7 +2092,7 @@
                             alt="wheel-chair-ms-foldable-image" class="absolute w-[55%] top-[25%] left-[48%]" />
 
                         <img src="../global assets/Images/commonThings/center-line-2.svg" alt="center-line"
-                            class="absolute h-[40%] top-[12%] left-[50%]" />
+                            class="absolute h-[45%] top-[12%] left-[50%]" />
                         <img src="../global assets/Images/commonThings/center-line.svg" alt="center-line"
                             class="absolute w-[90%] top-[57%] left-[5%]" />
 
@@ -2128,7 +2132,7 @@
                         <img src="../global assets/Images/products/medical-trolleys/dressing-trolley/MF-57.svg"
                             alt="MF-10" class="absolute w-[9.5%] top-[11%] left-[18%]" />
                         <img src="../global assets/Images/products/medical-trolleys/dressing-trolley/dressing-trolley-text.svg"
-                            alt="fowler-cot-text" class="absolute w-[54%] top-[14.5%] left-[5%]" />
+                            alt="fowler-cot-text" class="absolute w-[50%] top-[14.5%] left-[5%]" />
                         <img src="../global assets/Images/products/medical-trolleys/dressing-trolley/dressing-trolley-image.webp"
                             alt="fowler-cot-image" class="absolute w-[55%] top-[15%] right-[-4%]" />
                         <img src="../global assets/Images/products/medical-trolleys/dressing-trolley/specifications.svg"
@@ -2140,7 +2144,7 @@
                         <img src="../global assets/Images/products/medical-trolleys/mayos-trolley/MF-46.svg" alt="MF-49"
                             class="absolute w-[9.5%] top-[53%] left-[18%]" />
                         <img src="../global assets/Images/products/medical-trolleys/mayos-trolley/mayos-trolley-text.svg"
-                            alt="fowler-cot-text" class="absolute w-[54%] top-[56%] left-[5%]" />
+                            alt="fowler-cot-text" class="absolute w-[50%] top-[56%] left-[5%]" />
                         <img src="../global assets/Images/products/medical-trolleys/mayos-trolley/mayos-trolley-image.webp"
                             alt="fowler-cot-image" class="absolute w-[55%] top-[62%] right-[-4%]" />
                         <img src="../global assets/Images/products/medical-trolleys/mayos-trolley/specifications.svg"
@@ -2171,16 +2175,16 @@
                             data-src="../global assets/Images/products/medical-trolleys/crash-cart/MF-84.svg"
                             data-text="../global assets/Images/products/medical-trolleys/crash-cart/crash-cart-ms/crash-cart-ms-text.svg"
                             data-image="../global assets/Images/products/medical-trolleys/crash-cart/crash-cart-ms/crash-cart-ms-image.webp"
-                            class="svg-container absolute w-[9.5%] top-[11%] left-[19%] cursor-pointer cot-btn active-cot-btn">
+                            class="svg-container absolute w-[9.5%] top-[11%] left-[19%] cursor-pointer cot-btn active-cot-btn z-5">
                         </div>
                         <div id="btn-mf86"
                             data-src="../global assets/Images/products/medical-trolleys/crash-cart/MF-86.svg"
                             data-text="../global assets/Images/products/medical-trolleys/crash-cart/crash-cart-mini/crash-cart-mini-text.svg"
                             data-image="../global assets/Images/products/medical-trolleys/crash-cart/crash-cart-mini/crash-cart-mini-image.webp"
-                            class="svg-container absolute w-[9.5%] top-[11%] left-[30%] cursor-pointer cot-btn"></div>
+                            class="svg-container absolute w-[9.5%] top-[11%] left-[30%] cursor-pointer cot-btn z-5"></div>
                         <img id="cot-text"
                             src="../global assets/Images/products/medical-trolleys/crash-cart/crash-cart-ms/crash-cart-ms-text.svg"
-                            alt="attender-cot-text" class="absolute w-[54%] top-[15%] left-[5%] cot-fade" />
+                            alt="attender-cot-text" class="absolute w-[52%] top-[15%] left-[5%] cot-fade" />
                         <img id="cot-image"
                             src="../global assets/Images/products/medical-trolleys/crash-cart/crash-cart-ms/crash-cart-ms-image.webp"
                             alt="attender-cot-image" class="absolute w-[80%] top-[8%] right-[-8%] cot-fade" />
@@ -2214,7 +2218,7 @@
                         <img src="../global assets/Images/products/medical-trolleys/drug-trolley/MF-47.svg"
                             class="absolute w-[9.5%] top-[11%] left-[19%]" />
                         <img src="../global assets/Images/products/medical-trolleys/drug-trolley/drug-trolley-text.svg"
-                            alt="attender-cot-text" class="absolute w-[54%] top-[15%] left-[5%] cot-fade" />
+                            alt="attender-cot-text" class="absolute w-[52%] top-[15%] left-[5%] cot-fade" />
                         <img src="../global assets/Images/products/medical-trolleys/drug-trolley/drug-trolley-image.webp"
                             alt="attender-cot-image" class="absolute w-[80%] top-[8%] right-[-8%] cot-fade" />
                         <img src="../global assets/Images/products/medical-trolleys/drug-trolley/specifications.svg"
@@ -2247,7 +2251,7 @@
                         <img src="../global assets/Images/products/medical-trolleys/laparoscopy/MF-111.svg"
                             class="absolute w-[9.5%] top-[11%] left-[19%]" />
                         <img src="../global assets/Images/products/medical-trolleys/laparoscopy/laparoscopy-text.svg"
-                            alt="attender-cot-text" class="absolute w-[54%] top-[15%] left-[5%] cot-fade" />
+                            alt="attender-cot-text" class="absolute w-[52%] top-[15%] left-[5%] cot-fade" />
                         <img src="../global assets/Images/products/medical-trolleys/laparoscopy/laparoscopy-image.webp"
                             alt="attender-cot-image" class="absolute w-[80%] top-[8%] right-[-8%] cot-fade" />
                         <img src="../global assets/Images/products/medical-trolleys/laparoscopy/specifications.svg"
@@ -2280,7 +2284,7 @@
                         <img src="../global assets/Images/products/medical-trolleys/endoscopy-trolley/MF-113.svg"
                             class="absolute w-[9.5%] top-[11%] left-[19%]" />
                         <img src="../global assets/Images/products/medical-trolleys/endoscopy-trolley/endoscopy-trolley-text.svg"
-                            alt="attender-cot-text" class="absolute w-[54%] top-[15%] left-[5%] cot-fade" />
+                            alt="attender-cot-text" class="absolute w-[52%] top-[15%] left-[5%] cot-fade" />
                         <img src="../global assets/Images/products/medical-trolleys/endoscopy-trolley/endoscopy-trolley-image.webp"
                             alt="attender-cot-image" class="absolute w-[80%] top-[8%] right-[-8%] cot-fade" />
                         <img src="../global assets/Images/products/medical-trolleys/endoscopy-trolley/specifications.svg"
@@ -2313,7 +2317,7 @@
                         <img src="../global assets/Images/products/medical-trolleys/ecg-trolley/MF-58.svg"
                             class="absolute w-[9.5%] top-[11%] left-[19%]" />
                         <img src="../global assets/Images/products/medical-trolleys/ecg-trolley/ecg-trolley-text.svg"
-                            alt="attender-cot-text" class="absolute w-[54%] top-[15%] left-[5%] cot-fade" />
+                            alt="attender-cot-text" class="absolute w-[52%] top-[15%] left-[5%] cot-fade" />
                         <img src="../global assets/Images/products/medical-trolleys/ecg-trolley/ecg-trolley-image.webp"
                             alt="attender-cot-image" class="absolute w-[80%] top-[8%] right-[-8%] cot-fade" />
                         <img src="../global assets/Images/products/medical-trolleys/ecg-trolley/specifications.svg"
@@ -2498,7 +2502,7 @@
                         <img src="../global assets/Images/products/examination-and-consultation/deluxe-examination-couch/MF-65.svg"
                             alt="MF-44" class="absolute w-[9.5%] top-[11%] left-[18%]" />
                         <img src="../global assets/Images/products/examination-and-consultation/deluxe-examination-couch/deluxe-examination-couch-text.svg"
-                            alt="stretcher-trolley-text" class="absolute w-[54%] top-[15%] left-[5%] " />
+                            alt="stretcher-trolley-text" class="absolute w-[51%] top-[15%] left-[5%] " />
                         <img src="../global assets/Images/products/examination-and-consultation/deluxe-examination-couch/deluxe-examination-couch-image.webp"
                             alt="stretcher-trolley-image" class="absolute w-[55%] top-[15%] right-[3%]" />
                         <img id="cot-pos1"
@@ -2533,7 +2537,7 @@
                         <img src="../global assets/Images/products/examination-and-consultation/examination-table/MF-81.svg"
                             alt="MF-44" class="absolute w-[9.5%] top-[11%] left-[18%]" />
                         <img src="../global assets/Images/products/examination-and-consultation/examination-table/examination-table-text.svg"
-                            alt="stretcher-trolley-text" class="absolute w-[54%] top-[15%] left-[5%] " />
+                            alt="stretcher-trolley-text" class="absolute w-[51%] top-[15%] left-[5%] " />
                         <img src="../global assets/Images/products/examination-and-consultation/examination-table/examination-table-image.webp"
                             alt="stretcher-trolley-image" class="absolute w-[55%] top-[15%] right-[3%]" />
                         <img id="cot-pos1"
@@ -2568,7 +2572,7 @@
                         <img src="../global assets/Images/products/examination-and-consultation/gynec-examination-couch/MF-93.svg"
                             alt="MF-44" class="absolute w-[9.5%] top-[9%] left-[18%]" />
                         <img src="../global assets/Images/products/examination-and-consultation/gynec-examination-couch/gynec-examination-couch-text.svg"
-                            alt="stretcher-trolley-text" class="absolute w-[54%] top-[12%] left-[5%] " />
+                            alt="stretcher-trolley-text" class="absolute w-[51%] top-[12%] left-[5%] " />
                         <img src="../global assets/Images/products/examination-and-consultation/gynec-examination-couch/gynec-examination-couch-image.webp"
                             alt="stretcher-trolley-image" class="absolute w-[55%] top-[13%] right-[3%]" />
                         <img id="cot-pos1"
@@ -2586,7 +2590,7 @@
                         <div class="page-number-indicator left-corner">31</div>
                     </div>
                     <!-- *******************************  Page 31 end ***************************** -->
-                    <!-- *******************************  Page 32Start *************************** -->
+                    <!-- *******************************  Page 32 Start *************************** -->
                     <div class="page">
                         <img src="../global assets/Images/commonThings/left-page-shadow.svg" alt="left-page-shadow"
                             class="gutter-shadow  shadow-left absolute h-[100%] top-[0%] right-[-1%] z-[4]" />
@@ -2603,7 +2607,7 @@
                         <img src="../global assets/Images/products/examination-and-consultation/scan-couch/MF-96.svg"
                             alt="MF-44" class="absolute w-[9.5%] top-[9%] left-[18%]" />
                         <img src="../global assets/Images/products/examination-and-consultation/scan-couch/scan-couch-text.svg"
-                            alt="stretcher-trolley-text" class="absolute w-[54%] top-[12%] left-[5%] " />
+                            alt="stretcher-trolley-text" class="absolute w-[51%] top-[12%] left-[5%] " />
                         <img src="../global assets/Images/products/examination-and-consultation/scan-couch/scan-couch-image.webp"
                             alt="stretcher-trolley-image" class="absolute w-[55%] top-[13%] right-[3%]" />
                         <img src="../global assets/Images/products/examination-and-consultation/scan-couch/position-1.svg"
@@ -2644,7 +2648,7 @@
                         </img>
 
                         <img src="../global assets/Images/products/examination-and-consultation/revolving-stool/cushion/cushion-text.svg"
-                            alt="wheel-chair-text" class="absolute w-[40%] top-[15%] left-[5%] " />
+                            alt="wheel-chair-text" class="absolute w-[38%] top-[15%] left-[5%] " />
                         <img src="../global assets/Images/products/examination-and-consultation/revolving-stool/cushion/cushion-image.webp"
                             alt="wheel-chair-image" class="absolute w-[55%] top-[24%] left-[-5%] " />
 
@@ -2653,7 +2657,7 @@
                         <img src="../global assets/Images/products/examination-and-consultation/revolving-stool/MF-14.svg"
                             alt="MF-49" class="absolute w-[9.5%] top-[11%] left-[68%]" />
                         <img src="../global assets/Images/products/examination-and-consultation/revolving-stool/ss-top/ss-top-text.svg"
-                            alt="wheel-chair-ms-foldable-text" class="absolute w-[40%] top-[15%] left-[55%]" />
+                            alt="wheel-chair-ms-foldable-text" class="absolute w-[38%] top-[15%] left-[55%]" />
                         <img src="../global assets/Images/products/examination-and-consultation/revolving-stool/ss-top/ss-top-image.webp"
                             alt="wheel-chair-ms-foldable-image" class="absolute w-[55%] top-[23%] left-[48%]" />
 
@@ -2669,7 +2673,7 @@
                         <img src="../global assets/Images/products/examination-and-consultation/revolving-stool/MF-15.svg"
                             class="absolute w-[9.5%] top-[52.5%] left-[18%] cursor-pointer "></img>
                         <img src="../global assets/Images/products/examination-and-consultation/revolving-stool/with-backres/with-backres-text.svg"
-                            alt="wheel-chair-text" class="absolute w-[40%] top-[55%] left-[5%] " />
+                            alt="wheel-chair-text" class="absolute w-[38%] top-[55%] left-[5%] " />
                         <img src="../global assets/Images/products/examination-and-consultation/revolving-stool/with-backres/with-backres-image.webp"
                             alt="wheel-chair-image" class="absolute w-[55%] top-[69%] left-[-3%] " />
 
@@ -2678,7 +2682,7 @@
                         <img src="../global assets/Images/products/examination-and-consultation/blood-collection-table/MF-101.svg"
                             alt="MF-49" class="absolute w-[9.5%] top-[52.5%] left-[68%]" />
                         <img src="../global assets/Images/products/examination-and-consultation/blood-collection-table/blood-collection-chair-text.svg"
-                            alt="wheel-chair-ms-foldable-text" class="absolute w-[40%] top-[55%] left-[55%]" />
+                            alt="wheel-chair-ms-foldable-text" class="absolute w-[38%] top-[55%] left-[55%]" />
                         <img src="../global assets/Images/products/examination-and-consultation/blood-collection-table/blood-collection-chair-image.webp"
                             alt="wheel-chair-ms-foldable-image" class="absolute w-[55%] top-[65%] left-[48%]" />
 
@@ -2727,7 +2731,7 @@
                             alt="wheel-chair-ms-foldable-image" class="absolute w-[55%] top-[21%] left-[48%]" />
 
                         <img src="../global assets/Images/commonThings/center-line-2.svg" alt="center-line"
-                            class="absolute h-[40%]  top-[12%] left-[50%]" />
+                            class="absolute h-[38.2%]  top-[12%] left-[50%]" />
 
                         <img src="../global assets/Images/commonThings/center-line.svg" alt="center-line"
                             class="absolute w-[90%] top-[50%] left-[5%]" />
@@ -2916,7 +2920,7 @@
                         </img>
 
                         <img src="../global assets/Images/products/general-furniture/3-seater-chair/3-seater-chair-text.svg"
-                            alt="wheel-chair-text" class="absolute w-[35%] top-[15%] left-[5%] " />
+                            alt="wheel-chair-text" class="absolute w-[38%] top-[15%] left-[5%] " />
                         <img src="../global assets/Images/products/general-furniture/3-seater-chair/3-seater-chair-image.webp"
                             alt="wheel-chair-image" class="absolute w-[55%] top-[16%] left-[-2%] " />
 
@@ -2925,7 +2929,7 @@
                         <img src="../global assets/Images/products/general-furniture/4-seater-chair/MF-105.svg"
                             alt="MF-49" class="absolute w-[9.5%] top-[11%] left-[68%]" />
                         <img src="../global assets/Images/products/general-furniture/4-seater-chair/4-seater-chair-text.svg"
-                            alt="wheel-chair-ms-foldable-text" class="absolute w-[35%] top-[15%] left-[55%]" />
+                            alt="wheel-chair-ms-foldable-text" class="absolute w-[38%] top-[15%] left-[55%]" />
                         <img src="../global assets/Images/products/general-furniture/4-seater-chair/4-seater-chair-image.webp"
                             alt="wheel-chair-ms-foldable-image" class="absolute w-[55%] top-[18%] left-[46%]" />
 
@@ -3191,18 +3195,7 @@
 
         </div>
 
-        <a ignore="1" class="ui-arrow-control ui-arrow-next-page next-arrow">
-            <svg class="w-[18px] h-[18px] z-1111" viewBox="0 0 42 42" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M15.75 7L29.75 21L15.75 35" stroke="#E67429" stroke-width="4" stroke-linecap="round"
-                    stroke-linejoin="round" />
-            </svg>
-        </a>
-        <a ignore="1" class="ui-arrow-control ui-arrow-previous-page prev-arrow">
-            <svg class="w-[18px] h-[18px] z-1111" viewBox="0 0 42 42" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M26.25 7L12.25 21L26.25 35" stroke="#E67429" stroke-width="4" stroke-linecap="round"
-                    stroke-linejoin="round" />
-            </svg>
-        </a>
+
 
         <audio id="flipaudio" src="../audios/flipsound-new.mp3"></audio>
 
@@ -3425,6 +3418,19 @@
         </style>
 
 
+        <!-- Desktop Screen Fixed Outer Navigation Arrows -->
+        <a ignore="1" class="ui-arrow-control ui-arrow-next-page next-arrow">
+            <svg class="w-[18px] h-[18px] z-1111" viewBox="0 0 42 42" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M15.75 7L29.75 21L15.75 35" stroke="#E67429" stroke-width="4" stroke-linecap="round"
+                    stroke-linejoin="round" />
+            </svg>
+        </a>
+        <a ignore="1" class="ui-arrow-control ui-arrow-previous-page prev-arrow">
+            <svg class="w-[18px] h-[18px] z-1111" viewBox="0 0 42 42" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M26.25 7L12.25 21L26.25 35" stroke="#E67429" stroke-width="4" stroke-linecap="round"
+                    stroke-linejoin="round" />
+            </svg>
+        </a>
     </div>
 
 
@@ -4385,6 +4391,12 @@
 
             // ===== Table of Contents Panel =====
             function openToc() {
+                if (typeof window.closeThumbDrawer === 'function') {
+                    window.closeThumbDrawer();
+                } else {
+                    const thumbDrawer = document.getElementById('thumbnailDrawer');
+                    if (thumbDrawer) thumbDrawer.classList.remove('show');
+                }
                 mobileTocPanel.classList.add('active');
                 mobileTocOverlay.classList.add('active');
                 document.body.style.overflow = 'hidden';

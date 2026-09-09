@@ -3,6 +3,14 @@ const tocNav = document.getElementById('tocNav');
 const navOverlay = document.getElementById('navOverlay');
 
 function openMenu() {
+    // Automatically close Thumbnail popup/drawer if open
+    if (typeof window.closeThumbDrawer === 'function') {
+        window.closeThumbDrawer();
+    } else {
+        const thumbDrawer = document.getElementById('thumbnailDrawer');
+        if (thumbDrawer) thumbDrawer.classList.remove('show');
+    }
+
     navToggle.classList.add('open');
     tocNav.classList.add('show');
     navOverlay.classList.add('show');
@@ -167,6 +175,12 @@ const navToggle1 = document.getElementById('navToggle1');
 const tocNav1 = document.getElementById('tocNav1');
 const navOverlay1 = document.getElementById('navOverlay1');
 function openMenu1() {
+    if (typeof window.closeThumbDrawer === 'function') {
+        window.closeThumbDrawer();
+    } else {
+        const thumbDrawer = document.getElementById('thumbnailDrawer');
+        if (thumbDrawer) thumbDrawer.classList.remove('show');
+    }
     navToggle1.classList.add('open');
     tocNav1.classList.add('show');
     navOverlay1.classList.add('show');
@@ -1871,6 +1885,7 @@ document.addEventListener("DOMContentLoaded", function () {
             if (overlay) overlay.classList.remove('show');
         }
     }
+    window.closeThumbDrawer = closeThumbDrawer;
 
     // Close when clicking overlay
     const overlay = document.getElementById('navOverlay');

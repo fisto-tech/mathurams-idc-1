@@ -2287,24 +2287,45 @@
    NEW premium layout styles matching the target design
    ========================================================================== */
 
-/* Background */
-#rippleCanvas {
+/* Background Container & Crossfade Layers */
+#bgLayerContainer {
   position: fixed;
   top: 0;
   left: 0;
-  width: 100% !important;
-  height: 100% !important;
-  z-index: -1;
-  background-image: url('../global assets/bottom-navbar/desktop-background-image.webp') !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  z-index: -2;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.bg-layer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
   background-size: cover !important;
   background-position: center !important;
   background-repeat: no-repeat !important;
+  opacity: 0;
+  transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  will-change: opacity;
+  background-image: url('../global assets/bottom-navbar/desktop-background-image.webp');
+}
+
+.bg-layer.active {
+  opacity: 1;
 }
 
 @media (max-width: 768px) {
-  #rippleCanvas {
-    background-image: url('../global assets/bottom-navbar/mobile-background-image.webp') !important;
+  .bg-layer {
+    background-image: url('../global assets/bottom-navbar/mobile-background-image.webp');
   }
+}
+
+#rippleCanvas {
+  display: none !important;
 }
 
 /* Brand Logo (Top Left) */
@@ -3233,28 +3254,68 @@
 }
 
 /* First & Last Page Arrow Hiding (Global - Mobile, Tablet & Desktop) */
-#viewer.first-page~.ui-arrow-previous-page,
-#viewer.first-page~.prev-arrow {
+#viewer.first-page .ui-arrow-previous-page,
+#viewer.first-page .prev-arrow,
+.first-page .ui-arrow-previous-page,
+.first-page .prev-arrow {
   display: none !important;
   pointer-events: none !important;
 }
 
-#viewer.last-page~.ui-arrow-next-page,
-#viewer.last-page~.next-arrow {
+#viewer.last-page .ui-arrow-next-page,
+#viewer.last-page .next-arrow,
+.last-page .ui-arrow-next-page,
+.last-page .next-arrow {
   display: none !important;
   pointer-events: none !important;
 }
 
-/* Desktop-only First & Last Page Positioning Overrides */
-@media screen and (min-width: 1025px) {
-  #viewer.first-page~.ui-arrow-next-page {
-    right: 20px !important;
-    left: auto !important;
+/* Desktop Screen Navigation Arrow Positioning (Normal & Fullscreen) */
+@media screen and (min-width: 769px) {
+  .ui-arrow-control,
+  .next-arrow,
+  .prev-arrow {
+    transition: left 0.35s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.3s ease !important;
   }
 
-  #viewer.last-page~.ui-arrow-previous-page {
+  #viewer.first-page .ui-arrow-previous-page,
+  #viewer.first-page .prev-arrow,
+  .first-page .ui-arrow-previous-page,
+  .first-page .prev-arrow {
+    display: flex !important;
+  }
+
+  #viewer.last-page .ui-arrow-next-page,
+  #viewer.last-page .next-arrow,
+  .last-page .ui-arrow-next-page,
+  .last-page .next-arrow {
+    display: flex !important;
+  }
+
+  .ui-arrow-next-page,
+  .next-arrow,
+  #viewer .ui-arrow-next-page,
+  #viewer .next-arrow {
+    position: fixed !important;
+    top: 50% !important;
+    transform: translateY(-50%) !important;
+    right: 20px !important;
+    left: auto !important;
+    bottom: auto !important;
+    z-index: 99999999 !important;
+  }
+
+  .ui-arrow-previous-page,
+  .prev-arrow,
+  #viewer .ui-arrow-previous-page,
+  #viewer .prev-arrow {
+    position: fixed !important;
+    top: 50% !important;
+    transform: translateY(-50%) !important;
     left: 20px !important;
     right: auto !important;
+    bottom: auto !important;
+    z-index: 99999999 !important;
   }
 }
 
@@ -3290,7 +3351,7 @@ html.is-fullscreen .next-arrow {
   top: 50% !important;
   bottom: auto !important;
   transform: translateY(-50%) !important;
-  z-index: 999999 !important;
+  z-index: 99999999 !important;
 }
 
 @media screen and (min-width: 769px) {
@@ -3303,18 +3364,14 @@ html.is-fullscreen .next-arrow {
   body.is-fullscreen .ui-arrow-previous-page,
   body.is-fullscreen .prev-arrow,
   body.is-fullscreen .ui-arrow-control.ui-arrow-previous-page,
-  body.is-fullscreen #viewer~.ui-arrow-previous-page,
-  body.is-fullscreen #viewer.first-page~.ui-arrow-previous-page,
-  body.is-fullscreen #viewer.last-page~.ui-arrow-previous-page,
+  body.is-fullscreen #viewer .ui-arrow-previous-page,
   html.is-fullscreen .ui-arrow-previous-page,
   html.is-fullscreen .prev-arrow,
   html.is-fullscreen .ui-arrow-control.ui-arrow-previous-page,
-  html.is-fullscreen #viewer~.ui-arrow-previous-page,
-  html.is-fullscreen #viewer.first-page~.ui-arrow-previous-page,
-  html.is-fullscreen #viewer.last-page~.ui-arrow-previous-page {
+  html.is-fullscreen #viewer .ui-arrow-previous-page {
     left: 20px !important;
     right: auto !important;
-  
+    position: fixed !important;
   }
 
   :fullscreen .ui-arrow-next-page,
@@ -3326,17 +3383,14 @@ html.is-fullscreen .next-arrow {
   body.is-fullscreen .ui-arrow-next-page,
   body.is-fullscreen .next-arrow,
   body.is-fullscreen .ui-arrow-control.ui-arrow-next-page,
-  body.is-fullscreen #viewer~.ui-arrow-next-page,
-  body.is-fullscreen #viewer.first-page~.ui-arrow-next-page,
-  body.is-fullscreen #viewer.last-page~.ui-arrow-next-page,
+  body.is-fullscreen #viewer .ui-arrow-next-page,
   html.is-fullscreen .ui-arrow-next-page,
   html.is-fullscreen .next-arrow,
   html.is-fullscreen .ui-arrow-control.ui-arrow-next-page,
-  html.is-fullscreen #viewer~.ui-arrow-next-page,
-  html.is-fullscreen #viewer.first-page~.ui-arrow-next-page,
-  html.is-fullscreen #viewer.last-page~.ui-arrow-next-page {
+  html.is-fullscreen #viewer .ui-arrow-next-page {
     right: 20px !important;
     left: auto !important;
+    position: fixed !important;
   }
 }
 
