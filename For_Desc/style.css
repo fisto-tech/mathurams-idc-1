@@ -3272,6 +3272,7 @@
 
 /* Desktop Screen Navigation Arrow Positioning (Normal & Fullscreen) */
 @media screen and (min-width: 769px) {
+
   .ui-arrow-control,
   .next-arrow,
   .prev-arrow {
@@ -3355,6 +3356,7 @@ html.is-fullscreen .next-arrow {
 }
 
 @media screen and (min-width: 769px) {
+
   :fullscreen .ui-arrow-previous-page,
   :fullscreen .prev-arrow,
   :-webkit-full-screen .ui-arrow-previous-page,
@@ -3434,10 +3436,12 @@ body.is-fullscreen .ui-arrow-next-page:hover {
     opacity: 0;
     transform: scale(0.2) translateY(20px);
   }
+
   70% {
     opacity: 1;
     transform: scale(1.06) translateY(-3px);
   }
+
   100% {
     opacity: 1;
     transform: scale(1) translateY(0);
@@ -3943,5 +3947,3 @@ img[alt*="MF-"]:not(.cot-btn *):not(.cot-btn) {
 .active-cot-btn {
   animation: activeCotBtnZoomLoop 1.8s ease-in-out infinite !important;
 }
-
-

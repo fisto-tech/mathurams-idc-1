@@ -40,6 +40,7 @@ const initialCameraAngles = {
   'couch': { orbit: '358deg 79.74deg 4.469m', target: 'unset', fov: '30deg' },
   'semi-fowler': { orbit: '29.11deg 67.49deg 9.675m', target: 'unset', fov: '30deg' },
   'over-bed-table': { orbit: '267deg 42.99deg 4.584m', target: 'unset', fov: '30deg' },
+  'attender-cot-door': { orbit: '-1.294deg 67.49deg 7.96m', target: 'unset', fov: '30deg' },
   'attender-cot-deluxe': { orbit: '-1.294deg 67.49deg 7.96m', target: 'unset', fov: '30deg' },
   'attender-cot': { orbit: '-1.294deg 67.49deg 7.992m', target: 'unset', fov: '30deg' },
   'bedside-locker-deluxe': { orbit: '163.1deg 69.86deg 4.366m', target: 'unset', fov: '30deg' },
@@ -64,11 +65,11 @@ function loadModel(fileOrUrl, fileName) {
   const lowerName = name.toLowerCase();
   if (lowerName.includes('icu')) {
     productName = 'ICU Cot';
-  } else if (lowerName.includes('deluxe-double-door') || lowerName.includes('deluxe_double_door')) {
+  } else if (lowerName.includes('deluxe-double-door') || lowerName.includes('deluxe_double_door') || lowerName.includes('door_attender')) {
     productName = 'Deluxe Double Door Attender Cot';
   } else if (lowerName.includes('attender_cot_deluxe') || lowerName.includes('attender-cot-deluxe')) {
     productName = 'Attender Cot Deluxe';
-  } else if (lowerName.includes('attender_cot_plain') || lowerName.includes('attender-cot-plain')) {
+  } else if (lowerName.includes('attender_cot_plain') || lowerName.includes('attender-cot-plain') || (lowerName.includes('attender') && !lowerName.includes('deluxe') && !lowerName.includes('door'))) {
     productName = 'Attender Cot Plain';
   } else if (lowerName.includes('sidelocker_deluxe') || lowerName.includes('sidelocker-deluxe')) {
     productName = 'Bed Sidelocker Deluxe Wood';
@@ -98,11 +99,12 @@ function loadModel(fileOrUrl, fileName) {
   if (sidebarEl) sidebarEl.classList.add('loading');
 
   // Classify model type (View-only vs Customisation)
+  const isAttenderModel = name.toLowerCase().includes('attender');
+  const isLockerModel = name.toLowerCase().includes('locker') || name.toLowerCase().includes('sidelocker');
   const isViewOnly = url.toLowerCase().includes('view-only-models') ||
                      name.toLowerCase().includes('over-bed-table') ||
                      name.toLowerCase().includes('semi-fowler-cot') ||
-                     name.toLowerCase().includes('attender-cot') ||
-                     name.toLowerCase().includes('bedside-locker');
+                     isAttenderModel || isLockerModel;
 
   const appEl = document.getElementById('app');
   if (appEl) {
@@ -112,6 +114,8 @@ function loadModel(fileOrUrl, fileName) {
       appEl.classList.remove('view-only');
     }
   }
+
+  renderBottomVariantSelector();
 
   isCurrentModelViewOnly = isViewOnly;
   meshMap = {};
@@ -133,8 +137,9 @@ function loadModel(fileOrUrl, fileName) {
   else if (lowerName2.includes('hi-lo') || lowerName2.includes('hi_lo') || lowerName2.includes('hilo')) modelKey = 'hi-lo';
   else if (lowerName2.includes('couch') || lowerName2.includes('examination')) modelKey = 'couch';
   else if (lowerName2.includes('over-bed-table') || lowerName2.includes('overbed')) modelKey = 'over-bed-table';
+  else if (lowerName2.includes('deluxe_double_door') || lowerName2.includes('deluxe-double-door') || (lowerName2.includes('attender') && lowerName2.includes('door'))) modelKey = 'attender-cot-door';
   else if (lowerName2.includes('attender-cot-deluxe') || lowerName2.includes('attender_cot_deluxe')) modelKey = 'attender-cot-deluxe';
-  else if (lowerName2.includes('attender') && !lowerName2.includes('deluxe')) modelKey = 'attender-cot';
+  else if (lowerName2.includes('attender')) modelKey = 'attender-cot';
   else if (lowerName2.includes('bedside-locker-deluxe') || lowerName2.includes('sidelocker_deluxe') || lowerName2.includes('sidelocker-deluxe')) modelKey = 'bedside-locker-deluxe';
   else if (lowerName2.includes('bedside-locker') || lowerName2.includes('locker_plain') || lowerName2.includes('locker-plain')) modelKey = 'bedside-locker';
   
@@ -149,10 +154,12 @@ function loadModel(fileOrUrl, fileName) {
     modelInitialFov = 'auto';
   }
 
-  // Assign model-viewer camera options
+  // Assign model-viewer camera options & shadow settings
   modelViewer.cameraOrbit = modelInitialOrbit;
   modelViewer.cameraTarget = modelInitialTarget;
   modelViewer.fieldOfView = modelInitialFov;
+  modelViewer.setAttribute('shadow-intensity', '0');
+  modelViewer.removeAttribute('shadow-softness');
 
   // Reset panning state on load
   const panModelToggle = document.getElementById('pan-model-toggle-cb');
@@ -175,18 +182,17 @@ function loadModel(fileOrUrl, fileName) {
     modelViewer.exposure = 1.0;
   }
 
-  // Handle auto-rotate delay on load
-  modelViewer.autoRotate = false;
+  // Handle auto-rotate on load
   clearTimeout(initialAutoRotateTimeout);
   clearTimeout(autoRotateTimeout);
   clearTimeout(resetCameraTimeout);
 
-  initialAutoRotateTimeout = setTimeout(() => {
-    const cb = document.getElementById('auto-rotate-toggle-cb');
-    if (cb && cb.checked) {
-      modelViewer.autoRotate = true;
-    }
-  }, 5000);
+  const cb = document.getElementById('auto-rotate-toggle-cb');
+  if (cb) {
+    modelViewer.autoRotate = cb.checked;
+  } else {
+    modelViewer.autoRotate = true;
+  }
 
   // Assign source to Google's model-viewer
   modelViewer.src = url;
@@ -217,10 +223,33 @@ modelViewer.addEventListener('load', () => {
       return;
     }
 
+    // Hide door_color node for Bedside Locker
+    if (childName.includes('door_color')) {
+      child.visible = false;
+      if (child.material) {
+        if (Array.isArray(child.material)) child.material.forEach(m => m.visible = false);
+        else child.material.visible = false;
+      }
+    }
+
+    // Hide manual_rod and manual_rod_bush nodes & materials for Overbed Table
+    if (childName.includes('manual_rod')) {
+      child.visible = false;
+      if (child.material) {
+        if (Array.isArray(child.material)) child.material.forEach(m => m.visible = false);
+        else child.material.visible = false;
+      }
+    }
+
     // Standardize material configurations
     if (child.material) {
       const materials = Array.isArray(child.material) ? child.material : [child.material];
       materials.forEach(mat => {
+        const matName = (mat.name || '').toLowerCase();
+        if (matName === 'manual_rod' || matName === 'manual_rod_bush' || matName.includes('manual_rod')) {
+          mat.visible = false;
+          child.visible = false;
+        }
         if (mat.isMeshStandardMaterial) {
           mat.envMapIntensity = 1.5;
           mat.needsUpdate = true;
@@ -300,20 +329,27 @@ modelViewer.addEventListener('load', () => {
   const isCouch = productName.includes('Examination Couch') || productName.includes('Couch');
   const isHiLo = productName.includes('Hi-Lo Stretcher') || productName.includes('Hi-Lo Strecher') || productName.includes('Hi-Lo');
   const isLabor = productName.includes('Labor Cot');
+  const isAttender = productName.includes('Attender Cot') || productName.includes('Attender') || (currentModelName && currentModelName.toLowerCase().includes('attender'));
 
   const sectionHeadFoot = document.getElementById('config-section-headfoot');
   const sectionSideRails = document.getElementById('config-section-siderails');
   const sectionMattress = document.getElementById('config-section-mattress');
   const sectionWheel = document.getElementById('config-section-wheel');
   const sectionOperation = document.getElementById('config-section-operation');
+  const sectionAttender = document.getElementById('config-section-attender');
+  const sectionLocker = document.getElementById('config-section-locker');
   const couchStorageSection = document.getElementById('couch-storage-color-section');
+  const sectionFooter = document.getElementById('config-section-footer');
 
   if (sectionHeadFoot) sectionHeadFoot.style.display = 'none';
   if (sectionSideRails) sectionSideRails.style.display = 'none';
   if (sectionMattress) sectionMattress.style.display = 'none';
   if (sectionWheel) sectionWheel.style.display = 'none';
   if (sectionOperation) sectionOperation.style.display = 'none';
+  if (sectionAttender) sectionAttender.style.display = 'none';
+  if (sectionLocker) sectionLocker.style.display = 'none';
   if (couchStorageSection) couchStorageSection.style.display = 'none';
+  if (sectionFooter) sectionFooter.style.display = 'none';
 
   const toggleCardVisibility = (section, allowedValues) => {
     document.querySelectorAll(`.config-card[data-section="${section}"]`).forEach(card => {
@@ -370,26 +406,193 @@ modelViewer.addEventListener('load', () => {
       if (mattressTitle) mattressTitle.style.display = 'none';
     }
     if (sectionWheel) sectionWheel.style.display = 'flex';
+    if (sectionOperation) sectionOperation.style.display = 'flex';
+    if (sectionFooter) sectionFooter.style.display = 'flex';
     toggleCardVisibility('siderails', ['ssplain', 'abs', 'aluminium']);
+  } else if (isAttender) {
+    if (sectionAttender) sectionAttender.style.display = 'flex';
+    if (sectionMattress) sectionMattress.style.display = 'none';
+    const lower = (currentModelName || '').toLowerCase();
+    let variantVal = 'plain';
+    if (lower.includes('deluxe_double_door') || lower.includes('deluxe-double-door') || lower.includes('door')) {
+      variantVal = 'door';
+    } else if (lower.includes('deluxe')) {
+      variantVal = 'deluxe';
+    }
+    document.querySelectorAll('.config-card[data-section="attender"]').forEach(card => {
+      if (card.dataset.value === variantVal) {
+        card.classList.add('active');
+      } else {
+        card.classList.remove('active');
+      }
+    });
+  } else if (productName.includes('Locker') || productName.includes('Sidelocker') || (currentModelName && (currentModelName.toLowerCase().includes('locker') || currentModelName.toLowerCase().includes('sidelocker')))) {
+    if (sectionLocker) sectionLocker.style.display = 'flex';
+    const lower = (currentModelName || '').toLowerCase();
+    let variantVal = 'plain';
+    if (lower.includes('deluxe') || lower.includes('sidelocker_deluxe') || lower.includes('sidelocker-deluxe')) {
+      variantVal = 'deluxe';
+    }
+    document.querySelectorAll('.config-card[data-section="locker"]').forEach(card => {
+      if (card.dataset.value === variantVal) {
+        card.classList.add('active');
+      } else {
+        card.classList.remove('active');
+      }
+    });
   }
 
   updateSectionHeadings();
   setDefaultConfigForModel(name);
   applyCurrentConfig();
+  renderBottomVariantSelector();
 
   const sidebarEl = document.getElementById('sidebar-config');
   if (sidebarEl) sidebarEl.classList.remove('loading');
 });
 
+// == Bottom Floating Variant Selector (for Attender Cot & Bedside Locker) ========
+function renderBottomVariantSelector() {
+  const bottomSelector = document.getElementById('bottom-variant-selector');
+  if (!bottomSelector) return;
+
+  const isAttender = productName.includes('Attender Cot') || productName.includes('Attender') || (currentModelName && currentModelName.toLowerCase().includes('attender'));
+  const isLocker = productName.includes('Locker') || productName.includes('Sidelocker') || (currentModelName && (currentModelName.toLowerCase().includes('locker') || currentModelName.toLowerCase().includes('sidelocker')));
+  const isOverBed = productName.includes('Over Bed') || productName.includes('Overbed') || (currentModelName && (currentModelName.toLowerCase().includes('over-bed') || currentModelName.toLowerCase().includes('overbed')));
+
+  if (!isAttender && !isLocker && !isOverBed) {
+    bottomSelector.style.display = 'none';
+    bottomSelector.innerHTML = '';
+    return;
+  }
+
+  const lower = (currentModelName || '').toLowerCase();
+  let buttonsHtml = '';
+
+  if (isAttender) {
+    let activeVal = 'plain';
+    if (lower.includes('deluxe_double_door') || lower.includes('deluxe-double-door') || lower.includes('door')) {
+      activeVal = 'door';
+    } else if (lower.includes('deluxe')) {
+      activeVal = 'deluxe';
+    }
+
+    buttonsHtml = `
+      <div class="bottom-variant-bar">
+        <button class="bottom-variant-btn ${activeVal === 'plain' ? 'active' : ''}" data-type="attender" data-value="plain">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/></svg>
+          Plain
+        </button>
+        <button class="bottom-variant-btn ${activeVal === 'deluxe' ? 'active' : ''}" data-type="attender" data-value="deluxe">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          Deluxe
+        </button>
+        <button class="bottom-variant-btn ${activeVal === 'door' ? 'active' : ''}" data-type="attender" data-value="door">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="3" width="18" height="18" rx="2"/></svg>
+          Door Type
+        </button>
+      </div>
+    `;
+  } else if (isLocker) {
+    let activeVal = 'plain';
+    if (lower.includes('deluxe') || lower.includes('sidelocker_deluxe') || lower.includes('sidelocker-deluxe')) {
+      activeVal = 'deluxe';
+    }
+
+    buttonsHtml = `
+      <div class="bottom-variant-bar">
+        <button class="bottom-variant-btn ${activeVal === 'plain' ? 'active' : ''}" data-type="locker" data-value="plain">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/></svg>
+          Plain
+        </button>
+        <button class="bottom-variant-btn ${activeVal === 'deluxe' ? 'active' : ''}" data-type="locker" data-value="deluxe">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          Deluxe Wood
+        </button>
+      </div>
+    `;
+  } else if (isOverBed) {
+    let activeVal = 'wood';
+    if (lower.includes('abs') || lower.includes('gear')) {
+      activeVal = 'abs';
+    }
+
+    buttonsHtml = `
+      <div class="bottom-variant-bar">
+        <button class="bottom-variant-btn ${activeVal === 'wood' ? 'active' : ''}" data-type="overbed" data-value="wood">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/></svg>
+          Wood Type
+        </button>
+        <button class="bottom-variant-btn ${activeVal === 'abs' ? 'active' : ''}" data-type="overbed" data-value="abs">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          ABS Type
+        </button>
+      </div>
+    `;
+  }
+
+  bottomSelector.innerHTML = buttonsHtml;
+  bottomSelector.style.display = 'flex';
+
+  bottomSelector.querySelectorAll('.bottom-variant-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const type = btn.dataset.type;
+      const val = btn.dataset.value;
+
+      if (type === 'attender') {
+        let targetPath = 'assets/models/view-only-models/attender-cot/attender_cot_plain.glb';
+        let nameToSet = 'Attender Cot Plain';
+        if (val === 'deluxe') {
+          targetPath = 'assets/models/view-only-models/attender-cot/Attender_cot_deluxe.glb';
+          nameToSet = 'Attender Cot Deluxe';
+        } else if (val === 'door') {
+          targetPath = 'assets/models/view-only-models/attender-cot/Deluxe_double_door_attender_cot.glb';
+          nameToSet = 'Deluxe Double Door Attender Cot';
+        }
+        productName = nameToSet;
+        const titleEl = document.getElementById('product-title');
+        if (titleEl) titleEl.textContent = nameToSet;
+        loadModel(targetPath);
+      } else if (type === 'locker') {
+        let targetPath = 'assets/models/view-only-models/bedside-locker/bedside-locker-plain.glb';
+        let nameToSet = 'Bedside Locker Plain';
+        if (val === 'deluxe') {
+          targetPath = 'assets/models/view-only-models/bedside-locker/bedside-locker-deluxe.glb';
+          nameToSet = 'Bed Sidelocker Deluxe Wood';
+        }
+        productName = nameToSet;
+        const titleEl = document.getElementById('product-title');
+        if (titleEl) titleEl.textContent = nameToSet;
+        loadModel(targetPath);
+      } else if (type === 'overbed') {
+        let targetPath = 'assets/models/view-only-models/over-bed-table/Overbed-table-wood.glb';
+        let nameToSet = 'Over Bed Table Wood Type';
+        if (val === 'abs' || val === 'gear') {
+          targetPath = 'assets/models/view-only-models/over-bed-table/Overbed-table-ABS.glb';
+          nameToSet = 'Over Bed Table ABS Type';
+        }
+        productName = nameToSet;
+        const titleEl = document.getElementById('product-title');
+        if (titleEl) titleEl.textContent = nameToSet;
+        loadModel(targetPath);
+      }
+    });
+  });
+}
+
 
 
 function updateSectionHeadings() {
   const sections = [
+    { id: 'config-section-attender', baseText: 'Attender Cot Type' },
+    { id: 'config-section-locker', baseText: 'Bedside Locker Type' },
     { id: 'config-section-operation', baseText: 'BED TYPE' },
     { id: 'config-section-headfoot', baseText: 'Head & Foot End Panel' },
     { id: 'config-section-siderails', baseText: 'Side Rails' },
     { id: 'config-section-mattress', baseText: 'Mattress Type' },
-    { id: 'config-section-wheel', baseText: 'Wheel Type' }
+    { id: 'config-section-wheel', baseText: 'Wheel Type' },
+    { id: 'config-section-footer', baseText: 'Footer Position' }
   ];
 
   let currentLetterCode = 65; // 'A'
@@ -656,6 +859,10 @@ function focusSection(section) {
       if (name.includes('drawer') || name.includes('cupboard') || name === 'cabinent_1' || name === 'mini_cabinent' || name === 'cabinent') {
         match = true;
       }
+    } else if (section === 'footer') {
+      if (name.includes('cot_foot_in') || name.includes('cot_foot_out') || name.includes('foot_in') || name.includes('foot_out')) {
+        match = true;
+      }
     }
     
     if (match) {
@@ -806,7 +1013,8 @@ function setDefaultConfigForModel(name) {
       siderails: 'ssplain',
       mattress: 'plain',
       wheel: 'wheel',
-      operation: 'manual'
+      operation: 'manual',
+      footer: 'in'
     };
   } else if (lower.includes('fowler')) {
     defaults = {
@@ -849,14 +1057,38 @@ function setDefaultConfigForModel(name) {
   
   const operationRadio = document.querySelector(`input[name="operation"][value="${defaults.operation}"]`);
   if (operationRadio) operationRadio.checked = true;
+
+  const footerRadio = document.querySelector(`input[name="footer"][value="${defaults.footer || 'in'}"]`);
+  if (footerRadio) footerRadio.checked = true;
 }
 
 // == Configuration Logic ======================================================
 function applyCurrentConfig() {
   if (isCurrentModelViewOnly) {
     Object.keys(meshMap).forEach(key => {
-      toggleMesh(key, true);
+      const lowerKey = key.toLowerCase();
+      if (lowerKey.includes('door_color')) {
+        toggleMesh(key, false);
+      } else {
+        toggleMesh(key, true);
+      }
     });
+
+    const symbols = Object.getOwnPropertySymbols(modelViewer);
+    const sceneSymbol = symbols.find((s) => s.description === 'scene');
+    const internalScene = modelViewer[sceneSymbol];
+    if (internalScene) {
+      internalScene.traverse(child => {
+        const nodeName = (child.name || '').toLowerCase();
+        if (nodeName.includes('door_color')) {
+          child.visible = false;
+          if (child.material) {
+            if (Array.isArray(child.material)) child.material.forEach(m => m.visible = false);
+            else child.material.visible = false;
+          }
+        }
+      });
+    }
     return;
   }
 
@@ -865,6 +1097,7 @@ function applyCurrentConfig() {
   const mattress = document.querySelector('input[name="mattress"]:checked')?.value || 'zip';
   const wheel = document.querySelector('input[name="wheel"]:checked')?.value || 'without';
   const operation = document.querySelector('input[name="operation"]:checked')?.value || 'manual';
+  const footer = document.querySelector('input[name="footer"]:checked')?.value || 'in';
   const activeColor = document.querySelector('.color-swatch:not(.mattress-color):not(.abs-panel-color):not(.abs-rail-color):not(.couch-cabinet-color):not(.couch-drawer-color).active')?.dataset.color;
   const activeMattressColor = document.querySelector('.color-swatch.mattress-color.active')?.dataset.color;
 
@@ -881,6 +1114,8 @@ function applyCurrentConfig() {
   }
 
   const isCouch = currentModelName.toLowerCase().includes('couch') || currentModelName.toLowerCase().includes('examination') || productName === 'Deluxe Examination Couch';
+  const isLaborCot = productName === 'Labor Cot';
+  const isHiLo = productName.includes('Hi-Lo Stretcher') || productName.includes('Hi-Lo Strecher') || productName.includes('Hi-Lo') || (currentModelName && currentModelName.toLowerCase().includes('hi-lo'));
   const couchStorageSection = document.getElementById('couch-storage-color-section');
   if (couchStorageSection) couchStorageSection.style.display = isCouch ? 'flex' : 'none';
 
@@ -942,7 +1177,9 @@ function applyCurrentConfig() {
     // Mattress matching
     const isMattressMesh = name.includes('mattress') || name.includes('mattres') || name.includes('zipper') || name.includes('zip') || name.includes('cube.020') || name.includes('plain') || name.includes('base-cot-zipper') || name.includes('base_cot_zipper') || name.includes('basecotzipper');
     if (isMattressMesh) {
-      if (mattress === 'zip') {
+      if (isHiLo) {
+        visible = true;
+      } else if (mattress === 'zip') {
         if (name.includes('plain')) visible = false;
         if (name.includes('zip') || name.includes('zipper') || name.includes('cube.020') || name.includes('base-cot-zipper') || name.includes('base_cot_zipper')) visible = true;
       } else if (mattress === 'plain') {
@@ -996,19 +1233,33 @@ function applyCurrentConfig() {
     }
 
     // Operation matching
-    if (name.includes('motor') || name.includes('remote') || name.includes('crank') || name.includes('manual') || name.includes('handle') || name.includes('cable') || name.includes('wire')) {
+    if (name.includes('motor') || name.includes('remote') || name.includes('crank') || name.includes('manual') || name.includes('handle') || name.includes('cable') || name.includes('wire') || name.includes('adjustment')) {
       if (operation === 'manual') {
         if (name.includes('motor') || name.includes('remote') || name.includes('cable') || name.includes('wire')) visible = false;
       } else if (operation === 'remote') {
-        if (name.includes('crank') || name.includes('manual') || name.includes('handle')) visible = false;
+        if (name.includes('crank') || name.includes('manual') || name.includes('handle') || name.includes('adjustment')) visible = false;
+      }
+    }
+
+    // Footer Position & Logo matching (for Labor Cot)
+    if (isLaborCot) {
+      if (name.includes('cot_foot_in') || name.includes('cot_foot_out') || name.includes('foot_in') || name.includes('foot_out') || name.includes('logo_in') || name === 'logo' || name.includes('logo_')) {
+        if (footer === 'in') {
+          if (name.includes('cot_foot_out') || name.includes('foot_out') || (name === 'logo' && !name.includes('logo_in'))) visible = false;
+          if (name.includes('cot_foot_in') || name.includes('foot_in') || name.includes('logo_in')) visible = true;
+        } else if (footer === 'out') {
+          if (name.includes('cot_foot_in') || name.includes('foot_in') || name.includes('logo_in')) visible = false;
+          if (name.includes('cot_foot_out') || name.includes('foot_out') || (name === 'logo' && !name.includes('logo_in'))) visible = true;
+        }
       }
     }
 
     toggleMesh(key, visible);
   });
 
+  const isAttenderModel = productName.includes('Attender Cot') || productName.includes('Attender') || (currentModelName && currentModelName.toLowerCase().includes('attender'));
   if (activeColor && userColorsChanged.frame) applyColorToMeshes(activeColor);
-  if (activeMattressColor) applyMattressColor(activeMattressColor);
+  if (activeMattressColor && !isAttenderModel) applyMattressColor(activeMattressColor);
   if (isAbsPanelSelected && userColorsChanged.absPanel) {
     const activeAbsPanelColor = document.querySelector('.color-swatch.abs-panel-color.active')?.dataset.color;
     if (activeAbsPanelColor) {
@@ -1100,7 +1351,13 @@ function applyCurrentConfig() {
         const isZipNode = combinedMatNode.includes('zip') || combinedMatNode.includes('zipper') || combinedMatNode.includes('cube.020') || combinedMatNode.includes('base-cot-zipper') || combinedMatNode.includes('base_cot_zipper') || combinedMatNode.includes('basecotzipper');
         const isPlainNode = combinedMatNode.includes('plain');
 
-        if (mattress === 'plain') {
+        if (isHiLo) {
+          child.visible = true;
+          if (child.material) {
+            if (Array.isArray(child.material)) child.material.forEach(m => m.visible = true);
+            else child.material.visible = true;
+          }
+        } else if (mattress === 'plain') {
           if (isZipNode) {
             child.visible = false;
             if (child.material) {
@@ -1162,6 +1419,20 @@ function applyCurrentConfig() {
           }
         }
       }
+
+      // Parent group & node traversal for Footer Position & Logo (Labor Cot)
+      if (isLaborCot) {
+        const isFooterOrLogoNode = nodeName.includes('cot_foot_in') || nodeName.includes('cot_foot_out') || nodeName.includes('foot_in') || nodeName.includes('foot_out') || nodeName.includes('logo_in') || nodeName === 'logo' || nodeName.includes('logo_');
+        if (isFooterOrLogoNode) {
+          if (footer === 'in') {
+            if (nodeName.includes('cot_foot_out') || nodeName.includes('foot_out') || (nodeName === 'logo' && !nodeName.includes('logo_in'))) child.visible = false;
+            if (nodeName.includes('cot_foot_in') || nodeName.includes('foot_in') || nodeName.includes('logo_in')) child.visible = true;
+          } else if (footer === 'out') {
+            if (nodeName.includes('cot_foot_in') || nodeName.includes('foot_in') || nodeName.includes('logo_in')) child.visible = false;
+            if (nodeName.includes('cot_foot_out') || nodeName.includes('foot_out') || (nodeName === 'logo' && !nodeName.includes('logo_in'))) child.visible = true;
+          }
+        }
+      }
     });
   }
 
@@ -1196,7 +1467,7 @@ function applyMattressColor(hexColorStr) {
   Object.keys(meshMap).forEach(key => {
     const entry = meshMap[key];
     const name = entry.name.toLowerCase();
-    const isMattress = name.includes('mattress') || name.includes('mattres') || name.includes('zipper') || name.includes('zip') || name.includes('cube.020') || name.includes('plain') || name.includes('base-cot-zipper') || name.includes('base_cot_zipper') || name.includes('basecotzipper');
+    const isMattress = name.includes('mattress') || name.includes('mattres') || name.includes('zipper') || name.includes('zip') || name.includes('cube.020') || name.includes('plain') || name.includes('base-cot-zipper') || name.includes('base_cot_zipper') || name.includes('basecotzipper') || name.includes('grill_color') || name.includes('grill');
     if (entry.visible && isMattress) {
       entry.meshes.forEach(mesh => setColorOnMesh(mesh, hex, null, true));
     }
@@ -1210,7 +1481,7 @@ function applyMattressColor(hexColorStr) {
       const nodeName = (child.name || '').toLowerCase();
       const matName = (child.material ? (Array.isArray(child.material) ? child.material.map(m => m.name || '').join(' ') : (child.material.name || '')) : '').toLowerCase();
       const combined = (nodeName + ' ' + matName).toLowerCase();
-      const isMattress = combined.includes('mattress') || combined.includes('mattres') || combined.includes('zipper') || combined.includes('zip') || combined.includes('cube.020') || combined.includes('plain') || combined.includes('base-cot-zipper') || combined.includes('base_cot_zipper') || combined.includes('basecotzipper');
+      const isMattress = combined.includes('mattress') || combined.includes('mattres') || combined.includes('zipper') || combined.includes('zip') || combined.includes('cube.020') || combined.includes('plain') || combined.includes('base-cot-zipper') || combined.includes('base_cot_zipper') || combined.includes('basecotzipper') || combined.includes('grill_color') || combined.includes('grill');
       if (child.visible && isMattress && child.isMesh) {
         setColorOnMesh(child, hex, null, true);
       }
@@ -1221,6 +1492,7 @@ function applyMattressColor(hexColorStr) {
 // ABS Panel color
 function applyAbsPanelColor(hexColorStr) {
   const hex = parseInt(hexColorStr.replace('#', ''), 16);
+  const isLabor = productName === 'Labor Cot';
 
   Object.keys(meshMap).forEach(key => {
     const entry = meshMap[key];
@@ -1234,6 +1506,12 @@ function applyAbsPanelColor(hexColorStr) {
         const materials = Array.isArray(mesh.material) ? mesh.material : [mesh.material];
         materials.forEach(mat => {
           const matName = (mat.name || '').toLowerCase();
+
+          if (isLabor) {
+            // For Labor Cot, only target the accent insert material: abs1_clrhead&foot
+            if (!matName.includes('clrhead') && matName !== 'abs1_clrhead&foot') return;
+          }
+
           if (matName.includes('clr') || matName.includes('color') || matName.includes('blue') || matName.includes('red') || matName.includes('sticker') || matName.includes('head') || matName.includes('foot') || matName.includes('panel') || matName.includes('board') || matName.includes('abs')) {
             const cloned = mat.clone();
             if (cloned.color) {
@@ -1254,6 +1532,43 @@ function applyAbsPanelColor(hexColorStr) {
       });
     }
   });
+
+  // Direct scene graph traversal for nested material instances
+  const symbols = Object.getOwnPropertySymbols(modelViewer);
+  const sceneSymbol = symbols.find((s) => s.description === 'scene');
+  const internalScene = modelViewer[sceneSymbol];
+  if (internalScene) {
+    internalScene.traverse(child => {
+      if (!child.isMesh || !child.material) return;
+      const nodeName = (child.name || '').toLowerCase();
+      const isAbsPanelNode = nodeName.includes('abs') && (nodeName.includes('head') || nodeName.includes('foot') || nodeName.includes('board') || nodeName.includes('panel') || nodeName.includes('end'));
+      if (isAbsPanelNode) {
+        const materials = Array.isArray(child.material) ? child.material : [child.material];
+        materials.forEach(mat => {
+          const matName = (mat.name || '').toLowerCase();
+          if (isLabor) {
+            if (!matName.includes('clrhead') && matName !== 'abs1_clrhead&foot') return;
+          }
+          if (matName.includes('clr') || matName.includes('color') || matName.includes('blue') || matName.includes('red') || matName.includes('sticker') || matName.includes('head') || matName.includes('foot') || matName.includes('panel') || matName.includes('board') || matName.includes('abs')) {
+            const cloned = mat.clone();
+            if (cloned.color) {
+              cloned.color.setHex(hex);
+            }
+            if (cloned.emissive) {
+              cloned.emissive.setHex(0x000000);
+            }
+            cloned.needsUpdate = true;
+            if (Array.isArray(child.material)) {
+              const idx = child.material.indexOf(mat);
+              if (idx !== -1) child.material[idx] = cloned;
+            } else {
+              child.material = cloned;
+            }
+          }
+        });
+      }
+    });
+  }
 }
 
 // ABS Rail color
@@ -1272,7 +1587,8 @@ function applyAbsRailColor(hexColorStr) {
         const materials = Array.isArray(mesh.material) ? mesh.material : [mesh.material];
         materials.forEach(mat => {
           const matName = (mat.name || '').toLowerCase();
-          if (matName.includes('clr') || matName.includes('color') || matName.includes('blue') || matName.includes('red') || matName.includes('sticker') || matName.includes('siderail') || matName.includes('clrsider') || matName.includes('abs')) {
+          // Strictly target color insert material (e.g. abs_clrsiderail.001), ignoring main body (abs_siderail) & button
+          if (matName.includes('clrsiderail') || matName.includes('clrsider') || matName.includes('clrside') || (matName.includes('clr') && !matName.includes('bush'))) {
             const cloned = mat.clone();
             if (cloned.color) {
               cloned.color.setHex(hex);
@@ -1292,6 +1608,38 @@ function applyAbsRailColor(hexColorStr) {
       });
     }
   });
+
+  const symbols = Object.getOwnPropertySymbols(modelViewer);
+  const sceneSymbol = symbols.find((s) => s.description === 'scene');
+  const internalScene = modelViewer[sceneSymbol];
+  if (internalScene) {
+    internalScene.traverse(child => {
+      if (!child.isMesh || !child.material) return;
+      const nodeName = (child.name || '').toLowerCase();
+      if (nodeName.includes('abs')) {
+        const materials = Array.isArray(child.material) ? child.material : [child.material];
+        materials.forEach(mat => {
+          const matName = (mat.name || '').toLowerCase();
+          if (matName.includes('clrsiderail') || matName.includes('clrsider') || matName.includes('clrside') || (matName.includes('clr') && !matName.includes('bush'))) {
+            const cloned = mat.clone();
+            if (cloned.color) {
+              cloned.color.setHex(hex);
+            }
+            if (cloned.emissive) {
+              cloned.emissive.setHex(0x000000);
+            }
+            cloned.needsUpdate = true;
+            if (Array.isArray(child.material)) {
+              const idx = child.material.indexOf(mat);
+              if (idx !== -1) child.material[idx] = cloned;
+            } else {
+              child.material = cloned;
+            }
+          }
+        });
+      }
+    });
+  }
 }
 
 function applyCouchStorageColor(hexColorStr) {
@@ -1424,8 +1772,37 @@ document.querySelectorAll('.config-card').forEach(card => {
     const section = card.dataset.section;
     document.querySelectorAll(`.config-card[data-section="${section}"]`).forEach(c => c.classList.remove('active'));
     card.classList.add('active');
-    applyCurrentConfig();
-    focusSection(section);
+    if (section === 'attender') {
+      const val = card.dataset.value;
+      let targetPath = 'assets/models/view-only-models/attender-cot/attender_cot_plain.glb';
+      let nameToSet = 'Attender Cot Plain';
+      if (val === 'deluxe') {
+        targetPath = 'assets/models/view-only-models/attender-cot/Attender_cot_deluxe.glb';
+        nameToSet = 'Attender Cot Deluxe';
+      } else if (val === 'door') {
+        targetPath = 'assets/models/view-only-models/attender-cot/Deluxe_double_door_attender_cot.glb';
+        nameToSet = 'Deluxe Double Door Attender Cot';
+      }
+      productName = nameToSet;
+      const titleEl = document.getElementById('product-title');
+      if (titleEl) titleEl.textContent = nameToSet;
+      loadModel(targetPath);
+    } else if (section === 'locker') {
+      const val = card.dataset.value;
+      let targetPath = 'assets/models/view-only-models/bedside-locker/bedside-locker-plain.glb';
+      let nameToSet = 'Bedside Locker Plain';
+      if (val === 'deluxe') {
+        targetPath = 'assets/models/view-only-models/bedside-locker/bedside-locker-deluxe.glb';
+        nameToSet = 'Bed Sidelocker Deluxe Wood';
+      }
+      productName = nameToSet;
+      const titleEl = document.getElementById('product-title');
+      if (titleEl) titleEl.textContent = nameToSet;
+      loadModel(targetPath);
+    } else {
+      applyCurrentConfig();
+      focusSection(section);
+    }
   });
 });
 
@@ -1619,7 +1996,7 @@ document.getElementById('wireframe-btn').addEventListener('click', () => {
 
 document.getElementById('grid-btn').addEventListener('click', () => {
   const intensity = modelViewer.getAttribute('shadow-intensity');
-  const newIntensity = intensity === '0' ? '1' : '0';
+  const newIntensity = (intensity === '0' || intensity === null) ? '0.5' : '0';
   modelViewer.setAttribute('shadow-intensity', newIntensity);
   document.getElementById('grid-btn').classList.toggle('active', newIntensity !== '0');
   showToast(newIntensity === '0' ? 'Shadows hidden' : 'Shadows visible');
@@ -2038,20 +2415,26 @@ function initNavigation() {
     } else if (modelQuery.includes('labor-cot') || modelQuery.includes('deluxe-double-door') || modelQuery.includes('deluxe_double_door')) {
       modelPath = 'assets/models/customisation-models/labor-cot/3d_model.glb';
       nameToSet = 'Labor Cot';
+    } else if (modelQuery.includes('over-bed-table-abs') || modelQuery.includes('overbed-abs') || modelQuery.includes('overbed_abs') || modelQuery.includes('over-bed-table-gear') || modelQuery.includes('overbed-gear') || modelQuery.includes('overbed_gear')) {
+      modelPath = 'assets/models/view-only-models/over-bed-table/Overbed-table-ABS.glb';
+      nameToSet = 'Over Bed Table ABS Type';
     } else if (modelQuery.includes('over-bed-table') || modelQuery.includes('overbed')) {
-      modelPath = 'assets/models/view-only-models/over-bed-table.glb';
-      nameToSet = 'Over Bed Table';
+      modelPath = 'assets/models/view-only-models/over-bed-table/Overbed-table-wood.glb';
+      nameToSet = 'Over Bed Table Wood Type';
+    } else if (modelQuery.includes('attender-cot-door') || modelQuery.includes('attender_cot_door') || modelQuery.includes('deluxe-double-door') || modelQuery.includes('deluxe_double_door')) {
+      modelPath = 'assets/models/view-only-models/attender-cot/Deluxe_double_door_attender_cot.glb';
+      nameToSet = 'Deluxe Double Door Attender Cot';
     } else if (modelQuery.includes('attender-cot-deluxe') || modelQuery.includes('attender_cot_deluxe')) {
-      modelPath = 'assets/models/view-only-models/attender-cot/attender-cot-deluxe.glb';
+      modelPath = 'assets/models/view-only-models/attender-cot/Attender_cot_deluxe.glb';
       nameToSet = 'Attender Cot Deluxe';
-    } else if (modelQuery.includes('attender-cot') || modelQuery.includes('attender_cot')) {
-      modelPath = 'assets/models/view-only-models/attender-cot/attender-cot.glb';
+    } else if (modelQuery.includes('attender-cot') || modelQuery.includes('attender_cot') || modelQuery.includes('attender')) {
+      modelPath = 'assets/models/view-only-models/attender-cot/attender_cot_plain.glb';
       nameToSet = 'Attender Cot Plain';
     } else if (modelQuery.includes('bedside-locker-deluxe') || modelQuery.includes('sidelocker_deluxe') || modelQuery.includes('sidelocker-deluxe')) {
       modelPath = 'assets/models/view-only-models/bedside-locker/bedside-locker-deluxe.glb';
       nameToSet = 'Bed Sidelocker Deluxe Wood';
-    } else if (modelQuery.includes('bedside-locker') || modelQuery.includes('locker_plain') || modelQuery.includes('locker-plain')) {
-      modelPath = 'assets/models/view-only-models/bedside-locker/bedside-locker.glb';
+    } else if (modelQuery.includes('bedside-locker') || modelQuery.includes('locker_plain') || modelQuery.includes('locker-plain') || modelQuery.includes('locker')) {
+      modelPath = 'assets/models/view-only-models/bedside-locker/bedside-locker-plain.glb';
       nameToSet = 'Bedside Locker Plain';
     }
 

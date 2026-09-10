@@ -1,13 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <script>
-    window.onerror = function(msg, url, line, col, error) {
+    window.onerror = function (msg, url, line, col, error) {
       alert("Error: " + msg + "\nURL: " + url + "\nLine: " + line + "\nCol: " + col + "\nStack: " + (error ? error.stack : 'N/A'));
       return false;
     };
-    (function() {
+    (function () {
       const path = window.location.pathname;
       let baseHref = '/';
       const idx = path.toLowerCase().indexOf('/index.html');
@@ -22,7 +23,8 @@
     })();
   </script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Interactive 3D product configurator for Sri Mathurams Medical Engineering beds, cots, and hospital furniture." />
+  <meta name="description"
+    content="Interactive 3D product configurator for Sri Mathurams Medical Engineering beds, cots, and hospital furniture." />
   <link rel="icon" href="assets/images/logo-icon.svg" />
   <title>Mathurams IDC 3D Customisation</title>
   <link rel="stylesheet" href="style.css?v=5" />
@@ -32,614 +34,921 @@
   </script>
   <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/4.3.1/model-viewer.min.js"></script>
 </head>
+
 <body>
 
-<div id="app">
+  <div id="app">
 
-  <!-- Top Bar -->
-  <header id="topbar">
-    <div class="header-left">
-      <button class="back-btn" id="back-btn" title="Back to product">&larr;<span class="back-btn-text">Back To Product</span></button>
-      <div class="topbar-file-info" id="file-label">No file loaded &mdash; <span>Drop 3D file to begin</span></div>
-    </div>
-    
-    <div class="product-title-center" id="product-title"></div>
-    
-    <div class="header-right">
-      <button id="upload-btn">
-        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
-          <polyline points="17 8 12 3 7 8"/>
-          <line x1="12" y1="3" x2="12" y2="15"/>
-        </svg>
-        Load Model
-      </button>
-      <div class="export-container">
-        <button id="export-btn" title="Export current scene model">
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
-            <polyline points="7 10 12 15 17 10"/>
-            <line x1="12" y1="15" x2="12" y2="3"/>
+    <!-- Top Bar -->
+    <header id="topbar">
+      <div class="header-left">
+        <button class="back-btn" id="back-btn" title="Back to product">&larr;<span class="back-btn-text">Back To
+            Product</span></button>
+        <div class="topbar-file-info" id="file-label">No file loaded &mdash; <span>Drop 3D file to begin</span></div>
+      </div>
+
+      <div class="product-title-center" id="product-title"></div>
+
+      <div class="header-right">
+        <button id="upload-btn">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+            <polyline points="17 8 12 3 7 8" />
+            <line x1="12" y1="3" x2="12" y2="15" />
           </svg>
-          Export
+          Load Model
         </button>
-        <div class="export-dropdown" id="export-dropdown">
-          <button class="export-option" id="export-glb">Export GLB</button>
-          <button class="export-option" id="export-gltf">Export GLTF</button>
+        <div class="export-container">
+          <button id="export-btn" title="Export current scene model">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+              <polyline points="7 10 12 15 17 10" />
+              <line x1="12" y1="15" x2="12" y2="3" />
+            </svg>
+            Export
+          </button>
+          <div class="export-dropdown" id="export-dropdown">
+            <button class="export-option" id="export-glb">Export GLB</button>
+            <button class="export-option" id="export-gltf">Export GLTF</button>
+          </div>
+        </div>
+        <div class="company-logo">
+          <img src="assets/images/logo.svg" alt="Sri Mathurams Medical Engineering Logo" />
         </div>
       </div>
-      <div class="company-logo">
-        <img src="assets/images/logo.svg" alt="Sri Mathurams Medical Engineering Logo" />
-      </div>
-    </div>
-    <input type="file" id="file-input" accept=".fbx,.glb,.gltf,.obj" />
-  </header>
+      <input type="file" id="file-input" accept=".fbx,.glb,.gltf,.obj" />
+    </header>
 
-  <!-- Left Configuration Panel -->
-  <aside id="sidebar-config">
-    <!-- Skeleton Loader -->
-    <div id="sidebar-skeleton">
-      <div class="skeleton-section">
-        <div class="skeleton-title shimmer"></div>
-        <div class="skeleton-radio shimmer"></div>
-        <div class="skeleton-radio shimmer"></div>
-      </div>
-      <div class="skeleton-section">
-        <div class="skeleton-title shimmer"></div>
-        <div class="skeleton-grid">
-          <div class="skeleton-card shimmer"></div>
-          <div class="skeleton-card shimmer"></div>
-          <div class="skeleton-card shimmer"></div>
+    <!-- Left Configuration Panel -->
+    <aside id="sidebar-config">
+      <!-- Skeleton Loader -->
+      <div id="sidebar-skeleton">
+        <div class="skeleton-section">
+          <div class="skeleton-title shimmer"></div>
+          <div class="skeleton-radio shimmer"></div>
+          <div class="skeleton-radio shimmer"></div>
         </div>
-      </div>
-      <div class="skeleton-section">
-        <div class="skeleton-title shimmer"></div>
-        <div class="skeleton-grid">
-          <div class="skeleton-card shimmer"></div>
-          <div class="skeleton-card shimmer"></div>
-          <div class="skeleton-card shimmer"></div>
+        <div class="skeleton-section">
+          <div class="skeleton-title shimmer"></div>
+          <div class="skeleton-grid">
+            <div class="skeleton-card shimmer"></div>
+            <div class="skeleton-card shimmer"></div>
+            <div class="skeleton-card shimmer"></div>
+          </div>
         </div>
-      </div>
-    </div>
-
-    <!-- A. BED TYPE -->
-    <div class="config-section" id="config-section-operation">
-      <div class="config-section-title">A. BED TYPE</div>
-      <div class="radio-group">
-        <label class="radio-option">
-          <input type="radio" name="operation" value="manual" checked />
-          <span class="radio-custom"></span>
-          Manual
-        </label>
-        <label class="radio-option">
-          <input type="radio" name="operation" value="remote" />
-          <span class="radio-custom"></span>
-          Remote
-        </label>
-      </div>
-    </div>
-
-    <!-- B. Head & Foot Panel -->
-    <div class="config-section" id="config-section-headfoot">
-      <div class="config-section-title">B. Head &amp; Foot End Panel</div>
-      <div class="card-grid col-3">
-        <div class="config-card active" data-section="headfoot" data-value="ms">
-          <div class="selection-indicator"></div>
-          <img src="assets/images/ms-icon.webp" alt="MS" />
-          <span>MS Panel</span>
-        </div>
-        <div class="config-card" data-section="headfoot" data-value="ss">
-          <div class="selection-indicator"></div>
-          <img src="assets/images/ss-plain-icon.webp" alt="SS" />
-          <span>SS Panel</span>
-        </div>
-        <div class="config-card" data-section="headfoot" data-value="abs1">
-          <div class="selection-indicator"></div>
-          <img src="assets/images/abs-icon.webp" alt="ABS 1" />
-          <span>ABS 1 Panel</span>
-        </div>
-        <div class="config-card" data-section="headfoot" data-value="abs2">
-          <div class="selection-indicator"></div>
-          <img src="assets/images/abs-icon.webp" alt="ABS 2" />
-          <span>ABS 2 Panel</span>
-        </div>
-      </div>
-    </div>
-
-    <!-- ABS Panel Color Option Section -->
-    <div class="config-section" id="abs-panel-color-section" style="display: none;">
-      <div class="config-section-subtitle" style="margin-top: 0;">ABS Panel Color Option</div>
-      <div class="color-row" id="abs-panel-color-row">
-        <button class="color-swatch abs-panel-color" data-color="#6F4E37" style="background-color: #6F4E37; color: #FFFFFF;" title="Coffee Brown">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-        </button>
-        <button class="color-swatch abs-panel-color" data-color="#4E342E" style="background-color: #4E342E; color: #FFFFFF;" title="Chocolate Brown">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-        </button>
-        <button class="color-swatch abs-panel-color" data-color="#5BC0EB" style="background-color: #5BC0EB; color: #1E293B;" title="Light Blue">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-        </button>
-        <button class="color-swatch abs-panel-color active" data-color="#0056A6" style="background-color: #0056A6; color: #FFFFFF;" title="Dark Blue">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-        </button>
-        <button class="color-swatch abs-panel-color" data-color="#009A44" style="background-color: #009A44; color: #FFFFFF;" title="Reliance Green">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-        </button>
-        <button class="color-swatch abs-panel-color" data-color="#B8D8A3" style="background-color: #B8D8A3; color: #1E293B;" title="Pista Green">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-        </button>
-        <button class="color-swatch abs-panel-color" data-color="#50C878" style="background-color: #50C878; color: #FFFFFF;" title="Parrot Green">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-        </button>
-        <button class="color-swatch abs-panel-color" data-color="#A7A9AC" style="background-color: #A7A9AC; color: #1E293B;" title="DA Grey">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-        </button>
-        <button class="color-swatch abs-panel-color" data-color="#4A4F54" style="background-color: #4A4F54; color: #FFFFFF;" title="Basalt Grey">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-        </button>
-        <button class="color-swatch abs-panel-color" data-color="#F57C00" style="background-color: #F57C00; color: #FFFFFF;" title="Orange">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-        </button>
-        <button class="color-swatch abs-panel-color" data-color="#FFD400" style="background-color: #FFD400; color: #1E293B;" title="Lemon Yellow">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-        </button>
-        <button class="color-swatch abs-panel-color" data-color="#000000" style="background-color: #000000; color: #FFFFFF;" title="Black">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-        </button>
-        <button class="color-swatch abs-panel-color" data-color="#6A1B9A" style="background-color: #6A1B9A; color: #FFFFFF;" title="Violet">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-        </button>
-        <button class="color-swatch abs-panel-color" data-color="#E8DCC5" style="background-color: #E8DCC5; color: #1E293B;" title="Beige">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-        </button>
-      </div>
-    </div>
-
-    <!-- C. Side Rails -->
-    <div class="config-section" id="config-section-siderails">
-      <div class="config-section-title">C. Side Rails</div>
-      <div class="card-grid col-3">
-        <div class="config-card active" data-section="siderails" data-value="ms">
-          <div class="selection-indicator"></div>
-          <img src="assets/images/ms-icon.webp" alt="MS" />
-          <span>MS Rail</span>
-        </div>
-        <div class="config-card" data-section="siderails" data-value="ssplain">
-          <div class="selection-indicator"></div>
-          <img src="assets/images/ss-plain-icon.webp" alt="SS Plain" />
-          <span>SS Plain</span>
-        </div>
-        <div class="config-card" data-section="siderails" data-value="abs">
-          <div class="selection-indicator"></div>
-          <img src="assets/images/abs-icon.webp" alt="ABS" />
-          <span>ABS Rail</span>
-        </div>
-        <div class="config-card" data-section="siderails" data-value="aluminium">
-          <div class="selection-indicator"></div>
-          <img src="assets/images/aluminium-collapsible-icon.webp" alt="Aluminium Collapsible" />
-          <span>Aluminium Collapsible</span>
-        </div>
-        <div class="config-card" data-section="siderails" data-value="sscollapsible">
-          <div class="selection-indicator"></div>
-          <img src="assets/images/ss-collapsible-icon.webp" alt="SS Collapsible" />
-          <span>SS Collapsible</span>
-        </div>
-      </div>
-    </div>
-
-    <!-- ABS Rail Color Option Section -->
-    <div class="config-section" id="abs-rail-color-section" style="display: none;">
-      <div class="config-section-subtitle" style="margin-top: 0;">ABS Rail Color Option</div>
-      <div class="color-row" id="abs-rail-color-row">
-        <button class="color-swatch abs-rail-color" data-color="#6F4E37" style="background-color: #6F4E37; color: #FFFFFF;" title="Coffee Brown">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-        </button>
-        <button class="color-swatch abs-rail-color" data-color="#4E342E" style="background-color: #4E342E; color: #FFFFFF;" title="Chocolate Brown">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-        </button>
-        <button class="color-swatch abs-rail-color" data-color="#5BC0EB" style="background-color: #5BC0EB; color: #1E293B;" title="Light Blue">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-        </button>
-        <button class="color-swatch abs-rail-color active" data-color="#0056A6" style="background-color: #0056A6; color: #FFFFFF;" title="Dark Blue">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-        </button>
-        <button class="color-swatch abs-rail-color" data-color="#009A44" style="background-color: #009A44; color: #FFFFFF;" title="Reliance Green">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-        </button>
-        <button class="color-swatch abs-rail-color" data-color="#B8D8A3" style="background-color: #B8D8A3; color: #1E293B;" title="Pista Green">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-        </button>
-        <button class="color-swatch abs-rail-color" data-color="#50C878" style="background-color: #50C878; color: #FFFFFF;" title="Parrot Green">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-        </button>
-        <button class="color-swatch abs-rail-color" data-color="#A7A9AC" style="background-color: #A7A9AC; color: #1E293B;" title="DA Grey">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-        </button>
-        <button class="color-swatch abs-rail-color" data-color="#4A4F54" style="background-color: #4A4F54; color: #FFFFFF;" title="Basalt Grey">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-        </button>
-        <button class="color-swatch abs-rail-color" data-color="#F57C00" style="background-color: #F57C00; color: #FFFFFF;" title="Orange">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-        </button>
-        <button class="color-swatch abs-rail-color" data-color="#FFD400" style="background-color: #FFD400; color: #1E293B;" title="Lemon Yellow">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-        </button>
-        <button class="color-swatch abs-rail-color" data-color="#000000" style="background-color: #000000; color: #FFFFFF;" title="Black">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-        </button>
-        <button class="color-swatch abs-rail-color" data-color="#6A1B9A" style="background-color: #6A1B9A; color: #FFFFFF;" title="Violet">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-        </button>
-        <button class="color-swatch abs-rail-color" data-color="#E8DCC5" style="background-color: #E8DCC5; color: #1E293B;" title="Beige">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-        </button>
-      </div>
-    </div>
-
-    <!-- D. Mattress Type -->
-    <div class="config-section" id="config-section-mattress">
-      <div class="config-section-title">D. Mattress Type</div>
-      <div class="radio-group">
-        <label class="radio-option">
-          <input type="radio" name="mattress" value="zip" checked />
-          <span class="radio-custom"></span>
-          Zip Type
-        </label>
-        <label class="radio-option">
-          <input type="radio" name="mattress" value="plain" />
-          <span class="radio-custom"></span>
-          Plain
-        </label>
-      </div>
-      <div class="config-section-subtitle">Mattress Color Option</div>
-      <div class="color-row" id="mattress-color-row">
-        <button class="color-swatch mattress-color active" data-color="#6F4E37" style="background-color: #6F4E37; color: #FFFFFF;" title="#6F4E37">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-        </button>
-        <button class="color-swatch mattress-color" data-color="#4E342E" style="background-color: #4E342E; color: #FFFFFF;" title="#4E342E">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-        </button>
-        <button class="color-swatch mattress-color" data-color="#5BC0EB" style="background-color: #5BC0EB; color: #1E293B;" title="#5BC0EB">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-        </button>
-        <button class="color-swatch mattress-color" data-color="#0056A6" style="background-color: #0056A6; color: #FFFFFF;" title="#0056A6">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-        </button>
-        <button class="color-swatch mattress-color" data-color="#009A44" style="background-color: #009A44; color: #FFFFFF;" title="#009A44">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-        </button>
-        <button class="color-swatch mattress-color" data-color="#B8D8A3" style="background-color: #B8D8A3; color: #1E293B;" title="#B8D8A3">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-        </button>
-        <button class="color-swatch mattress-color" data-color="#50C878" style="background-color: #50C878; color: #FFFFFF;" title="#50C878">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-        </button>
-        <button class="color-swatch mattress-color" data-color="#A7A9AC" style="background-color: #A7A9AC; color: #1E293B;" title="#A7A9AC">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-        </button>
-        <button class="color-swatch mattress-color" data-color="#4A4F54" style="background-color: #4A4F54; color: #FFFFFF;" title="#4A4F54">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-        </button>
-        <button class="color-swatch mattress-color" data-color="#F57C00" style="background-color: #F57C00; color: #FFFFFF;" title="#F57C00">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-        </button>
-        <button class="color-swatch mattress-color" data-color="#FFD400" style="background-color: #FFD400; color: #1E293B;" title="#FFD400">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-        </button>
-        <button class="color-swatch mattress-color" data-color="#000000" style="background-color: #000000; color: #FFFFFF;" title="#000000">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-        </button>
-        <button class="color-swatch mattress-color" data-color="#6A1B9A" style="background-color: #6A1B9A; color: #FFFFFF;" title="#6A1B9A">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-        </button>
-        <button class="color-swatch mattress-color" data-color="#E8DCC5" style="background-color: #E8DCC5; color: #1E293B;" title="#E8DCC5">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-        </button>
-      </div>
-    </div>
-
-    <!-- Storage (Cupboard & Drawer) Color Option Section -->
-    <div class="config-section" id="couch-storage-color-section" style="display: none;">
-      <div class="config-section-subtitle" style="margin-top: 0;">Storage (Cupboard &amp; Drawer) Color Option</div>
-      <div class="color-row" id="couch-storage-color-row">
-        <button class="color-swatch couch-storage-color default-storage-swatch active" data-default="true" style="background-color: #FFFFFF; border: 2px solid #94A3B8; color: #475569;" title="Default Texture (No Color)">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="display: block; width: 14px; height: 14px;">
-            <circle cx="12" cy="12" r="7.5"></circle>
-          </svg>
-        </button>
-        <button class="color-swatch couch-storage-color" data-color="#6F4E37" style="background-color: #6F4E37; color: #FFFFFF;" title="Coffee Brown">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-        </button>
-        <button class="color-swatch couch-storage-color" data-color="#4E342E" style="background-color: #4E342E; color: #FFFFFF;" title="Chocolate Brown">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-        </button>
-        <button class="color-swatch couch-storage-color" data-color="#5BC0EB" style="background-color: #5BC0EB; color: #1E293B;" title="Light Blue">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-        </button>
-        <button class="color-swatch couch-storage-color" data-color="#0056A6" style="background-color: #0056A6; color: #FFFFFF;" title="Dark Blue">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-        </button>
-        <button class="color-swatch couch-storage-color" data-color="#009A44" style="background-color: #009A44; color: #FFFFFF;" title="Reliance Green">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-        </button>
-        <button class="color-swatch couch-storage-color" data-color="#B8D8A3" style="background-color: #B8D8A3; color: #1E293B;" title="Pista Green">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-        </button>
-        <button class="color-swatch couch-storage-color" data-color="#50C878" style="background-color: #50C878; color: #FFFFFF;" title="Parrot Green">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-        </button>
-        <button class="color-swatch couch-storage-color" data-color="#A7A9AC" style="background-color: #A7A9AC; color: #1E293B;" title="DA Grey">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-        </button>
-        <button class="color-swatch couch-storage-color" data-color="#4A4F54" style="background-color: #4A4F54; color: #FFFFFF;" title="Basalt Grey">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-        </button>
-        <button class="color-swatch couch-storage-color" data-color="#F57C00" style="background-color: #F57C00; color: #FFFFFF;" title="Orange">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-        </button>
-        <button class="color-swatch couch-storage-color" data-color="#FFD400" style="background-color: #FFD400; color: #1E293B;" title="Lemon Yellow">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-        </button>
-        <button class="color-swatch couch-storage-color" data-color="#000000" style="background-color: #000000; color: #FFFFFF;" title="Black">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-        </button>
-        <button class="color-swatch couch-storage-color" data-color="#6A1B9A" style="background-color: #6A1B9A; color: #FFFFFF;" title="Violet">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-        </button>
-        <button class="color-swatch couch-storage-color" data-color="#E8DCC5" style="background-color: #E8DCC5; color: #1E293B;" title="Beige">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-        </button>
-      </div>
-    </div>
-
-    <!-- E. Wheel Type -->
-    <div class="config-section" id="config-section-wheel">
-      <div class="config-section-title">E. Wheel Type</div>
-      <div class="radio-group">
-        <label class="radio-option">
-          <input type="radio" name="wheel" value="without" checked />
-          <span class="radio-custom"></span>
-          Without Wheel
-        </label>
-        <label class="radio-option">
-          <input type="radio" name="wheel" value="wheel" />
-          <span class="radio-custom"></span>
-          With Wheel
-        </label>
-      </div>
-    </div>
-
-  </aside>
-
-
-
-  <!-- Canvas Wrap -->
-  <div id="canvas-wrap">
-    <model-viewer id="three-canvas" alt="Mathurams 3D Product" camera-controls touch-action="none" shadow-intensity="1" disable-tap disable-pan></model-viewer>
-
-    <!-- Auto Rotate Switch in Top Right -->
-    <div id="auto-rotate-card">
-      <div class="auto-rotate-icon">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-          <path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l.73-.73" stroke-linecap="round" stroke-linejoin="round"/>
-          <text x="12" y="15.5" font-family="'Inter', sans-serif" font-size="9.5" font-weight="100" fill="currentColor" text-anchor="middle">A</text>
-        </svg>
-      </div>
-      <span class="auto-rotate-label">Auto Rotate</span>
-      <label class="auto-rotate-toggle">
-        <input type="checkbox" id="auto-rotate-toggle-cb" checked />
-        <span class="auto-rotate-slider"></span>
-      </label>
-    </div>
-    
-    <!-- Pan Model Switch in Top Right -->
-    <div id="pan-model-card">
-      <div class="pan-model-icon">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-          <path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-      </div>
-      <span class="pan-model-label">Pan Model</span>
-      <label class="pan-model-toggle">
-        <input type="checkbox" id="pan-model-toggle-cb" />
-        <span class="pan-model-slider"></span>
-      </label>
-    </div>
-
-    <!-- Drop zone overlay -->
-    <div id="drop-zone">
-      <div class="drop-ring">
-        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#EA580C" stroke-width="1.5">
-          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
-          <polyline points="17 8 12 3 7 8"/>
-          <line x1="12" y1="3" x2="12" y2="15"/>
-        </svg>
-      </div>
-      <p>Drop model file</p>
-      <small>Release to load</small>
-    </div>
-
-    <!-- Loading -->
-    <div id="loading">
-      <div class="spinner"></div>
-      <p>Loading <span id="loading-name">model</span>...</p>
-    </div>
-
-    <!-- Model info badge -->
-    <div id="info-badge">
-      <div><strong id="badge-name">&mdash;</strong></div>
-      <div id="badge-stats"></div>
-    </div>
-
-    <!-- HUD buttons -->
-    <div id="hud">
-      <button class="hud-btn" id="reset-cam-btn" title="Reset camera">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/>
-          <path d="M3 3v5h5"/>
-        </svg>
-      </button>
-      <button class="hud-btn" id="wireframe-btn" title="Toggle wireframe">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <polygon points="12 2 22 8.5 22 15.5 12 22 2 15.5 2 8.5 12 2"/>
-        </svg>
-      </button>
-      <button class="hud-btn active" id="grid-btn" title="Toggle floor">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
-          <line x1="3" y1="15" x2="21" y2="15"/>
-        </svg>
-      </button>
-      <div class="hud-btn-container" style="position: relative; display: inline-block;">
-        <button class="hud-btn" id="bg-palette-btn" title="Background color">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <circle cx="12" cy="12" r="10"/>
-            <circle cx="12" cy="12" r="6" fill="currentColor"/>
-          </svg>
-        </button>
-        <div class="bg-palette-popover" id="bg-palette-popover">
-          <div class="custom-color-picker-container">
-            <div class="color-map-wrapper">
-              <canvas id="color-map" width="180" height="120"></canvas>
-              <div id="color-map-cursor"></div>
-            </div>
-            <div class="hue-bar-wrapper">
-              <input type="range" id="hue-slider" min="0" max="360" value="230" />
-            </div>
-            <div class="color-preview-row">
-              <div id="color-preview-swatch"></div>
-              <input type="text" id="color-hex-input" value="#424357" readonly />
-            </div>
+        <div class="skeleton-section">
+          <div class="skeleton-title shimmer"></div>
+          <div class="skeleton-grid">
+            <div class="skeleton-card shimmer"></div>
+            <div class="skeleton-card shimmer"></div>
+            <div class="skeleton-card shimmer"></div>
           </div>
         </div>
       </div>
-      <button class="hud-btn" id="bg-btn" title="Cycle background">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <circle cx="12" cy="12" r="5"/>
-          <line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/>
-          <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
-          <line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/>
-          <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
-        </svg>
-      </button>
-      <button class="hud-btn" id="fullscreen-btn" title="Toggle Fullscreen">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-      </button>
+
+      <!-- Attender Cot Model Type Section -->
+      <div class="config-section" id="config-section-attender" style="display: none;">
+        <div class="config-section-title">Attender Cot Type</div>
+        <div class="card-grid col-3">
+          <div class="config-card active" data-section="attender" data-value="plain">
+            <div class="selection-indicator"></div>
+            <img src="assets/images/ms-icon.webp" alt="Plain" />
+            <span>Plain</span>
+          </div>
+          <div class="config-card" data-section="attender" data-value="deluxe">
+            <div class="selection-indicator"></div>
+            <img src="assets/images/ss-plain-icon.webp" alt="Deluxe" />
+            <span>Deluxe</span>
+          </div>
+          <div class="config-card" data-section="attender" data-value="door">
+            <div class="selection-indicator"></div>
+            <img src="assets/images/abs-icon.webp" alt="Door Type" />
+            <span>Door Type</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bedside Locker Model Type Section -->
+      <div class="config-section" id="config-section-locker" style="display: none;">
+        <div class="config-section-title">Bedside Locker Type</div>
+        <div class="card-grid col-2">
+          <div class="config-card active" data-section="locker" data-value="plain">
+            <div class="selection-indicator"></div>
+            <img src="assets/images/ms-icon.webp" alt="Plain" />
+            <span>Plain</span>
+          </div>
+          <div class="config-card" data-section="locker" data-value="deluxe">
+            <div class="selection-indicator"></div>
+            <img src="assets/images/ss-plain-icon.webp" alt="Deluxe Wood" />
+            <span>Deluxe Wood</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- A. BED TYPE -->
+      <div class="config-section" id="config-section-operation">
+        <div class="config-section-title">A. BED TYPE</div>
+        <div class="radio-group">
+          <label class="radio-option">
+            <input type="radio" name="operation" value="manual" checked />
+            <span class="radio-custom"></span>
+            Manual
+          </label>
+          <label class="radio-option">
+            <input type="radio" name="operation" value="remote" />
+            <span class="radio-custom"></span>
+            Remote
+          </label>
+        </div>
+      </div>
+
+      <!-- B. Head & Foot Panel -->
+      <div class="config-section" id="config-section-headfoot">
+        <div class="config-section-title">B. Head &amp; Foot End Panel</div>
+        <div class="card-grid col-3">
+          <div class="config-card active" data-section="headfoot" data-value="ms">
+            <div class="selection-indicator"></div>
+            <img src="assets/images/ms-icon.webp" alt="MS" />
+            <span>MS Panel</span>
+          </div>
+          <div class="config-card" data-section="headfoot" data-value="ss">
+            <div class="selection-indicator"></div>
+            <img src="assets/images/ss-plain-icon.webp" alt="SS" />
+            <span>SS Panel</span>
+          </div>
+          <div class="config-card" data-section="headfoot" data-value="abs1">
+            <div class="selection-indicator"></div>
+            <img src="assets/images/abs-icon.webp" alt="ABS 1" />
+            <span>ABS 1 Panel</span>
+          </div>
+          <div class="config-card" data-section="headfoot" data-value="abs2">
+            <div class="selection-indicator"></div>
+            <img src="assets/images/abs-icon.webp" alt="ABS 2" />
+            <span>ABS 2 Panel</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ABS Panel Color Option Section -->
+      <div class="config-section" id="abs-panel-color-section" style="display: none;">
+        <div class="config-section-subtitle" style="margin-top: 0;">ABS Panel Color Option</div>
+        <div class="color-row" id="abs-panel-color-row">
+          <button class="color-swatch abs-panel-color" data-color="#6F4E37"
+            style="background-color: #6F4E37; color: #FFFFFF;" title="Coffee Brown">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"
+              stroke-linejoin="round">
+              <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+          </button>
+          <button class="color-swatch abs-panel-color" data-color="#4E342E"
+            style="background-color: #4E342E; color: #FFFFFF;" title="Chocolate Brown">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"
+              stroke-linejoin="round">
+              <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+          </button>
+          <button class="color-swatch abs-panel-color" data-color="#5BC0EB"
+            style="background-color: #5BC0EB; color: #1E293B;" title="Light Blue">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"
+              stroke-linejoin="round">
+              <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+          </button>
+          <button class="color-swatch abs-panel-color active" data-color="#0056A6"
+            style="background-color: #0056A6; color: #FFFFFF;" title="Dark Blue">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"
+              stroke-linejoin="round">
+              <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+          </button>
+          <button class="color-swatch abs-panel-color" data-color="#009A44"
+            style="background-color: #009A44; color: #FFFFFF;" title="Reliance Green">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"
+              stroke-linejoin="round">
+              <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+          </button>
+          <button class="color-swatch abs-panel-color" data-color="#B8D8A3"
+            style="background-color: #B8D8A3; color: #1E293B;" title="Pista Green">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"
+              stroke-linejoin="round">
+              <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+          </button>
+          <button class="color-swatch abs-panel-color" data-color="#50C878"
+            style="background-color: #50C878; color: #FFFFFF;" title="Parrot Green">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"
+              stroke-linejoin="round">
+              <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+          </button>
+          <button class="color-swatch abs-panel-color" data-color="#A7A9AC"
+            style="background-color: #A7A9AC; color: #1E293B;" title="DA Grey">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"
+              stroke-linejoin="round">
+              <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+          </button>
+          <button class="color-swatch abs-panel-color" data-color="#4A4F54"
+            style="background-color: #4A4F54; color: #FFFFFF;" title="Basalt Grey">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"
+              stroke-linejoin="round">
+              <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+          </button>
+          <button class="color-swatch abs-panel-color" data-color="#F57C00"
+            style="background-color: #F57C00; color: #FFFFFF;" title="Orange">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"
+              stroke-linejoin="round">
+              <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+          </button>
+          <button class="color-swatch abs-panel-color" data-color="#FFD400"
+            style="background-color: #FFD400; color: #1E293B;" title="Lemon Yellow">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"
+              stroke-linejoin="round">
+              <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+          </button>
+          <button class="color-swatch abs-panel-color" data-color="#000000"
+            style="background-color: #000000; color: #FFFFFF;" title="Black">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"
+              stroke-linejoin="round">
+              <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+          </button>
+          <button class="color-swatch abs-panel-color" data-color="#6A1B9A"
+            style="background-color: #6A1B9A; color: #FFFFFF;" title="Violet">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"
+              stroke-linejoin="round">
+              <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+          </button>
+          <button class="color-swatch abs-panel-color" data-color="#E8DCC5"
+            style="background-color: #E8DCC5; color: #1E293B;" title="Beige">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"
+              stroke-linejoin="round">
+              <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- C. Side Rails -->
+      <div class="config-section" id="config-section-siderails">
+        <div class="config-section-title">C. Side Rails</div>
+        <div class="card-grid col-3">
+          <div class="config-card active" data-section="siderails" data-value="ms">
+            <div class="selection-indicator"></div>
+            <img src="assets/images/ms-icon.webp" alt="MS" />
+            <span>MS Rail</span>
+          </div>
+          <div class="config-card" data-section="siderails" data-value="ssplain">
+            <div class="selection-indicator"></div>
+            <img src="assets/images/ss-plain-icon.webp" alt="SS Plain" />
+            <span>SS Plain</span>
+          </div>
+          <div class="config-card" data-section="siderails" data-value="abs">
+            <div class="selection-indicator"></div>
+            <img src="assets/images/abs-icon.webp" alt="ABS" />
+            <span>ABS Rail</span>
+          </div>
+          <div class="config-card" data-section="siderails" data-value="aluminium">
+            <div class="selection-indicator"></div>
+            <img src="assets/images/aluminium-collapsible-icon.webp" alt="Aluminium Collapsible" />
+            <span>Aluminium Collapsible</span>
+          </div>
+          <div class="config-card" data-section="siderails" data-value="sscollapsible">
+            <div class="selection-indicator"></div>
+            <img src="assets/images/ss-collapsible-icon.webp" alt="SS Collapsible" />
+            <span>SS Collapsible</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ABS Rail Color Option Section -->
+      <div class="config-section" id="abs-rail-color-section" style="display: none;">
+        <div class="config-section-subtitle" style="margin-top: 0;">ABS Rail Color Option</div>
+        <div class="color-row" id="abs-rail-color-row">
+          <button class="color-swatch abs-rail-color" data-color="#6F4E37"
+            style="background-color: #6F4E37; color: #FFFFFF;" title="Coffee Brown">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"
+              stroke-linejoin="round">
+              <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+          </button>
+          <button class="color-swatch abs-rail-color" data-color="#4E342E"
+            style="background-color: #4E342E; color: #FFFFFF;" title="Chocolate Brown">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"
+              stroke-linejoin="round">
+              <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+          </button>
+          <button class="color-swatch abs-rail-color" data-color="#5BC0EB"
+            style="background-color: #5BC0EB; color: #1E293B;" title="Light Blue">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"
+              stroke-linejoin="round">
+              <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+          </button>
+          <button class="color-swatch abs-rail-color active" data-color="#0056A6"
+            style="background-color: #0056A6; color: #FFFFFF;" title="Dark Blue">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"
+              stroke-linejoin="round">
+              <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+          </button>
+          <button class="color-swatch abs-rail-color" data-color="#009A44"
+            style="background-color: #009A44; color: #FFFFFF;" title="Reliance Green">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"
+              stroke-linejoin="round">
+              <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+          </button>
+          <button class="color-swatch abs-rail-color" data-color="#B8D8A3"
+            style="background-color: #B8D8A3; color: #1E293B;" title="Pista Green">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"
+              stroke-linejoin="round">
+              <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+          </button>
+          <button class="color-swatch abs-rail-color" data-color="#50C878"
+            style="background-color: #50C878; color: #FFFFFF;" title="Parrot Green">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"
+              stroke-linejoin="round">
+              <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+          </button>
+          <button class="color-swatch abs-rail-color" data-color="#A7A9AC"
+            style="background-color: #A7A9AC; color: #1E293B;" title="DA Grey">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"
+              stroke-linejoin="round">
+              <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+          </button>
+          <button class="color-swatch abs-rail-color" data-color="#4A4F54"
+            style="background-color: #4A4F54; color: #FFFFFF;" title="Basalt Grey">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"
+              stroke-linejoin="round">
+              <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+          </button>
+          <button class="color-swatch abs-rail-color" data-color="#F57C00"
+            style="background-color: #F57C00; color: #FFFFFF;" title="Orange">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"
+              stroke-linejoin="round">
+              <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+          </button>
+          <button class="color-swatch abs-rail-color" data-color="#FFD400"
+            style="background-color: #FFD400; color: #1E293B;" title="Lemon Yellow">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"
+              stroke-linejoin="round">
+              <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+          </button>
+          <button class="color-swatch abs-rail-color" data-color="#000000"
+            style="background-color: #000000; color: #FFFFFF;" title="Black">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"
+              stroke-linejoin="round">
+              <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+          </button>
+          <button class="color-swatch abs-rail-color" data-color="#6A1B9A"
+            style="background-color: #6A1B9A; color: #FFFFFF;" title="Violet">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"
+              stroke-linejoin="round">
+              <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+          </button>
+          <button class="color-swatch abs-rail-color" data-color="#E8DCC5"
+            style="background-color: #E8DCC5; color: #1E293B;" title="Beige">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"
+              stroke-linejoin="round">
+              <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- D. Mattress Type -->
+      <div class="config-section" id="config-section-mattress">
+        <div class="config-section-title">D. Mattress Type</div>
+        <div class="radio-group">
+          <label class="radio-option">
+            <input type="radio" name="mattress" value="zip" checked />
+            <span class="radio-custom"></span>
+            Zip Type
+          </label>
+          <label class="radio-option">
+            <input type="radio" name="mattress" value="plain" />
+            <span class="radio-custom"></span>
+            Plain
+          </label>
+        </div>
+        <div class="config-section-subtitle">Mattress Color Option</div>
+        <div class="color-row" id="mattress-color-row">
+          <button class="color-swatch mattress-color active" data-color="#6F4E37"
+            style="background-color: #6F4E37; color: #FFFFFF;" title="#6F4E37">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"
+              stroke-linejoin="round">
+              <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+          </button>
+          <button class="color-swatch mattress-color" data-color="#4E342E"
+            style="background-color: #4E342E; color: #FFFFFF;" title="#4E342E">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"
+              stroke-linejoin="round">
+              <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+          </button>
+          <button class="color-swatch mattress-color" data-color="#5BC0EB"
+            style="background-color: #5BC0EB; color: #1E293B;" title="#5BC0EB">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"
+              stroke-linejoin="round">
+              <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+          </button>
+          <button class="color-swatch mattress-color" data-color="#0056A6"
+            style="background-color: #0056A6; color: #FFFFFF;" title="#0056A6">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"
+              stroke-linejoin="round">
+              <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+          </button>
+          <button class="color-swatch mattress-color" data-color="#009A44"
+            style="background-color: #009A44; color: #FFFFFF;" title="#009A44">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"
+              stroke-linejoin="round">
+              <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+          </button>
+          <button class="color-swatch mattress-color" data-color="#B8D8A3"
+            style="background-color: #B8D8A3; color: #1E293B;" title="#B8D8A3">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"
+              stroke-linejoin="round">
+              <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+          </button>
+          <button class="color-swatch mattress-color" data-color="#50C878"
+            style="background-color: #50C878; color: #FFFFFF;" title="#50C878">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"
+              stroke-linejoin="round">
+              <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+          </button>
+          <button class="color-swatch mattress-color" data-color="#A7A9AC"
+            style="background-color: #A7A9AC; color: #1E293B;" title="#A7A9AC">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"
+              stroke-linejoin="round">
+              <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+          </button>
+          <button class="color-swatch mattress-color" data-color="#4A4F54"
+            style="background-color: #4A4F54; color: #FFFFFF;" title="#4A4F54">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"
+              stroke-linejoin="round">
+              <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+          </button>
+          <button class="color-swatch mattress-color" data-color="#F57C00"
+            style="background-color: #F57C00; color: #FFFFFF;" title="#F57C00">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"
+              stroke-linejoin="round">
+              <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+          </button>
+          <button class="color-swatch mattress-color" data-color="#FFD400"
+            style="background-color: #FFD400; color: #1E293B;" title="#FFD400">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"
+              stroke-linejoin="round">
+              <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+          </button>
+          <button class="color-swatch mattress-color" data-color="#000000"
+            style="background-color: #000000; color: #FFFFFF;" title="#000000">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"
+              stroke-linejoin="round">
+              <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+          </button>
+          <button class="color-swatch mattress-color" data-color="#6A1B9A"
+            style="background-color: #6A1B9A; color: #FFFFFF;" title="#6A1B9A">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"
+              stroke-linejoin="round">
+              <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+          </button>
+          <button class="color-swatch mattress-color" data-color="#E8DCC5"
+            style="background-color: #E8DCC5; color: #1E293B;" title="#E8DCC5">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"
+              stroke-linejoin="round">
+              <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- Storage (Cupboard & Drawer) Color Option Section -->
+      <div class="config-section" id="couch-storage-color-section" style="display: none;">
+        <div class="config-section-subtitle" style="margin-top: 0;">Storage (Cupboard &amp; Drawer) Color Option</div>
+        <div class="color-row" id="couch-storage-color-row">
+          <button class="color-swatch default-storage-btn couch-storage-color default-storage-swatch active"
+            data-default="true" title="Default Texture (No Color)">Default</button>
+          <button class="color-swatch couch-storage-color" data-color="#6F4E37"
+            style="background-color: #6F4E37; color: #FFFFFF;" title="Coffee Brown">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"
+              stroke-linejoin="round">
+              <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+          </button>
+          <button class="color-swatch couch-storage-color" data-color="#4E342E"
+            style="background-color: #4E342E; color: #FFFFFF;" title="Chocolate Brown">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"
+              stroke-linejoin="round">
+              <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+          </button>
+          <button class="color-swatch couch-storage-color" data-color="#5BC0EB"
+            style="background-color: #5BC0EB; color: #1E293B;" title="Light Blue">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"
+              stroke-linejoin="round">
+              <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+          </button>
+          <button class="color-swatch couch-storage-color" data-color="#0056A6"
+            style="background-color: #0056A6; color: #FFFFFF;" title="Dark Blue">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"
+              stroke-linejoin="round">
+              <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+          </button>
+          <button class="color-swatch couch-storage-color" data-color="#009A44"
+            style="background-color: #009A44; color: #FFFFFF;" title="Reliance Green">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"
+              stroke-linejoin="round">
+              <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+          </button>
+          <button class="color-swatch couch-storage-color" data-color="#B8D8A3"
+            style="background-color: #B8D8A3; color: #1E293B;" title="Pista Green">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"
+              stroke-linejoin="round">
+              <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+          </button>
+          <button class="color-swatch couch-storage-color" data-color="#50C878"
+            style="background-color: #50C878; color: #FFFFFF;" title="Parrot Green">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"
+              stroke-linejoin="round">
+              <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+          </button>
+          <button class="color-swatch couch-storage-color" data-color="#A7A9AC"
+            style="background-color: #A7A9AC; color: #1E293B;" title="DA Grey">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"
+              stroke-linejoin="round">
+              <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+          </button>
+          <button class="color-swatch couch-storage-color" data-color="#4A4F54"
+            style="background-color: #4A4F54; color: #FFFFFF;" title="Basalt Grey">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"
+              stroke-linejoin="round">
+              <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+          </button>
+          <button class="color-swatch couch-storage-color" data-color="#F57C00"
+            style="background-color: #F57C00; color: #FFFFFF;" title="Orange">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"
+              stroke-linejoin="round">
+              <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+          </button>
+          <button class="color-swatch couch-storage-color" data-color="#FFD400"
+            style="background-color: #FFD400; color: #1E293B;" title="Lemon Yellow">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"
+              stroke-linejoin="round">
+              <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+          </button>
+          <button class="color-swatch couch-storage-color" data-color="#000000"
+            style="background-color: #000000; color: #FFFFFF;" title="Black">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"
+              stroke-linejoin="round">
+              <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+          </button>
+          <button class="color-swatch couch-storage-color" data-color="#6A1B9A"
+            style="background-color: #6A1B9A; color: #FFFFFF;" title="Violet">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"
+              stroke-linejoin="round">
+              <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+          </button>
+          <button class="color-swatch couch-storage-color" data-color="#E8DCC5"
+            style="background-color: #E8DCC5; color: #1E293B;" title="Beige">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"
+              stroke-linejoin="round">
+              <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- E. Wheel Type -->
+      <div class="config-section" id="config-section-wheel">
+        <div class="config-section-title">E. Wheel Type</div>
+        <div class="radio-group">
+          <label class="radio-option">
+            <input type="radio" name="wheel" value="without" checked />
+            <span class="radio-custom"></span>
+            Without Wheel
+          </label>
+          <label class="radio-option">
+            <input type="radio" name="wheel" value="wheel" />
+            <span class="radio-custom"></span>
+            With Wheel
+          </label>
+        </div>
+      </div>
+
+      <!-- Footer Position (Labor Cot Only) -->
+      <div class="config-section" id="config-section-footer" style="display: none;">
+        <div class="config-section-title">Footer Position</div>
+        <div class="radio-group">
+          <label class="radio-option">
+            <input type="radio" name="footer" value="in" checked />
+            <span class="radio-custom"></span>
+            Footer In
+          </label>
+          <label class="radio-option">
+            <input type="radio" name="footer" value="out" />
+            <span class="radio-custom"></span>
+            Footer Out
+          </label>
+        </div>
+      </div>
+
+    </aside>
+
+
+
+    <!-- Canvas Wrap -->
+    <div id="canvas-wrap">
+      <model-viewer id="three-canvas" alt="Mathurams 3D Product" camera-controls touch-action="none" auto-rotate
+        auto-rotate-delay="1000" rotation-per-second="12deg" interaction-prompt="when-focused"
+        interaction-prompt-threshold="1500" shadow-intensity="0" disable-tap disable-pan></model-viewer>
+
+      <!-- Bottom Floating Model Variant Selector (View-Only Models) -->
+      <div id="bottom-variant-selector" style="display: none;"></div>
+
+      <!-- Auto Rotate Switch in Top Right -->
+      <div id="auto-rotate-card">
+        <div class="auto-rotate-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l.73-.73" stroke-linecap="round"
+              stroke-linejoin="round" />
+            <text x="12" y="15.5" font-family="'Inter', sans-serif" font-size="9.5" font-weight="100"
+              fill="currentColor" text-anchor="middle">A</text>
+          </svg>
+        </div>
+        <span class="auto-rotate-label">Auto Rotate</span>
+        <label class="auto-rotate-toggle">
+          <input type="checkbox" id="auto-rotate-toggle-cb" checked />
+          <span class="auto-rotate-slider"></span>
+        </label>
+      </div>
+
+      <!-- Pan Model Switch in Top Right -->
+      <div id="pan-model-card">
+        <div class="pan-model-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+        </div>
+        <span class="pan-model-label">Pan Model</span>
+        <label class="pan-model-toggle">
+          <input type="checkbox" id="pan-model-toggle-cb" />
+          <span class="pan-model-slider"></span>
+        </label>
+      </div>
+
+      <!-- Drop zone overlay -->
+      <div id="drop-zone">
+        <div class="drop-ring">
+          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#EA580C" stroke-width="1.5">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+            <polyline points="17 8 12 3 7 8" />
+            <line x1="12" y1="3" x2="12" y2="15" />
+          </svg>
+        </div>
+        <p>Drop model file</p>
+        <small>Release to load</small>
+      </div>
+
+      <!-- Loading -->
+      <div id="loading">
+        <div class="loading-content">
+          <div class="spinner"></div>
+          <p>Loading <span id="loading-name">model</span>...</p>
+        </div>
+      </div>
+
+      <!-- Model info badge -->
+      <div id="info-badge">
+        <div><strong id="badge-name">&mdash;</strong></div>
+        <div id="badge-stats"></div>
+      </div>
+
+      <!-- HUD buttons -->
+      <div id="hud">
+        <button class="hud-btn" id="reset-cam-btn" title="Reset camera">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8" />
+            <path d="M3 3v5h5" />
+          </svg>
+        </button>
+        <button class="hud-btn" id="wireframe-btn" title="Toggle wireframe">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polygon points="12 2 22 8.5 22 15.5 12 22 2 15.5 2 8.5 12 2" />
+          </svg>
+        </button>
+        <button class="hud-btn active" id="grid-btn" title="Toggle floor">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
+            <line x1="3" y1="15" x2="21" y2="15" />
+          </svg>
+        </button>
+        <div class="hud-btn-container" style="position: relative; display: inline-block;">
+          <button class="hud-btn" id="bg-palette-btn" title="Background color">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="10" />
+              <circle cx="12" cy="12" r="6" fill="currentColor" />
+            </svg>
+          </button>
+          <div class="bg-palette-popover" id="bg-palette-popover">
+            <div class="custom-color-picker-container">
+              <div class="color-map-wrapper">
+                <canvas id="color-map" width="180" height="120"></canvas>
+                <div id="color-map-cursor"></div>
+              </div>
+              <div class="hue-bar-wrapper">
+                <input type="range" id="hue-slider" min="0" max="360" value="230" />
+              </div>
+              <div class="color-preview-row">
+                <div id="color-preview-swatch"></div>
+                <input type="text" id="color-hex-input" value="#424357" readonly />
+              </div>
+            </div>
+          </div>
+        </div>
+        <button class="hud-btn" id="bg-btn" title="Cycle background">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="5" />
+            <line x1="12" y1="1" x2="12" y2="3" />
+            <line x1="12" y1="21" x2="12" y2="23" />
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
+            <line x1="1" y1="12" x2="3" y2="12" />
+            <line x1="21" y1="12" x2="23" y2="12" />
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
+          </svg>
+        </button>
+        <button class="hud-btn" id="fullscreen-btn" title="Toggle Fullscreen">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"
+              stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+        </button>
+      </div>
+
+      <div id="axes-label">X &middot; Y &middot; Z</div>
+      <div id="toast"></div>
     </div>
 
-    <div id="axes-label">X &middot; Y &middot; Z</div>
-    <div id="toast"></div>
+    <!-- Homescreen Selector -->
+    <main id="homescreen">
+      <div class="homescreen-hero">
+        <h1>Sri Mathurams Medical Engineering</h1>
+        <p>Select a product model to begin customisation or 3D viewing</p>
+      </div>
+
+      <div class="product-grid-section">
+        <h2 class="section-heading">Customisation Models</h2>
+        <div class="product-grid">
+          <a href="#fowler-cot" class="product-card">
+            <div class="product-card-preview">
+              <model-viewer src="assets/models/customisation-models/fowler-cot/3d_model.glb" loading="lazy" auto-rotate
+                rotation-per-second="12deg" interaction-prompt="none" shadow-intensity="0"
+                style="width:100%; height:100%; pointer-events:none;"></model-viewer>
+            </div>
+            <h3>Fowler Cot</h3>
+            <p>Customise head & foot panel, rails, wheels, and operation modes</p>
+          </a>
+          <a href="#icu" class="product-card">
+            <div class="product-card-preview">
+              <model-viewer src="assets/models/customisation-models/icu-cot/3d_model.glb" loading="lazy" auto-rotate
+                rotation-per-second="12deg" interaction-prompt="none" shadow-intensity="0"
+                style="width:100%; height:100%; pointer-events:none;"></model-viewer>
+            </div>
+            <h3>ICU Cot</h3>
+            <p>Full 3D customisation with dynamic part replacement</p>
+          </a>
+          <a href="#labor-cot" class="product-card">
+            <div class="product-card-preview">
+              <model-viewer src="assets/models/customisation-models/labor-cot/3d_model.glb" loading="lazy" auto-rotate
+                rotation-per-second="12deg" interaction-prompt="none" shadow-intensity="0"
+                style="width:100%; height:100%; pointer-events:none;"></model-viewer>
+            </div>
+            <h3>Labor Cot</h3>
+            <p>Explore medical delivery beds options</p>
+          </a>
+          <a href="#hi-lo" class="product-card">
+            <div class="product-card-preview">
+              <model-viewer src="assets/models/customisation-models/hi-lo-stretcher/3d_model.glb" loading="lazy"
+                auto-rotate rotation-per-second="12deg" interaction-prompt="none" shadow-intensity="0"
+                style="width:100%; height:100%; pointer-events:none;"></model-viewer>
+            </div>
+            <h3>Hi-Lo Stretcher</h3>
+            <p>Interactive configurator for patient transfer stretchers</p>
+          </a>
+          <a href="#couch" class="product-card">
+            <div class="product-card-preview">
+              <model-viewer src="assets/models/customisation-models/deluxe-examination-couch/3d_model.glb"
+                loading="lazy" auto-rotate rotation-per-second="12deg" interaction-prompt="none" shadow-intensity="0"
+                style="width:100%; height:100%; pointer-events:none;"></model-viewer>
+            </div>
+            <h3>Deluxe Examination Couch</h3>
+            <p>Customise cabinet and drawer colors</p>
+          </a>
+        </div>
+      </div>
+
+      <div class="product-grid-section">
+        <h2 class="section-heading">View-Only Models</h2>
+        <div class="product-grid">
+          <a href="#semi-fowler" class="product-card view-only-card">
+            <div class="product-card-preview">
+              <model-viewer src="assets/models/view-only-models/semi-fowler-cot.glb" loading="lazy" auto-rotate
+                rotation-per-second="12deg" interaction-prompt="none" shadow-intensity="0"
+                style="width:100%; height:100%; pointer-events:none;"></model-viewer>
+            </div>
+            <h3>Semi Fowler Cot</h3>
+            <p>3D visual representation</p>
+          </a>
+          <a href="#over-bed-table" class="product-card view-only-card">
+            <div class="product-card-preview">
+              <model-viewer src="assets/models/view-only-models/over-bed-table/Overbed-table-wood.glb" loading="lazy" auto-rotate
+                rotation-per-second="12deg" interaction-prompt="none" shadow-intensity="0"
+                style="width:100%; height:100%; pointer-events:none;"></model-viewer>
+            </div>
+            <h3>Over Bed Table</h3>
+            <p>3D visual representation</p>
+          </a>
+          <a href="#attender-cot" class="product-card">
+            <div class="product-card-preview">
+              <model-viewer src="assets/models/view-only-models/attender-cot/attender_cot_plain.glb" loading="lazy"
+                auto-rotate rotation-per-second="12deg" interaction-prompt="none" shadow-intensity="0"
+                style="width:100%; height:100%; pointer-events:none;"></model-viewer>
+            </div>
+            <h3>Attender Cot</h3>
+            <p>3D Customisation (Plain, Deluxe &amp; Door Type)</p>
+          </a>
+          <a href="#bedside-locker-deluxe" class="product-card view-only-card">
+            <div class="product-card-preview">
+              <model-viewer src="assets/models/view-only-models/bedside-locker/bedside-locker-deluxe.glb" loading="lazy"
+                auto-rotate rotation-per-second="12deg" interaction-prompt="none" shadow-intensity="0"
+                style="width:100%; height:100%; pointer-events:none;"></model-viewer>
+            </div>
+            <h3>Bed Sidelocker Deluxe Wood</h3>
+            <p>3D visual representation</p>
+          </a>
+          <a href="#bedside-locker" class="product-card view-only-card">
+            <div class="product-card-preview">
+              <model-viewer src="assets/models/view-only-models/bedside-locker/bedside-locker.glb" loading="lazy"
+                auto-rotate rotation-per-second="12deg" interaction-prompt="none" shadow-intensity="0"
+                style="width:100%; height:100%; pointer-events:none;"></model-viewer>
+            </div>
+            <h3>Bedside Locker Plain</h3>
+            <p>3D visual representation</p>
+          </a>
+        </div>
+      </div>
+    </main>
+
   </div>
 
-  <!-- Homescreen Selector -->
-  <main id="homescreen">
-    <div class="homescreen-hero">
-      <h1>Sri Mathurams Medical Engineering</h1>
-      <p>Select a product model to begin customisation or 3D viewing</p>
-    </div>
-    
-    <div class="product-grid-section">
-      <h2 class="section-heading">Customisation Models</h2>
-      <div class="product-grid">
-        <a href="#fowler-cot" class="product-card">
-          <div class="product-card-preview">
-            <model-viewer src="assets/models/customisation-models/fowler-cot/3d_model.glb" loading="lazy" auto-rotate rotation-per-second="12deg" interaction-prompt="none" shadow-intensity="0.5" shadow-softness="0.8" style="width:100%; height:100%; pointer-events:none;"></model-viewer>
-          </div>
-          <h3>Fowler Cot</h3>
-          <p>Customise head & foot panel, rails, wheels, and operation modes</p>
-        </a>
-        <a href="#icu" class="product-card">
-          <div class="product-card-preview">
-            <model-viewer src="assets/models/customisation-models/icu-cot/3d_model.glb" loading="lazy" auto-rotate rotation-per-second="12deg" interaction-prompt="none" shadow-intensity="0.5" shadow-softness="0.8" style="width:100%; height:100%; pointer-events:none;"></model-viewer>
-          </div>
-          <h3>ICU Cot</h3>
-          <p>Full 3D customisation with dynamic part replacement</p>
-        </a>
-        <a href="#labor-cot" class="product-card">
-          <div class="product-card-preview">
-            <model-viewer src="assets/models/customisation-models/labor-cot/3d_model.glb" loading="lazy" auto-rotate rotation-per-second="12deg" interaction-prompt="none" shadow-intensity="0.5" shadow-softness="0.8" style="width:100%; height:100%; pointer-events:none;"></model-viewer>
-          </div>
-          <h3>Labor Cot</h3>
-          <p>Explore medical delivery beds options</p>
-        </a>
-        <a href="#hi-lo" class="product-card">
-          <div class="product-card-preview">
-            <model-viewer src="assets/models/customisation-models/hi-lo-stretcher/3d_model.glb" loading="lazy" auto-rotate rotation-per-second="12deg" interaction-prompt="none" shadow-intensity="0.5" shadow-softness="0.8" style="width:100%; height:100%; pointer-events:none;"></model-viewer>
-          </div>
-          <h3>Hi-Lo Stretcher</h3>
-          <p>Interactive configurator for patient transfer stretchers</p>
-        </a>
-        <a href="#couch" class="product-card">
-          <div class="product-card-preview">
-            <model-viewer src="assets/models/customisation-models/deluxe-examination-couch/3d_model.glb" loading="lazy" auto-rotate rotation-per-second="12deg" interaction-prompt="none" shadow-intensity="0.5" shadow-softness="0.8" style="width:100%; height:100%; pointer-events:none;"></model-viewer>
-          </div>
-          <h3>Deluxe Examination Couch</h3>
-          <p>Customise cabinet and drawer colors</p>
-        </a>
-      </div>
-    </div>
-
-    <div class="product-grid-section">
-      <h2 class="section-heading">View-Only Models</h2>
-      <div class="product-grid">
-        <a href="#semi-fowler" class="product-card view-only-card">
-          <div class="product-card-preview">
-            <model-viewer src="assets/models/view-only-models/semi-fowler-cot.glb" loading="lazy" auto-rotate rotation-per-second="12deg" interaction-prompt="none" shadow-intensity="0.5" shadow-softness="0.8" style="width:100%; height:100%; pointer-events:none;"></model-viewer>
-          </div>
-          <h3>Semi Fowler Cot</h3>
-          <p>3D visual representation</p>
-        </a>
-        <a href="#over-bed-table" class="product-card view-only-card">
-          <div class="product-card-preview">
-            <model-viewer src="assets/models/view-only-models/over-bed-table.glb" loading="lazy" auto-rotate rotation-per-second="12deg" interaction-prompt="none" shadow-intensity="0.5" shadow-softness="0.8" style="width:100%; height:100%; pointer-events:none;"></model-viewer>
-          </div>
-          <h3>Over Bed Table</h3>
-          <p>3D visual representation</p>
-        </a>
-        <a href="#attender-cot-deluxe" class="product-card view-only-card">
-          <div class="product-card-preview">
-            <model-viewer src="assets/models/view-only-models/attender-cot/attender-cot-deluxe.glb" loading="lazy" auto-rotate rotation-per-second="12deg" interaction-prompt="none" shadow-intensity="0.5" shadow-softness="0.8" style="width:100%; height:100%; pointer-events:none;"></model-viewer>
-          </div>
-          <h3>Attender Cot Deluxe</h3>
-          <p>3D visual representation</p>
-        </a>
-        <a href="#attender-cot" class="product-card view-only-card">
-          <div class="product-card-preview">
-            <model-viewer src="assets/models/view-only-models/attender-cot/attender-cot.glb" loading="lazy" auto-rotate rotation-per-second="12deg" interaction-prompt="none" shadow-intensity="0.5" shadow-softness="0.8" style="width:100%; height:100%; pointer-events:none;"></model-viewer>
-          </div>
-          <h3>Attender Cot Plain</h3>
-          <p>3D visual representation</p>
-        </a>
-        <a href="#bedside-locker-deluxe" class="product-card view-only-card">
-          <div class="product-card-preview">
-            <model-viewer src="assets/models/view-only-models/bedside-locker/bedside-locker-deluxe.glb" loading="lazy" auto-rotate rotation-per-second="12deg" interaction-prompt="none" shadow-intensity="0.5" shadow-softness="0.8" style="width:100%; height:100%; pointer-events:none;"></model-viewer>
-          </div>
-          <h3>Bed Sidelocker Deluxe Wood</h3>
-          <p>3D visual representation</p>
-        </a>
-        <a href="#bedside-locker" class="product-card view-only-card">
-          <div class="product-card-preview">
-            <model-viewer src="assets/models/view-only-models/bedside-locker/bedside-locker.glb" loading="lazy" auto-rotate rotation-per-second="12deg" interaction-prompt="none" shadow-intensity="0.5" shadow-softness="0.8" style="width:100%; height:100%; pointer-events:none;"></model-viewer>
-          </div>
-          <h3>Bedside Locker Plain</h3>
-          <p>3D visual representation</p>
-        </a>
-      </div>
-    </div>
-  </main>
-
-</div>
-
-<script type="importmap">
+  <script type="importmap">
   {
     "imports": {
       "three": "https://unpkg.com/three@0.128.0/build/three.module.js"
     }
   }
 </script>
-<script type="module" src="app.js?v=20260824_5"></script>
+  <script type="module" src="app.js?v=20260824_5"></script>
 
 </body>
+
 </html>
