@@ -310,8 +310,13 @@
           </div>
           <div class="config-card" data-section="siderails" data-value="abs">
             <div class="selection-indicator"></div>
-            <img src="assets/images/abs-icon.webp" alt="ABS" />
-            <span>ABS Rail</span>
+            <img src="assets/images/abs-icon.webp" alt="ABS Rail 1" />
+            <span>ABS Rail 1</span>
+          </div>
+          <div class="config-card" data-section="siderails" data-value="abs2">
+            <div class="selection-indicator"></div>
+            <img src="assets/images/abs-icon.webp" alt="ABS Button Rail" />
+            <span>ABS Button Rail</span>
           </div>
           <div class="config-card" data-section="siderails" data-value="aluminium">
             <div class="selection-indicator"></div>
@@ -673,19 +678,19 @@
         </div>
       </div>
 
-      <!-- Footer Position (Labor Cot Only) -->
-      <div class="config-section" id="config-section-footer" style="display: none;">
-        <div class="config-section-title">Footer Position</div>
+      <!-- Position Option (Fowler Cot Only) -->
+      <div class="config-section" id="config-section-position" style="display: none;">
+        <div class="config-section-title">Position</div>
         <div class="radio-group">
           <label class="radio-option">
-            <input type="radio" name="footer" value="in" checked />
+            <input type="radio" name="position" value="flat" checked />
             <span class="radio-custom"></span>
-            Footer In
+            Flat
           </label>
           <label class="radio-option">
-            <input type="radio" name="footer" value="out" />
+            <input type="radio" name="position" value="fowler" />
             <span class="radio-custom"></span>
-            Footer Out
+            Fowler
           </label>
         </div>
       </div>
@@ -698,7 +703,7 @@
     <div id="canvas-wrap">
       <model-viewer id="three-canvas" alt="Mathurams 3D Product" camera-controls touch-action="none" auto-rotate
         auto-rotate-delay="1000" rotation-per-second="12deg" interaction-prompt="when-focused"
-        interaction-prompt-threshold="1500" shadow-intensity="0" disable-tap disable-pan></model-viewer>
+        interaction-prompt-threshold="1500" shadow-intensity="0.8" shadow-softness="1" environment-image="neutral" disable-tap disable-pan></model-viewer>
 
       <!-- Bottom Floating Model Variant Selector (View-Only Models) -->
       <div id="bottom-variant-selector" style="display: none;"></div>

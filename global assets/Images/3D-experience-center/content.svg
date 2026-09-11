@@ -1,38 +1,153 @@
-<svg width="255" height="190" viewBox="0 0 255 190" fill="none" xmlns="http://www.w3.org/2000/svg">
+<svg width="255" height="215" viewBox="0 0 255 215" fill="none" xmlns="http://www.w3.org/2000/svg">
 <style>
-.color-circle {
+.tooltip-item {
+  opacity: 0;
+  pointer-events: none;
   transform-box: fill-box;
   transform-origin: center;
-  animation: circleZoomLoop 4.5s ease-in-out infinite;
+  filter: drop-shadow(0px 2px 4px rgba(0, 0, 0, 0.4));
 }
 
-.circle-1  { transform-origin: 41.96px 150.96px; animation-delay: 0.00s; }
-.circle-2  { transform-origin: 68.31px 150.96px; animation-delay: 0.28s; }
-.circle-3  { transform-origin: 94.66px 150.96px; animation-delay: 0.56s; }
-.circle-4  { transform-origin: 121.00px 150.96px; animation-delay: 0.84s; }
-.circle-5  { transform-origin: 147.35px 150.96px; animation-delay: 1.12s; }
-.circle-6  { transform-origin: 173.69px 150.96px; animation-delay: 1.40s; }
-.circle-7  { transform-origin: 200.04px 150.96px; animation-delay: 1.68s; }
-
-.circle-8  { transform-origin: 41.96px 172.07px; animation-delay: 1.96s; }
-.circle-9  { transform-origin: 68.31px 172.07px; animation-delay: 2.24s; }
-.circle-10 { transform-origin: 94.66px 172.07px; animation-delay: 2.52s; }
-.circle-11 { transform-origin: 121.00px 172.07px; animation-delay: 2.80s; }
-.circle-12 { transform-origin: 147.35px 172.07px; animation-delay: 3.08s; }
-.circle-13 { transform-origin: 173.69px 172.07px; animation-delay: 3.36s; }
-.circle-14 { transform-origin: 200.04px 172.07px; animation-delay: 3.64s; }
-
-@keyframes circleZoomLoop {
-  0% {
-    transform: scale(1);
-  }
-  12% {
-    transform: scale(1.08);
-  }
-  24%, 100% {
-    transform: scale(1);
-  }
+@keyframes tt-reveal-1 {
+  0%, 0.00% { opacity: 0; transform: scale(0.75) translateY(3px); }
+  1.50%, 5.64% { opacity: 1; transform: scale(1.35) translateY(0); }
+  7.14%, 100% { opacity: 0; transform: scale(0.75) translateY(-3px); }
 }
+
+.tt-1 {
+  animation: tt-reveal-1 28s infinite ease-in-out;
+}
+
+@keyframes tt-reveal-2 {
+  0%, 7.14% { opacity: 0; transform: scale(0.75) translateY(3px); }
+  8.64%, 12.79% { opacity: 1; transform: scale(1.35) translateY(0); }
+  14.29%, 100% { opacity: 0; transform: scale(0.75) translateY(-3px); }
+}
+
+.tt-2 {
+  animation: tt-reveal-2 28s infinite ease-in-out;
+}
+
+@keyframes tt-reveal-3 {
+  0%, 14.29% { opacity: 0; transform: scale(0.75) translateY(3px); }
+  15.79%, 19.93% { opacity: 1; transform: scale(1.35) translateY(0); }
+  21.43%, 100% { opacity: 0; transform: scale(0.75) translateY(-3px); }
+}
+
+.tt-3 {
+  animation: tt-reveal-3 28s infinite ease-in-out;
+}
+
+@keyframes tt-reveal-4 {
+  0%, 21.43% { opacity: 0; transform: scale(0.75) translateY(3px); }
+  22.93%, 27.07% { opacity: 1; transform: scale(1.35) translateY(0); }
+  28.57%, 100% { opacity: 0; transform: scale(0.75) translateY(-3px); }
+}
+
+.tt-4 {
+  animation: tt-reveal-4 28s infinite ease-in-out;
+}
+
+@keyframes tt-reveal-5 {
+  0%, 28.57% { opacity: 0; transform: scale(0.75) translateY(3px); }
+  30.07%, 34.21% { opacity: 1; transform: scale(1.35) translateY(0); }
+  35.71%, 100% { opacity: 0; transform: scale(0.75) translateY(-3px); }
+}
+
+.tt-5 {
+  animation: tt-reveal-5 28s infinite ease-in-out;
+}
+
+@keyframes tt-reveal-6 {
+  0%, 35.71% { opacity: 0; transform: scale(0.75) translateY(3px); }
+  37.21%, 41.36% { opacity: 1; transform: scale(1.35) translateY(0); }
+  42.86%, 100% { opacity: 0; transform: scale(0.75) translateY(-3px); }
+}
+
+.tt-6 {
+  animation: tt-reveal-6 28s infinite ease-in-out;
+}
+
+@keyframes tt-reveal-7 {
+  0%, 42.86% { opacity: 0; transform: scale(0.75) translateY(3px); }
+  44.36%, 48.50% { opacity: 1; transform: scale(1.35) translateY(0); }
+  50.00%, 100% { opacity: 0; transform: scale(0.75) translateY(-3px); }
+}
+
+.tt-7 {
+  animation: tt-reveal-7 28s infinite ease-in-out;
+}
+
+@keyframes tt-reveal-8 {
+  0%, 50.00% { opacity: 0; transform: scale(0.75) translateY(3px); }
+  51.50%, 55.64% { opacity: 1; transform: scale(1.35) translateY(0); }
+  57.14%, 100% { opacity: 0; transform: scale(0.75) translateY(-3px); }
+}
+
+.tt-8 {
+  animation: tt-reveal-8 28s infinite ease-in-out;
+}
+
+@keyframes tt-reveal-9 {
+  0%, 57.14% { opacity: 0; transform: scale(0.75) translateY(3px); }
+  58.64%, 62.79% { opacity: 1; transform: scale(1.35) translateY(0); }
+  64.29%, 100% { opacity: 0; transform: scale(0.75) translateY(-3px); }
+}
+
+.tt-9 {
+  animation: tt-reveal-9 28s infinite ease-in-out;
+}
+
+@keyframes tt-reveal-10 {
+  0%, 64.29% { opacity: 0; transform: scale(0.75) translateY(3px); }
+  65.79%, 69.93% { opacity: 1; transform: scale(1.35) translateY(0); }
+  71.43%, 100% { opacity: 0; transform: scale(0.75) translateY(-3px); }
+}
+
+.tt-10 {
+  animation: tt-reveal-10 28s infinite ease-in-out;
+}
+
+@keyframes tt-reveal-11 {
+  0%, 71.43% { opacity: 0; transform: scale(0.75) translateY(3px); }
+  72.93%, 77.07% { opacity: 1; transform: scale(1.35) translateY(0); }
+  78.57%, 100% { opacity: 0; transform: scale(0.75) translateY(-3px); }
+}
+
+.tt-11 {
+  animation: tt-reveal-11 28s infinite ease-in-out;
+}
+
+@keyframes tt-reveal-12 {
+  0%, 78.57% { opacity: 0; transform: scale(0.75) translateY(3px); }
+  80.07%, 84.21% { opacity: 1; transform: scale(1.35) translateY(0); }
+  85.71%, 100% { opacity: 0; transform: scale(0.75) translateY(-3px); }
+}
+
+.tt-12 {
+  animation: tt-reveal-12 28s infinite ease-in-out;
+}
+
+@keyframes tt-reveal-13 {
+  0%, 85.71% { opacity: 0; transform: scale(0.75) translateY(3px); }
+  87.21%, 91.36% { opacity: 1; transform: scale(1.35) translateY(0); }
+  92.86%, 100% { opacity: 0; transform: scale(0.75) translateY(-3px); }
+}
+
+.tt-13 {
+  animation: tt-reveal-13 28s infinite ease-in-out;
+}
+
+@keyframes tt-reveal-14 {
+  0%, 92.86% { opacity: 0; transform: scale(0.75) translateY(3px); }
+  94.36%, 98.50% { opacity: 1; transform: scale(1.35) translateY(0); }
+  100.00%, 100% { opacity: 0; transform: scale(0.75) translateY(-3px); }
+}
+
+.tt-14 {
+  animation: tt-reveal-14 28s infinite ease-in-out;
+}
+
 </style>
 <g clip-path="url(#clip0_1218_425)">
 <g filter="url(#filter0_f_1218_425)">
@@ -104,6 +219,79 @@
 <circle cx="200.036" cy="172.065" r="8.96369" fill="#E8DCC5"/>
 <circle cx="200.036" cy="172.065" r="8.53685" stroke="white" stroke-width="0.853685"/>
 </g>
+</g>
+<!-- Animated Tooltips -->
+<g id="animated-tooltips">
+  <g class="tooltip-item tt-1">
+    <rect x="19.96" y="119" width="44" height="22" rx="4" fill="#222222" stroke="#ffffff" stroke-width="0.75" />
+    <path d="M37.96 141 L41.96 146 L45.96 141 Z" fill="#222222" />
+    <text x="41.96" y="133.5" fill="#ffffff" font-size="9.5" font-family="Inter, system-ui, sans-serif" font-weight="700" text-anchor="middle">Coffee</text>
+  </g>
+  <g class="tooltip-item tt-2">
+    <rect x="47.31" y="119" width="42" height="22" rx="4" fill="#222222" stroke="#ffffff" stroke-width="0.75" />
+    <path d="M64.31 141 L68.31 146 L72.31 141 Z" fill="#222222" />
+    <text x="68.31" y="133.5" fill="#ffffff" font-size="9.5" font-family="Inter, system-ui, sans-serif" font-weight="700" text-anchor="middle">Choco</text>
+  </g>
+  <g class="tooltip-item tt-3">
+    <rect x="63.66" y="119" width="62" height="22" rx="4" fill="#222222" stroke="#ffffff" stroke-width="0.75" />
+    <path d="M90.66 141 L94.66 146 L98.66 141 Z" fill="#222222" />
+    <text x="94.66" y="133.5" fill="#ffffff" font-size="9.5" font-family="Inter, system-ui, sans-serif" font-weight="700" text-anchor="middle">Light Blue</text>
+  </g>
+  <g class="tooltip-item tt-4">
+    <rect x="90.00" y="119" width="62" height="22" rx="4" fill="#222222" stroke="#ffffff" stroke-width="0.75" />
+    <path d="M117.00 141 L121.00 146 L125.00 141 Z" fill="#222222" />
+    <text x="121.00" y="133.5" fill="#ffffff" font-size="9.5" font-family="Inter, system-ui, sans-serif" font-weight="700" text-anchor="middle">Dark Blue</text>
+  </g>
+  <g class="tooltip-item tt-5">
+    <rect x="105.35" y="119" width="84" height="22" rx="4" fill="#222222" stroke="#ffffff" stroke-width="0.75" />
+    <path d="M143.35 141 L147.35 146 L151.35 141 Z" fill="#222222" />
+    <text x="147.35" y="133.5" fill="#ffffff" font-size="9.5" font-family="Inter, system-ui, sans-serif" font-weight="700" text-anchor="middle">Reliable Green</text>
+  </g>
+  <g class="tooltip-item tt-6">
+    <rect x="146.69" y="119" width="54" height="22" rx="4" fill="#222222" stroke="#ffffff" stroke-width="0.75" />
+    <path d="M169.69 141 L173.69 146 L177.69 141 Z" fill="#222222" />
+    <text x="173.69" y="133.5" fill="#ffffff" font-size="9.5" font-family="Inter, system-ui, sans-serif" font-weight="700" text-anchor="middle">Pistachio</text>
+  </g>
+  <g class="tooltip-item tt-7">
+    <rect x="162.04" y="119" width="76" height="22" rx="4" fill="#222222" stroke="#ffffff" stroke-width="0.75" />
+    <path d="M196.04 141 L200.04 146 L204.04 141 Z" fill="#222222" />
+    <text x="200.04" y="133.5" fill="#ffffff" font-size="9.5" font-family="Inter, system-ui, sans-serif" font-weight="700" text-anchor="middle">Parrot Green</text>
+  </g>
+  <g class="tooltip-item tt-8">
+    <rect x="11.96" y="182" width="60" height="22" rx="4" fill="#222222" stroke="#ffffff" stroke-width="0.75" />
+    <path d="M37.96 182 L41.96 177 L45.96 182 Z" fill="#222222" />
+    <text x="41.96" y="196.5" fill="#ffffff" font-size="9.5" font-family="Inter, system-ui, sans-serif" font-weight="700" text-anchor="middle">Dark Grey</text>
+  </g>
+  <g class="tooltip-item tt-9">
+    <rect x="34.31" y="182" width="68" height="22" rx="4" fill="#222222" stroke="#ffffff" stroke-width="0.75" />
+    <path d="M64.31 182 L68.31 177 L72.31 182 Z" fill="#222222" />
+    <text x="68.31" y="196.5" fill="#ffffff" font-size="9.5" font-family="Inter, system-ui, sans-serif" font-weight="700" text-anchor="middle">Basalt Grey</text>
+  </g>
+  <g class="tooltip-item tt-10">
+    <rect x="70.66" y="182" width="48" height="22" rx="4" fill="#222222" stroke="#ffffff" stroke-width="0.75" />
+    <path d="M90.66 182 L94.66 177 L98.66 182 Z" fill="#222222" />
+    <text x="94.66" y="196.5" fill="#ffffff" font-size="9.5" font-family="Inter, system-ui, sans-serif" font-weight="700" text-anchor="middle">Orange</text>
+  </g>
+  <g class="tooltip-item tt-11">
+    <rect x="82.00" y="182" width="78" height="22" rx="4" fill="#222222" stroke="#ffffff" stroke-width="0.75" />
+    <path d="M117.00 182 L121.00 177 L125.00 182 Z" fill="#222222" />
+    <text x="121.00" y="196.5" fill="#ffffff" font-size="9.5" font-family="Inter, system-ui, sans-serif" font-weight="700" text-anchor="middle">Lemon Yellow</text>
+  </g>
+  <g class="tooltip-item tt-12">
+    <rect x="126.35" y="182" width="42" height="22" rx="4" fill="#222222" stroke="#ffffff" stroke-width="0.75" />
+    <path d="M143.35 182 L147.35 177 L151.35 182 Z" fill="#222222" />
+    <text x="147.35" y="196.5" fill="#ffffff" font-size="9.5" font-family="Inter, system-ui, sans-serif" font-weight="700" text-anchor="middle">Black</text>
+  </g>
+  <g class="tooltip-item tt-13">
+    <rect x="152.69" y="182" width="42" height="22" rx="4" fill="#222222" stroke="#ffffff" stroke-width="0.75" />
+    <path d="M169.69 182 L173.69 177 L177.69 182 Z" fill="#222222" />
+    <text x="173.69" y="196.5" fill="#ffffff" font-size="9.5" font-family="Inter, system-ui, sans-serif" font-weight="700" text-anchor="middle">Violet</text>
+  </g>
+  <g class="tooltip-item tt-14">
+    <rect x="179.04" y="182" width="42" height="22" rx="4" fill="#222222" stroke="#ffffff" stroke-width="0.75" />
+    <path d="M196.04 182 L200.04 177 L204.04 182 Z" fill="#222222" />
+    <text x="200.04" y="196.5" fill="#ffffff" font-size="9.5" font-family="Inter, system-ui, sans-serif" font-weight="700" text-anchor="middle">Beige</text>
+  </g>
 </g>
 <defs>
 <filter id="filter0_f_1218_425" x="-14.1" y="-12.1" width="238.2" height="228.2" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
@@ -252,7 +440,7 @@
 <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_1218_425" result="shape"/>
 </filter>
 <clipPath id="clip0_1218_425">
-<rect width="255" height="190" fill="white"/>
+<rect width="255" height="215" fill="white"/>
 </clipPath>
 </defs>
 </svg>
