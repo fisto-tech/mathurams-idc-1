@@ -232,8 +232,9 @@ modelViewer.addEventListener('load', () => {
       }
     }
 
-    // Hide manual_rod and manual_rod_bush nodes & materials for Overbed Table
-    if (childName.includes('manual_rod')) {
+    // Hide manual_rod and manual_rod_bush nodes & materials ONLY for Overbed Table
+    const isOverBedTable = (currentModelName || '').toLowerCase().includes('over-bed') || (currentModelName || '').toLowerCase().includes('overbed') || productName.toLowerCase().includes('overbed') || productName.toLowerCase().includes('over bed');
+    if (isOverBedTable && childName.includes('manual_rod')) {
       child.visible = false;
       if (child.material) {
         if (Array.isArray(child.material)) child.material.forEach(m => m.visible = false);
@@ -246,7 +247,7 @@ modelViewer.addEventListener('load', () => {
       const materials = Array.isArray(child.material) ? child.material : [child.material];
       materials.forEach(mat => {
         const matName = (mat.name || '').toLowerCase();
-        if (matName === 'manual_rod' || matName === 'manual_rod_bush' || matName.includes('manual_rod')) {
+        if (isOverBedTable && (matName === 'manual_rod' || matName === 'manual_rod_bush' || matName.includes('manual_rod'))) {
           mat.visible = false;
           child.visible = false;
         }
@@ -616,7 +617,7 @@ function getMeshIconSrc(name) {
   if (lower.includes('ss') && (lower.includes('collapsible') || lower.includes('colapsable'))) return 'assets/images/ss-collapsible-icon.webp';
   if (lower.includes('aluminium') || lower.includes('collapsible') || lower.includes('colapsable')) return 'assets/images/aluminium-collapsible-icon.webp';
   if (lower.includes('ms') || lower.includes('m1') || lower.includes('m4')) return 'assets/images/ms-icon.webp';
-  if (lower.includes('ss') || lower.includes('plain')) return 'assets/images/ss-plain-icon.webp';
+  if (lower.includes('ss') || lower.includes('plain') || lower.includes('siderailing') || lower.includes('bush_siderail') || lower.includes('bush_basesider')) return 'assets/images/ss-plain-icon.webp';
   return null;
 }
 
@@ -833,7 +834,7 @@ function focusSection(section) {
         match = true;
       }
     } else if (section === 'siderails') {
-      if (name.includes('rail') || name.includes('side') || name.includes('collapsible') || name.includes('colapsable') || name.includes('ac-') || name.includes('ac_') || name.includes('pipe')) {
+      if (name.includes('rail') || name.includes('side') || name.includes('collapsible') || name.includes('colapsable') || name.includes('ac-') || name.includes('ac_') || name.includes('pipe') || name.includes('siderailing') || name.includes('bush_basesider') || name.includes('bush_siderail')) {
         match = true;
       }
     } else if (section === 'wheel') {
@@ -1005,7 +1006,7 @@ function setDefaultConfigForModel(name) {
       siderails: 'ssplain',
       mattress: 'zip',
       wheel: 'wheel',
-      operation: 'remote'
+      operation: 'manual'
     };
   } else if (lower.includes('labor')) {
     defaults = {
@@ -1148,13 +1149,13 @@ function applyCurrentConfig() {
     }
 
     // Side Rails matching
-    const isRailMesh = name.includes('rail') || name.includes('side') || name.includes('collapsible') || name.includes('colapsable') || name.includes('ac-') || name.includes('ac_') || name.includes('pipe') || name.includes('siderailing');
+    const isRailMesh = name.includes('rail') || name.includes('side') || name.includes('collapsible') || name.includes('colapsable') || name.includes('ac-') || name.includes('ac_') || name.includes('pipe') || name.includes('siderailing') || name.includes('bush_basesider') || name.includes('bush_siderail');
     if (isRailMesh) {
       const isAbsRail = name.includes('abs');
       const isAlum = (name.includes('aluminium') || name.includes('ac_') || name.includes('ac-') || name.startsWith('ac ') || name === 'ac_siderailings');
       const isSsCollapsible = (name.includes('ss_collaps') || name.includes('sscollaps') || name.includes('ss_collapsible')) && !isAbsRail;
-      const isSsPlain = (name.includes('ss') || name.includes('s3')) && !isAbsRail && !isSsCollapsible && !isAlum;
-      const isMsRail = (name.includes('ms') || name.includes('m1')) && !isAbsRail && !isAlum && !isSsCollapsible;
+      const isSsPlain = (name.includes('ss') || name.includes('s3') || name.includes('siderailing') || name.includes('bush_basesider') || name.includes('bush_siderail')) && !isAbsRail && !isSsCollapsible && !isAlum;
+      const isMsRail = (name.includes('ms') || name.includes('m1')) && !isAbsRail && !isAlum && !isSsCollapsible && !name.includes('siderailing') && !name.includes('bush_basesider') && !name.includes('bush_siderail');
 
       if (siderails === 'ms') {
         if (isSsPlain || isAbsRail || isAlum || isSsCollapsible) visible = false;
@@ -1233,11 +1234,13 @@ function applyCurrentConfig() {
     }
 
     // Operation matching
-    if (name.includes('motor') || name.includes('remote') || name.includes('crank') || name.includes('manual') || name.includes('handle') || name.includes('cable') || name.includes('wire') || name.includes('adjustment')) {
+    if (isHiLo && (name.includes('adjustment') || name.includes('rod') || name.includes('crank'))) {
+      visible = true;
+    } else if (!isHiLo && (name.includes('motor') || name.includes('remote') || name.includes('crank') || (name.includes('manual') && !name.includes('manual_rod')) || name.includes('handle') || name.includes('cable') || name.includes('wire') || name.includes('adjustment'))) {
       if (operation === 'manual') {
         if (name.includes('motor') || name.includes('remote') || name.includes('cable') || name.includes('wire')) visible = false;
       } else if (operation === 'remote') {
-        if (name.includes('crank') || name.includes('manual') || name.includes('handle') || name.includes('adjustment')) visible = false;
+        if (name.includes('crank') || (name.includes('manual') && !name.includes('manual_rod')) || name.includes('handle') || name.includes('adjustment')) visible = false;
       }
     }
 
@@ -1317,29 +1320,89 @@ function applyCurrentConfig() {
       }
 
       // Parent group & node traversal for Side Rails
-      const isRailNode = nodeName.includes('rail') || nodeName.includes('side') || nodeName.includes('siderailing') || nodeName.includes('collapsible') || nodeName.includes('colapsable') || nodeName.includes('ac-') || nodeName.includes('ac_');
+      const isRailNode = nodeName.includes('rail') || nodeName.includes('side') || nodeName.includes('siderailing') || nodeName.includes('collapsible') || nodeName.includes('colapsable') || nodeName.includes('ac-') || nodeName.includes('ac_') || nodeName.includes('bush_basesider') || nodeName.includes('bush_siderail');
       if (isRailNode) {
         const isAbsRailNode = nodeName.includes('abs');
         const isAlumNode = (nodeName.includes('aluminium') || nodeName.includes('ac_') || nodeName.includes('ac-') || nodeName.startsWith('ac ') || nodeName === 'ac_siderailings');
         const isSsCollapsNode = (nodeName.includes('ss_collaps') || nodeName.includes('sscollaps') || nodeName.includes('ss_collapsible')) && !isAbsRailNode;
-        const isSsPlainNode = (nodeName.includes('ss') || nodeName.includes('s3')) && !isAbsRailNode && !isSsCollapsNode && !isAlumNode;
-        const isMsRailNode = (nodeName.includes('ms') || nodeName.includes('m1')) && !isAbsRailNode && !isAlumNode && !isSsCollapsNode;
+        const isSsPlainNode = (nodeName.includes('ss') || nodeName.includes('s3') || nodeName.includes('siderailing') || nodeName.includes('bush_basesider') || nodeName.includes('bush_siderail')) && !isAbsRailNode && !isSsCollapsNode && !isAlumNode;
+        const isMsRailNode = (nodeName.includes('ms') || nodeName.includes('m1')) && !isAbsRailNode && !isAlumNode && !isSsCollapsNode && !nodeName.includes('siderailing') && !nodeName.includes('bush_basesider') && !nodeName.includes('bush_siderail');
 
         if (siderails === 'ms') {
-          if (isSsPlainNode || isAbsRailNode || isAlumNode || isSsCollapsNode) child.visible = false;
-          if (isMsRailNode) child.visible = true;
+          if (isSsPlainNode || isAbsRailNode || isAlumNode || isSsCollapsNode) {
+            child.visible = false;
+            if (child.material) {
+              if (Array.isArray(child.material)) child.material.forEach(m => m.visible = false);
+              else child.material.visible = false;
+            }
+          }
+          if (isMsRailNode) {
+            child.visible = true;
+            if (child.material) {
+              if (Array.isArray(child.material)) child.material.forEach(m => m.visible = true);
+              else child.material.visible = true;
+            }
+          }
         } else if (siderails === 'ssplain') {
-          if (isMsRailNode || isAbsRailNode || isAlumNode || isSsCollapsNode) child.visible = false;
-          if (isSsPlainNode) child.visible = true;
+          if (isMsRailNode || isAbsRailNode || isAlumNode || isSsCollapsNode) {
+            child.visible = false;
+            if (child.material) {
+              if (Array.isArray(child.material)) child.material.forEach(m => m.visible = false);
+              else child.material.visible = false;
+            }
+          }
+          if (isSsPlainNode) {
+            child.visible = true;
+            if (child.material) {
+              if (Array.isArray(child.material)) child.material.forEach(m => m.visible = true);
+              else child.material.visible = true;
+            }
+          }
         } else if (siderails === 'abs') {
-          if (isMsRailNode || isSsPlainNode || isAlumNode || isSsCollapsNode) child.visible = false;
-          if (isAbsRailNode) child.visible = true;
+          if (isMsRailNode || isSsPlainNode || isAlumNode || isSsCollapsNode) {
+            child.visible = false;
+            if (child.material) {
+              if (Array.isArray(child.material)) child.material.forEach(m => m.visible = false);
+              else child.material.visible = false;
+            }
+          }
+          if (isAbsRailNode) {
+            child.visible = true;
+            if (child.material) {
+              if (Array.isArray(child.material)) child.material.forEach(m => m.visible = true);
+              else child.material.visible = true;
+            }
+          }
         } else if (siderails === 'aluminium') {
-          if (isMsRailNode || isSsPlainNode || isAbsRailNode || isSsCollapsNode) child.visible = false;
-          if (isAlumNode) child.visible = true;
+          if (isMsRailNode || isSsPlainNode || isAbsRailNode || isSsCollapsNode) {
+            child.visible = false;
+            if (child.material) {
+              if (Array.isArray(child.material)) child.material.forEach(m => m.visible = false);
+              else child.material.visible = false;
+            }
+          }
+          if (isAlumNode) {
+            child.visible = true;
+            if (child.material) {
+              if (Array.isArray(child.material)) child.material.forEach(m => m.visible = true);
+              else child.material.visible = true;
+            }
+          }
         } else if (siderails === 'sscollapsible') {
-          if (isMsRailNode || isSsPlainNode || isAbsRailNode || isAlumNode) child.visible = false;
-          if (isSsCollapsNode) child.visible = true;
+          if (isMsRailNode || isSsPlainNode || isAbsRailNode || isAlumNode) {
+            child.visible = false;
+            if (child.material) {
+              if (Array.isArray(child.material)) child.material.forEach(m => m.visible = false);
+              else child.material.visible = false;
+            }
+          }
+          if (isSsCollapsNode) {
+            child.visible = true;
+            if (child.material) {
+              if (Array.isArray(child.material)) child.material.forEach(m => m.visible = true);
+              else child.material.visible = true;
+            }
+          }
         }
       }
 
@@ -1451,8 +1514,8 @@ function applyColorToMeshes(hexColorStr) {
     const entry = meshMap[key];
     const name = entry.name.toLowerCase();
     
-    const isRailMesh = name.includes('rail') || name.includes('side') || name.includes('collapsible') || name.includes('colapsable') || name.includes('ac-') || name.includes('ac_');
-    const isAbsRail = isRailMesh && !name.includes('ms') && !name.includes('ss') && !name.includes('aluminium') && !name.includes('collapsible') && !name.includes('colapsable') && !name.includes('ac-') && !name.includes('ac_');
+    const isRailMesh = name.includes('rail') || name.includes('side') || name.includes('collapsible') || name.includes('colapsable') || name.includes('ac-') || name.includes('ac_') || name.includes('siderailing') || name.includes('bush_basesider') || name.includes('bush_siderail');
+    const isAbsRail = isRailMesh && !name.includes('ms') && !name.includes('ss') && !name.includes('aluminium') && !name.includes('collapsible') && !name.includes('colapsable') && !name.includes('ac-') && !name.includes('ac_') && !name.includes('siderailing') && !name.includes('bush_siderail') && !name.includes('bush_basesider');
     const isAbs = name.includes('abs') || isAbsRail;
 
     if (entry.visible && !name.includes('mattress') && !isAbs && (name.includes('panel') || name.includes('rail') || name.includes('frame') || name.includes('board') || name.includes('head') || name.includes('foot') || name.includes('body') || name.includes('support'))) {
