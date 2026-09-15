@@ -183,7 +183,7 @@ function loadModel(fileOrUrl, fileName) {
   modelViewer.cameraOrbit = modelInitialOrbit;
   modelViewer.cameraTarget = modelInitialTarget;
   modelViewer.fieldOfView = modelInitialFov;
-  modelViewer.setAttribute('shadow-intensity', '0.8');
+  modelViewer.setAttribute('shadow-intensity', '0.6');
   modelViewer.setAttribute('shadow-softness', '1');
 
   // Reset panning state on load
@@ -194,12 +194,10 @@ function loadModel(fileOrUrl, fileName) {
   modelViewer.setAttribute('disable-pan', '');
   modelViewer.disablePan = true;
 
-  // Set model-specific exposure & environment image
-  if (modelKey === 'bedside-locker') {
-    modelViewer.environmentImage = 'legacy';
-  } else {
-    modelViewer.environmentImage = 'neutral';
-  }
+  // Set model-specific exposure & environment image (legacy environment produces soft leg contact shadows)
+  // Both attribute + JS property must be set BEFORE src so model-viewer picks them up on load
+  modelViewer.setAttribute('environment-image', 'legacy');
+  modelViewer.environmentImage = 'legacy';
 
   if (modelKey === 'bedside-locker-deluxe') {
     modelViewer.exposure = 0.75;
@@ -218,6 +216,12 @@ function loadModel(fileOrUrl, fileName) {
   } else {
     modelViewer.autoRotate = true;
   }
+
+  // Zero out shadow-intensity before setting src so the subsequent
+  // setAttribute('shadow-intensity', '0.6') is a REAL attribute change
+  // (not a no-op repeat), forcing model-viewer to recompute the contact shadow
+  // against the new model's bounding box.
+  modelViewer.setAttribute('shadow-intensity', '0');
 
   // Assign source to Google's model-viewer
   modelViewer.src = url;
@@ -249,9 +253,6 @@ modelViewer.addEventListener('load', () => {
     }
   });
 
-  // Enable native model-viewer soft contact shadows with realistic intensity & softness
-  modelViewer.setAttribute('shadow-intensity', '0.8');
-  modelViewer.setAttribute('shadow-softness', '1');
   modelViewer.style.backgroundColor = 'transparent';
 
   let totalTris = 0;
@@ -260,9 +261,9 @@ modelViewer.addEventListener('load', () => {
   internalScene.traverse((child) => {
     if (!child.isMesh) return;
 
-    // Filter out internal model-viewer helper elements (e.g. shadow ground planes, UI helper nodes)
+    // Filter out internal model-viewer helper elements (e.g. UI helper nodes)
     const childName = (child.name || '').toLowerCase();
-    if (childName.includes('helper') || childName.includes('skybox') || childName.includes('ground') || childName.includes('shadow') || childName.includes('floor') || childName.includes('reticle')) {
+    if (childName.includes('helper') || childName.includes('skybox') || childName.includes('reticle')) {
       return;
     }
 
@@ -276,11 +277,6 @@ modelViewer.addEventListener('load', () => {
         }
       });
     }
-
-    // Enable castShadow selectively on frame/structure meshes, disabling on flat mattress/panels to avoid boxy ground shadows
-    const isFlatTopMesh = childName.includes('mattress') || childName.includes('mattres') || childName.includes('sheet') || childName.includes('panel') || childName.includes('board') || childName.includes('cube.020') || childName.includes('plain');
-    child.castShadow = !isFlatTopMesh;
-    child.receiveShadow = true;
 
     // Hide door_color node for Bedside Locker
     if (childName.includes('door_color')) {
@@ -420,12 +416,25 @@ modelViewer.addEventListener('load', () => {
     });
   };
 
+  const updatePositionOptions = (allowedPosList) => {
+    if (!sectionPosition) return;
+    const posFlat = document.getElementById('pos-option-flat');
+    const posFoldable = document.getElementById('pos-option-foldable');
+    const posFowler = document.getElementById('pos-option-fowler');
+    if (posFlat) posFlat.style.display = allowedPosList.includes('flat') ? 'inline-flex' : 'none';
+    if (posFoldable) posFoldable.style.display = allowedPosList.includes('foldable') ? 'inline-flex' : 'none';
+    if (posFowler) posFowler.style.display = allowedPosList.includes('fowler') ? 'inline-flex' : 'none';
+  };
+
   if (isIcu) {
     if (sectionHeadFoot) sectionHeadFoot.style.display = 'flex';
     if (sectionSideRails) sectionSideRails.style.display = 'flex';
     if (sectionMattress) sectionMattress.style.display = 'flex';
     if (sectionOperation) sectionOperation.style.display = 'flex';
-    if (sectionPosition) sectionPosition.style.display = 'flex';
+    if (sectionPosition) {
+      sectionPosition.style.display = 'flex';
+      updatePositionOptions(['flat', 'fowler']);
+    }
     toggleCardVisibility('siderails', ['ms', 'ssplain', 'abs', 'abs2', 'aluminium', 'sscollapsible']);
     toggleCardVisibility('headfoot', ['ms', 'ss', 'abs1', 'abs2']);
   } else if (isFowler) {
@@ -434,7 +443,10 @@ modelViewer.addEventListener('load', () => {
     if (sectionMattress) sectionMattress.style.display = 'flex';
     if (sectionWheel) sectionWheel.style.display = 'flex';
     if (sectionOperation) sectionOperation.style.display = 'flex';
-    if (sectionPosition) sectionPosition.style.display = 'flex';
+    if (sectionPosition) {
+      sectionPosition.style.display = 'flex';
+      updatePositionOptions(['flat', 'fowler']);
+    }
     toggleCardVisibility('siderails', ['ssplain', 'abs', 'abs2', 'aluminium']);
     toggleCardVisibility('headfoot', ['ms', 'ss', 'abs1', 'abs2']);
   } else if (isCouch) {
@@ -471,7 +483,10 @@ modelViewer.addEventListener('load', () => {
     }
     if (sectionWheel) sectionWheel.style.display = 'flex';
     if (sectionOperation) sectionOperation.style.display = 'flex';
-    if (sectionFooter) sectionFooter.style.display = 'flex';
+    if (sectionPosition) {
+      sectionPosition.style.display = 'flex';
+      updatePositionOptions(['flat', 'foldable']);
+    }
     toggleCardVisibility('siderails', ['ssplain', 'abs', 'aluminium']);
   } else if (isAttender) {
     if (sectionAttender) sectionAttender.style.display = 'flex';
@@ -513,6 +528,24 @@ modelViewer.addEventListener('load', () => {
 
   const sidebarEl = document.getElementById('sidebar-config');
   if (sidebarEl) sidebarEl.classList.remove('loading');
+
+  // Re-enforce shadow & environment AFTER all sync setup + model-viewer's own
+  // first render tick. Apply softness + env-image first, then intensity last
+  // (0 → 0.6 is a real change, triggering shadow-catcher recompute on new geometry).
+  requestAnimationFrame(() => {
+    requestAnimationFrame(() => {
+      modelViewer.setAttribute('shadow-softness', '1');
+      modelViewer.setAttribute('environment-image', 'legacy');
+      modelViewer.environmentImage = 'legacy';
+      modelViewer.setAttribute('shadow-intensity', '0.6'); // real change: '0' → '0.6'
+    });
+  });
+
+  // Extra safety frame: model-viewer sometimes needs one more render tick to
+  // rebuild the shadow root after toggleMesh visibility changes settle.
+  setTimeout(() => {
+    modelViewer.setAttribute('shadow-intensity', '0.6');
+  }, 50);
 });
 
 // == Bottom Floating Variant Selector (for Attender Cot & Bedside Locker) ========
@@ -652,12 +685,11 @@ function updateSectionHeadings() {
     { id: 'config-section-attender', baseText: 'Attender Cot Type' },
     { id: 'config-section-locker', baseText: 'Bedside Locker Type' },
     { id: 'config-section-operation', baseText: 'BED TYPE' },
+    { id: 'config-section-position', baseText: 'Position' },
     { id: 'config-section-headfoot', baseText: 'Head & Foot End Panel' },
     { id: 'config-section-siderails', baseText: 'Side Rails' },
     { id: 'config-section-mattress', baseText: 'Mattress Type' },
-    { id: 'config-section-wheel', baseText: 'Wheel Type' },
-    { id: 'config-section-footer', baseText: 'Footer Position' },
-    { id: 'config-section-position', baseText: 'Position' }
+    { id: 'config-section-wheel', baseText: 'Wheel Type' }
   ];
 
   let currentLetterCode = 65; // 'A'
@@ -1078,7 +1110,7 @@ function setDefaultConfigForModel(name) {
       mattress: 'plain',
       wheel: 'wheel',
       operation: 'manual',
-      footer: 'in'
+      position: 'flat'
     };
   } else if (lower.includes('fowler')) {
     defaults = {
@@ -1166,8 +1198,9 @@ function applyCurrentConfig() {
   const wheel = document.querySelector('input[name="wheel"]:checked')?.value || 'without';
   const operation = document.querySelector('input[name="operation"]:checked')?.value || 'manual';
   const footer = document.querySelector('input[name="footer"]:checked')?.value || 'in';
-  const position = document.querySelector('input[name="position"]:checked')?.value || 'flat';
-  const isFlatPos = (position === 'flat' || position === 'plain');
+  const position = document.querySelector('input[name="position"]:checked')?.value || document.querySelector('input[name="footer"]:checked')?.value || 'flat';
+  const isFlatPos = (position === 'flat' || position === 'plain' || position === 'in');
+  const isFoldablePos = (position === 'foldable' || position === 'out');
   const isFowlerPos = (position === 'fowler');
   const activeColor = document.querySelector('.color-swatch:not(.mattress-color):not(.abs-panel-color):not(.abs-rail-color):not(.couch-cabinet-color):not(.couch-drawer-color).active')?.dataset.color;
   const activeMattressColor = document.querySelector('.color-swatch.mattress-color.active')?.dataset.color;
@@ -1338,15 +1371,15 @@ function applyCurrentConfig() {
       }
     }
 
-    // Footer Position & Logo matching (for Labor Cot)
+    // Position / Footer & Logo matching (for Labor Cot)
     if (isLaborCot) {
       if (name.includes('cot_foot_in') || name.includes('cot_foot_out') || name.includes('foot_in') || name.includes('foot_out') || name.includes('logo_in') || name === 'logo' || name.includes('logo_')) {
-        if (footer === 'in') {
-          if (name.includes('cot_foot_out') || name.includes('foot_out') || (name === 'logo' && !name.includes('logo_in'))) visible = false;
-          if (name.includes('cot_foot_in') || name.includes('foot_in') || name.includes('logo_in')) visible = true;
-        } else if (footer === 'out') {
+        if (isFlatPos) {
           if (name.includes('cot_foot_in') || name.includes('foot_in') || name.includes('logo_in')) visible = false;
           if (name.includes('cot_foot_out') || name.includes('foot_out') || (name === 'logo' && !name.includes('logo_in'))) visible = true;
+        } else if (isFoldablePos) {
+          if (name.includes('cot_foot_out') || name.includes('foot_out') || (name === 'logo' && !name.includes('logo_in'))) visible = false;
+          if (name.includes('cot_foot_in') || name.includes('foot_in') || name.includes('logo_in')) visible = true;
         }
       }
     }
@@ -1553,16 +1586,16 @@ function applyCurrentConfig() {
         }
       }
 
-      // Parent group & node traversal for Footer Position & Logo (Labor Cot)
+      // Parent group & node traversal for Position / Footer & Logo (Labor Cot)
       if (isLaborCot) {
         const isFooterOrLogoNode = nodeName.includes('cot_foot_in') || nodeName.includes('cot_foot_out') || nodeName.includes('foot_in') || nodeName.includes('foot_out') || nodeName.includes('logo_in') || nodeName === 'logo' || nodeName.includes('logo_');
         if (isFooterOrLogoNode) {
-          if (footer === 'in') {
-            if (nodeName.includes('cot_foot_out') || nodeName.includes('foot_out') || (nodeName === 'logo' && !nodeName.includes('logo_in'))) child.visible = false;
-            if (nodeName.includes('cot_foot_in') || nodeName.includes('foot_in') || nodeName.includes('logo_in')) child.visible = true;
-          } else if (footer === 'out') {
+          if (isFlatPos) {
             if (nodeName.includes('cot_foot_in') || nodeName.includes('foot_in') || nodeName.includes('logo_in')) child.visible = false;
             if (nodeName.includes('cot_foot_out') || nodeName.includes('foot_out') || (nodeName === 'logo' && !nodeName.includes('logo_in'))) child.visible = true;
+          } else if (isFoldablePos) {
+            if (nodeName.includes('cot_foot_out') || nodeName.includes('foot_out') || (nodeName === 'logo' && !nodeName.includes('logo_in'))) child.visible = false;
+            if (nodeName.includes('cot_foot_in') || nodeName.includes('foot_in') || nodeName.includes('logo_in')) child.visible = true;
           }
         }
       }
@@ -2149,7 +2182,7 @@ document.getElementById('wireframe-btn').addEventListener('click', () => {
 
 document.getElementById('grid-btn').addEventListener('click', () => {
   const intensity = modelViewer.getAttribute('shadow-intensity');
-  const newIntensity = (intensity === '0' || intensity === null) ? '0.8' : '0';
+  const newIntensity = (intensity === '0' || intensity === null) ? '0.6' : '0';
   modelViewer.setAttribute('shadow-intensity', newIntensity);
   document.getElementById('grid-btn').classList.toggle('active', newIntensity !== '0');
   showToast(newIntensity === '0' ? 'Shadows hidden' : 'Shadows visible');

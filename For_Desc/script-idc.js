@@ -549,17 +549,17 @@ $(document).ready(function () {
 const categoryBackgrounds = {
     ranges: [
         { start: 1, end: 1, bg: '../global assets/bottom-navbar/desktop-background-image.webp', name: 'Home' },
-        { start: 2, end: 3, bg: '../global assets/Images/background-images/background-image-4.webp', name: 'About Us' },
+        { start: 2, end: 3, bg: '../global assets/bottom-navbar/desktop-background-image.webp', name: 'About Us' },
         { start: 4, end: 5, bg: '../global assets/bottom-navbar/desktop-background-image.webp', name: 'Products' },
         { start: 5, end: 5, bg: '../global assets/Images/background-images/background-image-5.webp', name: '3D Experience' },
         { start: 6, end: 11, bg: '../global assets/Images/background-images/background-image-1.webp', name: 'Ward Furniture' },
         { start: 12, end: 13, bg: '../global assets/Images/background-images/background-image-2.webp', name: 'ICU & Critical Care' },
         { start: 14, end: 15, bg: '../global assets/Images/background-images/background-image-3.webp', name: 'Labour & Maternity' },
-        { start: 16, end: 20, bg: '../global assets/Images/background-images/background-image-4.webp', name: 'Emergency & Patient Transfer' },
-        { start: 21, end: 28, bg: '../global assets/Images/background-images/background-image-5.webp', name: 'Medical Trolleys' },
-        { start: 29, end: 34, bg: '../global assets/Images/background-images/background-image-1.webp', name: 'Examination & Consultation' },
-        { start: 35, end: 36, bg: '../global assets/Images/background-images/background-image-2.webp', name: 'Stainless Steel Furniture & Ward Accessories' },
-        { start: 37, end: 37, bg: '../global assets/Images/background-images/background-image-3.webp', name: 'General Furniture' },
+        { start: 16, end: 19, bg: '../global assets/Images/background-images/background-image-4.webp', name: 'Emergency & Patient Transfer' },
+        { start: 20, end: 27, bg: '../global assets/Images/background-images/background-image-5.webp', name: 'Medical Trolleys' },
+        { start: 28, end: 33, bg: '../global assets/Images/background-images/background-image-1.webp', name: 'Examination & Consultation' },
+        { start: 34, end: 35, bg: '../global assets/Images/background-images/background-image-2.webp', name: 'Stainless Steel Furniture & Ward Accessories' },
+        { start: 36, end: 37, bg: '../global assets/Images/background-images/background-image-3.webp', name: 'General Furniture' },
         { start: 38, end: 39, bg: '../global assets/Images/background-images/background-image-4.webp', name: 'Accessories' },
         { start: 40, end: 40, bg: '../global assets/bottom-navbar/desktop-background-image.webp', name: 'Contact Us' }
     ],

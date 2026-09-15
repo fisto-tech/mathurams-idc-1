@@ -162,6 +162,28 @@
         </div>
       </div>
 
+      <!-- Position Option Section -->
+      <div class="config-section" id="config-section-position" style="display: none;">
+        <div class="config-section-title">Position</div>
+        <div class="radio-group">
+          <label class="radio-option" id="pos-option-flat">
+            <input type="radio" name="position" value="flat" checked />
+            <span class="radio-custom"></span>
+            Flat
+          </label>
+          <label class="radio-option" id="pos-option-foldable">
+            <input type="radio" name="position" value="foldable"/>
+            <span class="radio-custom"></span>
+            Foldable
+          </label>
+          <label class="radio-option" id="pos-option-fowler">
+            <input type="radio" name="position" value="fowler"/>
+            <span class="radio-custom"></span>
+            Fowler
+          </label>
+        </div>
+      </div>
+
       <!-- B. Head & Foot Panel -->
       <div class="config-section" id="config-section-headfoot">
         <div class="config-section-title">B. Head &amp; Foot End Panel</div>
@@ -193,99 +215,113 @@
       <div class="config-section" id="abs-panel-color-section" style="display: none;">
         <div class="config-section-subtitle" style="margin-top: 0;">ABS Panel Color Option</div>
         <div class="color-row" id="abs-panel-color-row">
-          <button class="color-swatch abs-panel-color" data-color="#6F4E37"
-            style="background-color: #6F4E37; color: #FFFFFF;" title="Coffee Brown">
+          <button class="color-swatch abs-panel-color" data-color="#795548"
+            style="background-color: #795548; color: #FFFFFF;" title="Coffee Brown">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"
               stroke-linejoin="round">
               <polyline points="20 6 9 17 4 12"></polyline>
             </svg>
           </button>
-          <button class="color-swatch abs-panel-color" data-color="#4E342E"
-            style="background-color: #4E342E; color: #FFFFFF;" title="Chocolate Brown">
+          <button class="color-swatch abs-panel-color" data-color="#5D4037"
+            style="background-color: #5D4037; color: #FFFFFF;" title="Chocolate Brown">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"
               stroke-linejoin="round">
               <polyline points="20 6 9 17 4 12"></polyline>
             </svg>
           </button>
-          <button class="color-swatch abs-panel-color" data-color="#5BC0EB"
-            style="background-color: #5BC0EB; color: #1E293B;" title="Light Blue">
+          <button class="color-swatch abs-panel-color" data-color="#58AAF8"
+            style="background-color: #58AAF8; color: #FFFFFF;" title="Light Blue">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"
               stroke-linejoin="round">
               <polyline points="20 6 9 17 4 12"></polyline>
             </svg>
           </button>
-          <button class="color-swatch abs-panel-color active" data-color="#0056A6"
-            style="background-color: #0056A6; color: #FFFFFF;" title="Dark Blue">
+          <button class="color-swatch abs-panel-color active" data-color="#0D90E2"
+            style="background-color: #0D90E2; color: #FFFFFF;" title="Dark Blue">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"
               stroke-linejoin="round">
               <polyline points="20 6 9 17 4 12"></polyline>
             </svg>
           </button>
-          <button class="color-swatch abs-panel-color" data-color="#009A44"
-            style="background-color: #009A44; color: #FFFFFF;" title="Reliance Green">
+          <button class="color-swatch abs-panel-color" data-color="#0FCCD5"
+            style="background-color: #0FCCD5; color: #FFFFFF;" title="Reliance Green">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"
               stroke-linejoin="round">
               <polyline points="20 6 9 17 4 12"></polyline>
             </svg>
           </button>
-          <button class="color-swatch abs-panel-color" data-color="#B8D8A3"
-            style="background-color: #B8D8A3; color: #1E293B;" title="Pista Green">
+          <button class="color-swatch abs-panel-color" data-color="#9EC7C0"
+            style="background-color: #9EC7C0; color: #1E293B;" title="Pista Green">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"
               stroke-linejoin="round">
               <polyline points="20 6 9 17 4 12"></polyline>
             </svg>
           </button>
-          <button class="color-swatch abs-panel-color" data-color="#50C878"
-            style="background-color: #50C878; color: #FFFFFF;" title="Parrot Green">
+          <button class="color-swatch abs-panel-color" data-color="#62B84F"
+            style="background-color: #62B84F; color: #FFFFFF;" title="Parrot Green">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"
               stroke-linejoin="round">
               <polyline points="20 6 9 17 4 12"></polyline>
             </svg>
           </button>
-          <button class="color-swatch abs-panel-color" data-color="#A7A9AC"
-            style="background-color: #A7A9AC; color: #1E293B;" title="DA Grey">
+          <button class="color-swatch abs-panel-color" data-color="#88A0AD"
+            style="background-color: #88A0AD; color: #FFFFFF;" title="DA Grey">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"
               stroke-linejoin="round">
               <polyline points="20 6 9 17 4 12"></polyline>
             </svg>
           </button>
-          <button class="color-swatch abs-panel-color" data-color="#4A4F54"
-            style="background-color: #4A4F54; color: #FFFFFF;" title="Basalt Grey">
+          <button class="color-swatch abs-panel-color" data-color="#575D5E"
+            style="background-color: #575D5E; color: #FFFFFF;" title="Basalt Grey">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"
               stroke-linejoin="round">
               <polyline points="20 6 9 17 4 12"></polyline>
             </svg>
           </button>
-          <button class="color-swatch abs-panel-color" data-color="#F57C00"
-            style="background-color: #F57C00; color: #FFFFFF;" title="Orange">
+          <button class="color-swatch abs-panel-color" data-color="#EAA45E"
+            style="background-color: #EAA45E; color: #FFFFFF;" title="Orange">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"
               stroke-linejoin="round">
               <polyline points="20 6 9 17 4 12"></polyline>
             </svg>
           </button>
-          <button class="color-swatch abs-panel-color" data-color="#FFD400"
-            style="background-color: #FFD400; color: #1E293B;" title="Lemon Yellow">
+          <button class="color-swatch abs-panel-color" data-color="#F4D94E"
+            style="background-color: #F4D94E; color: #1E293B;" title="Lemon Yellow">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"
               stroke-linejoin="round">
               <polyline points="20 6 9 17 4 12"></polyline>
             </svg>
           </button>
-          <button class="color-swatch abs-panel-color" data-color="#000000"
-            style="background-color: #000000; color: #FFFFFF;" title="Black">
+          <button class="color-swatch abs-panel-color" data-color="#252525"
+            style="background-color: #252525; color: #FFFFFF;" title="Black">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"
               stroke-linejoin="round">
               <polyline points="20 6 9 17 4 12"></polyline>
             </svg>
           </button>
-          <button class="color-swatch abs-panel-color" data-color="#6A1B9A"
-            style="background-color: #6A1B9A; color: #FFFFFF;" title="Violet">
+          <button class="color-swatch abs-panel-color" data-color="#BE8FC7"
+            style="background-color: #BE8FC7; color: #FFFFFF;" title="Violet">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"
               stroke-linejoin="round">
               <polyline points="20 6 9 17 4 12"></polyline>
             </svg>
           </button>
-          <button class="color-swatch abs-panel-color" data-color="#E8DCC5"
-            style="background-color: #E8DCC5; color: #1E293B;" title="Beige">
+          <button class="color-swatch abs-panel-color" data-color="#D8C3A5"
+            style="background-color: #D8C3A5; color: #1E293B;" title="Beige">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"
+              stroke-linejoin="round">
+              <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+          </button>
+          <button class="color-swatch abs-panel-color" data-color="#DB88C5"
+            style="background-color: #DB88C5; color: #FFFFFF;" title="Pink">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"
+              stroke-linejoin="round">
+              <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+          </button>
+          <button class="color-swatch abs-panel-color" data-color="#78BECD"
+            style="background-color: #78BECD; color: #FFFFFF;" title="Sea Green">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"
               stroke-linejoin="round">
               <polyline points="20 6 9 17 4 12"></polyline>
@@ -335,99 +371,113 @@
       <div class="config-section" id="abs-rail-color-section" style="display: none;">
         <div class="config-section-subtitle" style="margin-top: 0;">ABS Rail Color Option</div>
         <div class="color-row" id="abs-rail-color-row">
-          <button class="color-swatch abs-rail-color" data-color="#6F4E37"
-            style="background-color: #6F4E37; color: #FFFFFF;" title="Coffee Brown">
+          <button class="color-swatch abs-rail-color" data-color="#795548"
+            style="background-color: #795548; color: #FFFFFF;" title="Coffee Brown">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"
               stroke-linejoin="round">
               <polyline points="20 6 9 17 4 12"></polyline>
             </svg>
           </button>
-          <button class="color-swatch abs-rail-color" data-color="#4E342E"
-            style="background-color: #4E342E; color: #FFFFFF;" title="Chocolate Brown">
+          <button class="color-swatch abs-rail-color" data-color="#5D4037"
+            style="background-color: #5D4037; color: #FFFFFF;" title="Chocolate Brown">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"
               stroke-linejoin="round">
               <polyline points="20 6 9 17 4 12"></polyline>
             </svg>
           </button>
-          <button class="color-swatch abs-rail-color" data-color="#5BC0EB"
-            style="background-color: #5BC0EB; color: #1E293B;" title="Light Blue">
+          <button class="color-swatch abs-rail-color" data-color="#58AAF8"
+            style="background-color: #58AAF8; color: #FFFFFF;" title="Light Blue">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"
               stroke-linejoin="round">
               <polyline points="20 6 9 17 4 12"></polyline>
             </svg>
           </button>
-          <button class="color-swatch abs-rail-color active" data-color="#0056A6"
-            style="background-color: #0056A6; color: #FFFFFF;" title="Dark Blue">
+          <button class="color-swatch abs-rail-color active" data-color="#0D90E2"
+            style="background-color: #0D90E2; color: #FFFFFF;" title="Dark Blue">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"
               stroke-linejoin="round">
               <polyline points="20 6 9 17 4 12"></polyline>
             </svg>
           </button>
-          <button class="color-swatch abs-rail-color" data-color="#009A44"
-            style="background-color: #009A44; color: #FFFFFF;" title="Reliance Green">
+          <button class="color-swatch abs-rail-color" data-color="#0FCCD5"
+            style="background-color: #0FCCD5; color: #FFFFFF;" title="Reliance Green">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"
               stroke-linejoin="round">
               <polyline points="20 6 9 17 4 12"></polyline>
             </svg>
           </button>
-          <button class="color-swatch abs-rail-color" data-color="#B8D8A3"
-            style="background-color: #B8D8A3; color: #1E293B;" title="Pista Green">
+          <button class="color-swatch abs-rail-color" data-color="#9EC7C0"
+            style="background-color: #9EC7C0; color: #1E293B;" title="Pista Green">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"
               stroke-linejoin="round">
               <polyline points="20 6 9 17 4 12"></polyline>
             </svg>
           </button>
-          <button class="color-swatch abs-rail-color" data-color="#50C878"
-            style="background-color: #50C878; color: #FFFFFF;" title="Parrot Green">
+          <button class="color-swatch abs-rail-color" data-color="#62B84F"
+            style="background-color: #62B84F; color: #FFFFFF;" title="Parrot Green">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"
               stroke-linejoin="round">
               <polyline points="20 6 9 17 4 12"></polyline>
             </svg>
           </button>
-          <button class="color-swatch abs-rail-color" data-color="#A7A9AC"
-            style="background-color: #A7A9AC; color: #1E293B;" title="DA Grey">
+          <button class="color-swatch abs-rail-color" data-color="#88A0AD"
+            style="background-color: #88A0AD; color: #FFFFFF;" title="DA Grey">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"
               stroke-linejoin="round">
               <polyline points="20 6 9 17 4 12"></polyline>
             </svg>
           </button>
-          <button class="color-swatch abs-rail-color" data-color="#4A4F54"
-            style="background-color: #4A4F54; color: #FFFFFF;" title="Basalt Grey">
+          <button class="color-swatch abs-rail-color" data-color="#575D5E"
+            style="background-color: #575D5E; color: #FFFFFF;" title="Basalt Grey">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"
               stroke-linejoin="round">
               <polyline points="20 6 9 17 4 12"></polyline>
             </svg>
           </button>
-          <button class="color-swatch abs-rail-color" data-color="#F57C00"
-            style="background-color: #F57C00; color: #FFFFFF;" title="Orange">
+          <button class="color-swatch abs-rail-color" data-color="#EAA45E"
+            style="background-color: #EAA45E; color: #FFFFFF;" title="Orange">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"
               stroke-linejoin="round">
               <polyline points="20 6 9 17 4 12"></polyline>
             </svg>
           </button>
-          <button class="color-swatch abs-rail-color" data-color="#FFD400"
-            style="background-color: #FFD400; color: #1E293B;" title="Lemon Yellow">
+          <button class="color-swatch abs-rail-color" data-color="#F4D94E"
+            style="background-color: #F4D94E; color: #1E293B;" title="Lemon Yellow">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"
               stroke-linejoin="round">
               <polyline points="20 6 9 17 4 12"></polyline>
             </svg>
           </button>
-          <button class="color-swatch abs-rail-color" data-color="#000000"
-            style="background-color: #000000; color: #FFFFFF;" title="Black">
+          <button class="color-swatch abs-rail-color" data-color="#252525"
+            style="background-color: #252525; color: #FFFFFF;" title="Black">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"
               stroke-linejoin="round">
               <polyline points="20 6 9 17 4 12"></polyline>
             </svg>
           </button>
-          <button class="color-swatch abs-rail-color" data-color="#6A1B9A"
-            style="background-color: #6A1B9A; color: #FFFFFF;" title="Violet">
+          <button class="color-swatch abs-rail-color" data-color="#BE8FC7"
+            style="background-color: #BE8FC7; color: #FFFFFF;" title="Violet">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"
               stroke-linejoin="round">
               <polyline points="20 6 9 17 4 12"></polyline>
             </svg>
           </button>
-          <button class="color-swatch abs-rail-color" data-color="#E8DCC5"
-            style="background-color: #E8DCC5; color: #1E293B;" title="Beige">
+          <button class="color-swatch abs-rail-color" data-color="#D8C3A5"
+            style="background-color: #D8C3A5; color: #1E293B;" title="Beige">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"
+              stroke-linejoin="round">
+              <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+          </button>
+          <button class="color-swatch abs-rail-color" data-color="#DB88C5"
+            style="background-color: #DB88C5; color: #FFFFFF;" title="Pink">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"
+              stroke-linejoin="round">
+              <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+          </button>
+          <button class="color-swatch abs-rail-color" data-color="#78BECD"
+            style="background-color: #78BECD; color: #FFFFFF;" title="Sea Green">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"
               stroke-linejoin="round">
               <polyline points="20 6 9 17 4 12"></polyline>
@@ -453,99 +503,113 @@
         </div>
         <div class="config-section-subtitle">Mattress Color Option</div>
         <div class="color-row" id="mattress-color-row">
-          <button class="color-swatch mattress-color active" data-color="#6F4E37"
-            style="background-color: #6F4E37; color: #FFFFFF;" title="#6F4E37">
+          <button class="color-swatch mattress-color active" data-color="#795548"
+            style="background-color: #795548; color: #FFFFFF;" title="Coffee Brown">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"
               stroke-linejoin="round">
               <polyline points="20 6 9 17 4 12"></polyline>
             </svg>
           </button>
-          <button class="color-swatch mattress-color" data-color="#4E342E"
-            style="background-color: #4E342E; color: #FFFFFF;" title="#4E342E">
+          <button class="color-swatch mattress-color" data-color="#5D4037"
+            style="background-color: #5D4037; color: #FFFFFF;" title="Chocolate Brown">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"
               stroke-linejoin="round">
               <polyline points="20 6 9 17 4 12"></polyline>
             </svg>
           </button>
-          <button class="color-swatch mattress-color" data-color="#5BC0EB"
-            style="background-color: #5BC0EB; color: #1E293B;" title="#5BC0EB">
+          <button class="color-swatch mattress-color" data-color="#58AAF8"
+            style="background-color: #58AAF8; color: #FFFFFF;" title="Light Blue">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"
               stroke-linejoin="round">
               <polyline points="20 6 9 17 4 12"></polyline>
             </svg>
           </button>
-          <button class="color-swatch mattress-color" data-color="#0056A6"
-            style="background-color: #0056A6; color: #FFFFFF;" title="#0056A6">
+          <button class="color-swatch mattress-color" data-color="#0D90E2"
+            style="background-color: #0D90E2; color: #FFFFFF;" title="Dark Blue">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"
               stroke-linejoin="round">
               <polyline points="20 6 9 17 4 12"></polyline>
             </svg>
           </button>
-          <button class="color-swatch mattress-color" data-color="#009A44"
-            style="background-color: #009A44; color: #FFFFFF;" title="#009A44">
+          <button class="color-swatch mattress-color" data-color="#0FCCD5"
+            style="background-color: #0FCCD5; color: #FFFFFF;" title="Reliance Green">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"
               stroke-linejoin="round">
               <polyline points="20 6 9 17 4 12"></polyline>
             </svg>
           </button>
-          <button class="color-swatch mattress-color" data-color="#B8D8A3"
-            style="background-color: #B8D8A3; color: #1E293B;" title="#B8D8A3">
+          <button class="color-swatch mattress-color" data-color="#9EC7C0"
+            style="background-color: #9EC7C0; color: #1E293B;" title="Pista Green">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"
               stroke-linejoin="round">
               <polyline points="20 6 9 17 4 12"></polyline>
             </svg>
           </button>
-          <button class="color-swatch mattress-color" data-color="#50C878"
-            style="background-color: #50C878; color: #FFFFFF;" title="#50C878">
+          <button class="color-swatch mattress-color" data-color="#62B84F"
+            style="background-color: #62B84F; color: #FFFFFF;" title="Parrot Green">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"
               stroke-linejoin="round">
               <polyline points="20 6 9 17 4 12"></polyline>
             </svg>
           </button>
-          <button class="color-swatch mattress-color" data-color="#A7A9AC"
-            style="background-color: #A7A9AC; color: #1E293B;" title="#A7A9AC">
+          <button class="color-swatch mattress-color" data-color="#88A0AD"
+            style="background-color: #88A0AD; color: #FFFFFF;" title="DA Grey">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"
               stroke-linejoin="round">
               <polyline points="20 6 9 17 4 12"></polyline>
             </svg>
           </button>
-          <button class="color-swatch mattress-color" data-color="#4A4F54"
-            style="background-color: #4A4F54; color: #FFFFFF;" title="#4A4F54">
+          <button class="color-swatch mattress-color" data-color="#575D5E"
+            style="background-color: #575D5E; color: #FFFFFF;" title="Basalt Grey">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"
               stroke-linejoin="round">
               <polyline points="20 6 9 17 4 12"></polyline>
             </svg>
           </button>
-          <button class="color-swatch mattress-color" data-color="#F57C00"
-            style="background-color: #F57C00; color: #FFFFFF;" title="#F57C00">
+          <button class="color-swatch mattress-color" data-color="#EAA45E"
+            style="background-color: #EAA45E; color: #FFFFFF;" title="Orange">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"
               stroke-linejoin="round">
               <polyline points="20 6 9 17 4 12"></polyline>
             </svg>
           </button>
-          <button class="color-swatch mattress-color" data-color="#FFD400"
-            style="background-color: #FFD400; color: #1E293B;" title="#FFD400">
+          <button class="color-swatch mattress-color" data-color="#F4D94E"
+            style="background-color: #F4D94E; color: #1E293B;" title="Lemon Yellow">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"
               stroke-linejoin="round">
               <polyline points="20 6 9 17 4 12"></polyline>
             </svg>
           </button>
-          <button class="color-swatch mattress-color" data-color="#000000"
-            style="background-color: #000000; color: #FFFFFF;" title="#000000">
+          <button class="color-swatch mattress-color" data-color="#252525"
+            style="background-color: #252525; color: #FFFFFF;" title="Black">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"
               stroke-linejoin="round">
               <polyline points="20 6 9 17 4 12"></polyline>
             </svg>
           </button>
-          <button class="color-swatch mattress-color" data-color="#6A1B9A"
-            style="background-color: #6A1B9A; color: #FFFFFF;" title="#6A1B9A">
+          <button class="color-swatch mattress-color" data-color="#BE8FC7"
+            style="background-color: #BE8FC7; color: #FFFFFF;" title="Violet">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"
               stroke-linejoin="round">
               <polyline points="20 6 9 17 4 12"></polyline>
             </svg>
           </button>
-          <button class="color-swatch mattress-color" data-color="#E8DCC5"
-            style="background-color: #E8DCC5; color: #1E293B;" title="#E8DCC5">
+          <button class="color-swatch mattress-color" data-color="#D8C3A5"
+            style="background-color: #D8C3A5; color: #1E293B;" title="Beige">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"
+              stroke-linejoin="round">
+              <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+          </button>
+          <button class="color-swatch mattress-color" data-color="#DB88C5"
+            style="background-color: #DB88C5; color: #FFFFFF;" title="Pink">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"
+              stroke-linejoin="round">
+              <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+          </button>
+          <button class="color-swatch mattress-color" data-color="#78BECD"
+            style="background-color: #78BECD; color: #FFFFFF;" title="Sea Green">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"
               stroke-linejoin="round">
               <polyline points="20 6 9 17 4 12"></polyline>
@@ -558,106 +622,120 @@
       <div class="config-section" id="couch-storage-color-section" style="display: none;">
         <div class="config-section-subtitle" style="margin-top: 0;">Storage (Cupboard &amp; Drawer) Color Option</div>
         <div class="color-row" id="couch-storage-color-row">
+          <button class="color-swatch couch-storage-color" data-color="#795548"
+            style="background-color: #795548; color: #FFFFFF;" title="Coffee Brown">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"
+              stroke-linejoin="round">
+              <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+          </button>
+          <button class="color-swatch couch-storage-color" data-color="#5D4037"
+            style="background-color: #5D4037; color: #FFFFFF;" title="Chocolate Brown">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"
+              stroke-linejoin="round">
+              <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+          </button>
+          <button class="color-swatch couch-storage-color" data-color="#58AAF8"
+            style="background-color: #58AAF8; color: #FFFFFF;" title="Light Blue">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"
+              stroke-linejoin="round">
+              <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+          </button>
+          <button class="color-swatch couch-storage-color" data-color="#0D90E2"
+            style="background-color: #0D90E2; color: #FFFFFF;" title="Dark Blue">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"
+              stroke-linejoin="round">
+              <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+          </button>
+          <button class="color-swatch couch-storage-color" data-color="#0FCCD5"
+            style="background-color: #0FCCD5; color: #FFFFFF;" title="Reliance Green">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"
+              stroke-linejoin="round">
+              <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+          </button>
+          <button class="color-swatch couch-storage-color" data-color="#9EC7C0"
+            style="background-color: #9EC7C0; color: #1E293B;" title="Pista Green">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"
+              stroke-linejoin="round">
+              <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+          </button>
+          <button class="color-swatch couch-storage-color" data-color="#62B84F"
+            style="background-color: #62B84F; color: #FFFFFF;" title="Parrot Green">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"
+              stroke-linejoin="round">
+              <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+          </button>
+          <button class="color-swatch couch-storage-color" data-color="#88A0AD"
+            style="background-color: #88A0AD; color: #FFFFFF;" title="DA Grey">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"
+              stroke-linejoin="round">
+              <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+          </button>
+          <button class="color-swatch couch-storage-color" data-color="#575D5E"
+            style="background-color: #575D5E; color: #FFFFFF;" title="Basalt Grey">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"
+              stroke-linejoin="round">
+              <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+          </button>
+          <button class="color-swatch couch-storage-color" data-color="#EAA45E"
+            style="background-color: #EAA45E; color: #FFFFFF;" title="Orange">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"
+              stroke-linejoin="round">
+              <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+          </button>
+          <button class="color-swatch couch-storage-color" data-color="#F4D94E"
+            style="background-color: #F4D94E; color: #1E293B;" title="Lemon Yellow">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"
+              stroke-linejoin="round">
+              <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+          </button>
+          <button class="color-swatch couch-storage-color" data-color="#252525"
+            style="background-color: #252525; color: #FFFFFF;" title="Black">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"
+              stroke-linejoin="round">
+              <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+          </button>
+          <button class="color-swatch couch-storage-color" data-color="#BE8FC7"
+            style="background-color: #BE8FC7; color: #FFFFFF;" title="Violet">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"
+              stroke-linejoin="round">
+              <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+          </button>
+          <button class="color-swatch couch-storage-color" data-color="#D8C3A5"
+            style="background-color: #D8C3A5; color: #1E293B;" title="Beige">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"
+              stroke-linejoin="round">
+              <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+          </button>
+          <button class="color-swatch couch-storage-color" data-color="#DB88C5"
+            style="background-color: #DB88C5; color: #FFFFFF;" title="Pink">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"
+              stroke-linejoin="round">
+              <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+          </button>
+          <button class="color-swatch couch-storage-color" data-color="#78BECD"
+            style="background-color: #78BECD; color: #FFFFFF;" title="Sea Green">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"
+              stroke-linejoin="round">
+              <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+          </button>
           <button class="color-swatch default-storage-btn couch-storage-color default-storage-swatch active"
             data-default="true" title="Default Texture (No Color)">Default</button>
-          <button class="color-swatch couch-storage-color" data-color="#6F4E37"
-            style="background-color: #6F4E37; color: #FFFFFF;" title="Coffee Brown">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"
-              stroke-linejoin="round">
-              <polyline points="20 6 9 17 4 12"></polyline>
-            </svg>
-          </button>
-          <button class="color-swatch couch-storage-color" data-color="#4E342E"
-            style="background-color: #4E342E; color: #FFFFFF;" title="Chocolate Brown">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"
-              stroke-linejoin="round">
-              <polyline points="20 6 9 17 4 12"></polyline>
-            </svg>
-          </button>
-          <button class="color-swatch couch-storage-color" data-color="#5BC0EB"
-            style="background-color: #5BC0EB; color: #1E293B;" title="Light Blue">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"
-              stroke-linejoin="round">
-              <polyline points="20 6 9 17 4 12"></polyline>
-            </svg>
-          </button>
-          <button class="color-swatch couch-storage-color" data-color="#0056A6"
-            style="background-color: #0056A6; color: #FFFFFF;" title="Dark Blue">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"
-              stroke-linejoin="round">
-              <polyline points="20 6 9 17 4 12"></polyline>
-            </svg>
-          </button>
-          <button class="color-swatch couch-storage-color" data-color="#009A44"
-            style="background-color: #009A44; color: #FFFFFF;" title="Reliance Green">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"
-              stroke-linejoin="round">
-              <polyline points="20 6 9 17 4 12"></polyline>
-            </svg>
-          </button>
-          <button class="color-swatch couch-storage-color" data-color="#B8D8A3"
-            style="background-color: #B8D8A3; color: #1E293B;" title="Pista Green">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"
-              stroke-linejoin="round">
-              <polyline points="20 6 9 17 4 12"></polyline>
-            </svg>
-          </button>
-          <button class="color-swatch couch-storage-color" data-color="#50C878"
-            style="background-color: #50C878; color: #FFFFFF;" title="Parrot Green">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"
-              stroke-linejoin="round">
-              <polyline points="20 6 9 17 4 12"></polyline>
-            </svg>
-          </button>
-          <button class="color-swatch couch-storage-color" data-color="#A7A9AC"
-            style="background-color: #A7A9AC; color: #1E293B;" title="DA Grey">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"
-              stroke-linejoin="round">
-              <polyline points="20 6 9 17 4 12"></polyline>
-            </svg>
-          </button>
-          <button class="color-swatch couch-storage-color" data-color="#4A4F54"
-            style="background-color: #4A4F54; color: #FFFFFF;" title="Basalt Grey">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"
-              stroke-linejoin="round">
-              <polyline points="20 6 9 17 4 12"></polyline>
-            </svg>
-          </button>
-          <button class="color-swatch couch-storage-color" data-color="#F57C00"
-            style="background-color: #F57C00; color: #FFFFFF;" title="Orange">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"
-              stroke-linejoin="round">
-              <polyline points="20 6 9 17 4 12"></polyline>
-            </svg>
-          </button>
-          <button class="color-swatch couch-storage-color" data-color="#FFD400"
-            style="background-color: #FFD400; color: #1E293B;" title="Lemon Yellow">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"
-              stroke-linejoin="round">
-              <polyline points="20 6 9 17 4 12"></polyline>
-            </svg>
-          </button>
-          <button class="color-swatch couch-storage-color" data-color="#000000"
-            style="background-color: #000000; color: #FFFFFF;" title="Black">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"
-              stroke-linejoin="round">
-              <polyline points="20 6 9 17 4 12"></polyline>
-            </svg>
-          </button>
-          <button class="color-swatch couch-storage-color" data-color="#6A1B9A"
-            style="background-color: #6A1B9A; color: #FFFFFF;" title="Violet">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"
-              stroke-linejoin="round">
-              <polyline points="20 6 9 17 4 12"></polyline>
-            </svg>
-          </button>
-          <button class="color-swatch couch-storage-color" data-color="#E8DCC5"
-            style="background-color: #E8DCC5; color: #1E293B;" title="Beige">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"
-              stroke-linejoin="round">
-              <polyline points="20 6 9 17 4 12"></polyline>
-            </svg>
-          </button>
         </div>
       </div>
 
@@ -678,22 +756,6 @@
         </div>
       </div>
 
-      <!-- Position Option (Fowler Cot Only) -->
-      <div class="config-section" id="config-section-position" style="display: none;">
-        <div class="config-section-title">Position</div>
-        <div class="radio-group">
-          <label class="radio-option">
-            <input type="radio" name="position" value="flat" checked />
-            <span class="radio-custom"></span>
-            Flat
-          </label>
-          <label class="radio-option">
-            <input type="radio" name="position" value="fowler" />
-            <span class="radio-custom"></span>
-            Fowler
-          </label>
-        </div>
-      </div>
 
     </aside>
 
@@ -703,7 +765,7 @@
     <div id="canvas-wrap">
       <model-viewer id="three-canvas" alt="Mathurams 3D Product" camera-controls touch-action="none" auto-rotate
         auto-rotate-delay="1000" rotation-per-second="12deg" interaction-prompt="when-focused"
-        interaction-prompt-threshold="1500" shadow-intensity="0.8" shadow-softness="1" environment-image="neutral" disable-tap disable-pan></model-viewer>
+        interaction-prompt-threshold="1500" shadow-intensity="0.6" shadow-softness="1" environment-image="legacy" disable-tap disable-pan></model-viewer>
 
       <!-- Bottom Floating Model Variant Selector (View-Only Models) -->
       <div id="bottom-variant-selector" style="display: none;"></div>
@@ -952,7 +1014,7 @@
     }
   }
 </script>
-  <script type="module" src="app.js?v=20260824_5"></script>
+  <script type="module" src="app.js?v=20260915_shadow_zero"></script>
 
 </body>
 
