@@ -196,8 +196,15 @@ function loadModel(fileOrUrl, fileName) {
 
   // Set model-specific exposure & environment image (legacy environment produces soft leg contact shadows)
   // Both attribute + JS property must be set BEFORE src so model-viewer picks them up on load
-  modelViewer.setAttribute('environment-image', 'legacy');
-  modelViewer.environmentImage = 'legacy';
+  if (modelKey === 'over-bed-table' && lowerName2.includes('abs')) {
+    // Over Bed Table ABS only — use dedicated HDR environment
+    const hdrPath = 'assets/models/view-only-models/over-bed-table/brown_photostudio_02_2k_1.hdr';
+    modelViewer.setAttribute('environment-image', hdrPath);
+    modelViewer.environmentImage = hdrPath;
+  } else {
+    modelViewer.setAttribute('environment-image', 'legacy');
+    modelViewer.environmentImage = 'legacy';
+  }
 
   if (modelKey === 'bedside-locker-deluxe') {
     modelViewer.exposure = 0.75;
@@ -312,6 +319,11 @@ modelViewer.addEventListener('load', () => {
         }
         if (childName === 'ms_head&foot_1' && (productName === 'Fowler Cot' || productName === 'ICU Cot') && mat.color) {
           mat.color.setHex(0xafafaf);
+        }
+        // Apply default cream-white (#FFFCEF) to any cot_base* material across all products
+        if (matName.startsWith('cot_base') && mat.color) {
+          mat.color.setHex(0xFFFCEF);
+          mat.needsUpdate = true;
         }
       });
     }
@@ -532,14 +544,26 @@ modelViewer.addEventListener('load', () => {
   // Re-enforce shadow & environment AFTER all sync setup + model-viewer's own
   // first render tick. Apply softness + env-image first, then intensity last
   // (0 → 0.6 is a real change, triggering shadow-catcher recompute on new geometry).
+requestAnimationFrame(() => {
   requestAnimationFrame(() => {
-    requestAnimationFrame(() => {
-      modelViewer.setAttribute('shadow-softness', '1');
+    modelViewer.setAttribute('shadow-softness', '1');
+
+    const lowerCurrent = (currentModelName || '').toLowerCase();
+    const isOverBedAbs = lowerCurrent.includes('over-bed-table') && lowerCurrent.includes('abs') ||
+                          lowerCurrent.includes('overbed') && lowerCurrent.includes('abs');
+
+    if (isOverBedAbs) {
+      const hdrPath = 'assets/models/view-only-models/over-bed-table/brown_photostudio_02_2k_1.hdr';
+      modelViewer.setAttribute('environment-image', hdrPath);
+      modelViewer.environmentImage = hdrPath;
+    } else {
       modelViewer.setAttribute('environment-image', 'legacy');
       modelViewer.environmentImage = 'legacy';
-      modelViewer.setAttribute('shadow-intensity', '0.6'); // real change: '0' → '0.6'
-    });
+    }
+
+    modelViewer.setAttribute('shadow-intensity', '0.6');
   });
+});
 
   // Extra safety frame: model-viewer sometimes needs one more render tick to
   // rebuild the shadow root after toggleMesh visibility changes settle.

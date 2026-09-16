@@ -551,16 +551,16 @@ const categoryBackgrounds = {
         { start: 1, end: 1, bg: '../global assets/bottom-navbar/desktop-background-image.webp', name: 'Home' },
         { start: 2, end: 3, bg: '../global assets/bottom-navbar/desktop-background-image.webp', name: 'About Us' },
         { start: 4, end: 5, bg: '../global assets/bottom-navbar/desktop-background-image.webp', name: 'Products' },
-        { start: 5, end: 5, bg: '../global assets/Images/background-images/background-image-5.webp', name: '3D Experience' },
-        { start: 6, end: 11, bg: '../global assets/Images/background-images/background-image-1.webp', name: 'Ward Furniture' },
-        { start: 12, end: 13, bg: '../global assets/Images/background-images/background-image-2.webp', name: 'ICU & Critical Care' },
-        { start: 14, end: 15, bg: '../global assets/Images/background-images/background-image-3.webp', name: 'Labour & Maternity' },
-        { start: 16, end: 19, bg: '../global assets/Images/background-images/background-image-4.webp', name: 'Emergency & Patient Transfer' },
-        { start: 20, end: 27, bg: '../global assets/Images/background-images/background-image-5.webp', name: 'Medical Trolleys' },
-        { start: 28, end: 33, bg: '../global assets/Images/background-images/background-image-1.webp', name: 'Examination & Consultation' },
-        { start: 34, end: 35, bg: '../global assets/Images/background-images/background-image-2.webp', name: 'Stainless Steel Furniture & Ward Accessories' },
-        { start: 36, end: 37, bg: '../global assets/Images/background-images/background-image-3.webp', name: 'General Furniture' },
-        { start: 38, end: 39, bg: '../global assets/Images/background-images/background-image-4.webp', name: 'Accessories' },
+        { start: 5, end: 5, bg: '../global assets/bottom-navbar/desktop-background-image.webp', name: '3D Experience' },
+        { start: 6, end: 11, bg: '../global assets/Images/background-images/ward-furniture-image.webp', name: 'Ward Furniture' },
+        { start: 12, end: 13, bg: '../global assets/Images/background-images/icu-critical-care-image.webp', name: 'ICU & Critical Care' },
+        { start: 14, end: 15, bg: '../global assets/Images/background-images/labor-maternity-image.webp', name: 'Labour & Maternity' },
+        { start: 16, end: 19, bg: '../global assets/Images/background-images/emergency-patient-transfer-image.webp', name: 'Emergency & Patient Transfer' },
+        { start: 20, end: 27, bg: '../global assets/Images/background-images/medical-trolley-image.webp', name: 'Medical Trolleys' },
+        { start: 28, end: 33, bg: '../global assets/Images/background-images/examination-consultation-image.webp', name: 'Examination & Consultation' },
+        { start: 34, end: 35, bg: '../global assets/Images/background-images/stainless-steal-ward-accessories-image.webp', name: 'Stainless Steel Furniture & Ward Accessories' },
+        { start: 36, end: 37, bg: '../global assets/Images/background-images/general-furniture-image.webp', name: 'General Furniture' },
+        { start: 38, end: 39, bg: '../global assets/Images/background-images/accessories-image.webp', name: 'Accessories' },
         { start: 40, end: 40, bg: '../global assets/bottom-navbar/desktop-background-image.webp', name: 'Contact Us' }
     ],
     defaultBg: '../global assets/bottom-navbar/desktop-background-image.webp'
@@ -571,9 +571,20 @@ let activeBgLayerNum = 1;
 
 function getCategoryBgForPage(pageNum) {
     const isMobile = window.innerWidth <= 768;
+
+    // On mobile: product pages (6–39) use their category-specific image,
+    // all other pages use the mobile background image.
     if (isMobile) {
+        if (pageNum >= 6 && pageNum <= 39) {
+            for (let r of categoryBackgrounds.ranges) {
+                if (pageNum >= r.start && pageNum <= r.end) {
+                    return r.bg;
+                }
+            }
+        }
         return '../global assets/bottom-navbar/mobile-background-image.webp';
     }
+
     for (let r of categoryBackgrounds.ranges) {
         if (pageNum >= r.start && pageNum <= r.end) {
             return r.bg;

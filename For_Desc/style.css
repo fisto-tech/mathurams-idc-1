@@ -2312,6 +2312,8 @@
   transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1) !important;
   will-change: opacity;
   background-image: url('../global assets/bottom-navbar/desktop-background-image.webp');
+  filter: blur(6px);
+  transform: scale(1.05);
 }
 
 .bg-layer.active {
